@@ -146,6 +146,9 @@ div.unit-cell div#sp2 img {
   width: 24px;
   height: 24px;
 }
+img.pos {
+  vertical-align: text-bottom;
+}
 
 /*original*/
 table {
