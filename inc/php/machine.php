@@ -18,7 +18,6 @@ function td($id) {
 }
 $title = "";
 $machine = tos("扭蛋機", "扭蛋机")." ";
-echo 1;
 if ($_GET["machine"] != NULL) {
   $sql = "SELECT * FROM `capsule` WHERE `machine` = ?;";
   $result = $pdo->prepare($sql);
