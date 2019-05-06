@@ -376,7 +376,7 @@ if ($result->rowCount() >= 1) {
     $temp[5] .= "'{$row["rank"]}'";
     $temp[6] .= "'{$row["pos"]}'";
   }
-} else {echo $result->rowCount();}
+}
 $query_html .= "
 <br>
 <div id='result'>
