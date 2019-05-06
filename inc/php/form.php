@@ -393,11 +393,11 @@ function cm_option() {
             <option value="spd" localization TC="　速度" SC="　速度"></option>
             <option value="ctl" localization TC="　操控" SC="　操控"></option>
             <option value="id" localization TC="ID" SC="ID" style='font-weight: bold;'></option>
-            <option value="" disabled localization TC="武器" SC="武器"></option>
+            <!--option value="" disabled localization TC="武器" SC="武器"></option>
             <option value="rng" localization TC="　射程" SC="　射程"></option>
             <option value="dmg" localization TC="　傷害" SC="　伤害"></option>
             <option value="sets" localization TC="　彈數" SC="　弹数"></option>
-            <option value="cd" localization TC="　CD" SC="　CD"></option>
+            <option value="cd" localization TC="　CD" SC="　CD"></option-->
             <option value="lock" localization TC="鎖敵距離" SC="锁敌距离" style='font-weight: bold;'></option>
           </select>
         </div>
