@@ -119,7 +119,7 @@ div#result, div#id {
 }
 div.unit-cell {
   display: inline-block;
-  margin: 0 4px;
+  margin: 4px;
 }
 div.unit-cell div#unit img {
   padding-bottom: 2px;

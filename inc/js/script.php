@@ -114,15 +114,15 @@ $(document).ready(function(){
     });
   }
   $("img.unit").each(function(){
-    if (unit[0].indexOf($(this).attr("srcc")) != 1)
+    if (unit[0].indexOf($(this).attr("srcc")) != -1)
       $(this).attr("src", prefix[1]+unit[1][unit[0].indexOf($(this).attr("srcc"))]+".png");
   });
   $("img.weapon").each(function(){
-    if (weapon[0].indexOf($(this).attr("srcc")) != 1)
+    if (weapon[0].indexOf($(this).attr("srcc")) != -1)
       $(this).attr("src", prefix[0]+weapon[1][weapon[0].indexOf($(this).attr("srcc"))]+".gif");
   });
   $("img.pos").each(function(){
-    if (pos[0].indexOf($(this).attr("srcc")) != 1)
+    if (pos[0].indexOf($(this).attr("srcc")) != -1)
       $(this).attr("src", pos[1][pos[0].indexOf($(this).attr("srcc"))]);
   });
   $("img.skill, img.sp").each(function(){
