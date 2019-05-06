@@ -16,9 +16,9 @@ function skl_option() {
 function wpn_option() {
   $html = "";
   $wpn = [
-    [1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,25,26,27,28,31,32,33,34,35,36,37,38,39,41,42,43],
-    ["格鬥","斧","光束軍刀","實體刀","擊","斬","熱能鞭","火箭錨","飛鏢","劍氣","護盾","拳","光束擴散炮","火神炮","狀態彈","浮游炮(射擊型)","浮游炮(近接型)","浮游炮(反射型)","浮游炮(追尾型)","噴槍","光束步槍","機關槍","火箭炮","擴散炮","飛彈","羽毛","線性步槍","格林機槍","加農炮","超視炮","狙擊槍"],
-    ["格斗","斧","光束军刀","实体刀","击","斩","热能鞭","火箭锚","飞镖","剑气","护盾","拳","光束扩散炮","火神炮","状态弹","浮游炮(射击型)","浮游炮(近接型)","浮游炮(反射型)","浮游炮(追尾型)","喷枪","光束步枪","机关枪","火箭炮","扩散炮","飞弹","羽毛","线性步枪","格林机枪","加农炮","超视炮","狙击枪"]
+    [1,2,3,4,5,6,11,12,13,14,15,16,21,22,23,25,26,27,28,31,32,"tag0",33,34,35,36,37,38,39,41,42,43],
+    ["格鬥","斧","光束軍刀","實體刀","擊","斬","熱能鞭","火箭錨","飛鏢","劍氣","護盾","拳","光束擴散炮","火神炮","狀態彈","浮游炮(射擊型)","浮游炮(近接型)","浮游炮(反射型)","浮游炮(追尾型)","噴槍","光束步槍","光束步槍(3連射)","機關槍","火箭炮","擴散炮","飛彈","羽毛","線性步槍","格林機槍","加農炮","超視炮","狙擊槍"],
+    ["格斗","斧","光束军刀","实体刀","击","斩","热能鞭","火箭锚","飞镖","剑气","护盾","拳","光束扩散炮","火神炮","状态弹","浮游炮(射击型)","浮游炮(近接型)","浮游炮(反射型)","浮游炮(追尾型)","喷枪","光束步枪","光束步枪(3连射)","机关枪","火箭炮","扩散炮","飞弹","羽毛","线性步枪","格林机枪","加农炮","超视炮","狙击枪"]
   ];
   $l = $_COOKIE["l"] == "TC" ? 1 : 2;
   for ($x = 0; $x < sizeOf($wpn[0]); $x++) {
@@ -179,6 +179,7 @@ function cm_option() {
             <option localization="" tc="　浮游炮(追尾型)" sc="　浮游炮(追尾型)" value="28"></option>
             <option localization="" tc="　噴槍" sc="　喷枪" value="31"></option>
             <option localization="" tc="　光束步槍" sc="　光束步枪" value="32"></option>
+            <option localization="" tc="　光束步槍(3連射)" sc="　光束步枪(3连射)" value="tag0"></option>
             <option localization="" tc="　機關槍" sc="　机关枪" value="33"></option>
             <option localization="" tc="　火箭炮" sc="　火箭炮" value="34"></option>
             <option localization="" tc="　擴散炮" sc="　扩散炮" value="35"></option>
@@ -317,7 +318,7 @@ function cm_option() {
         </div><div class="cell body">
           <select name="tag">
             <option value=""></option>
-            <option value="tag1" localization TC="　自由" SC="　自由"></option>
+            <option value="tag2" localization TC="　自由" SC="　自由"></option>
             <option value="tag3" localization TC="　裝甲解除" SC="　装甲解除"></option>
             <option value="tag4" localization TC="　技能激活" SC="　技能激活"></option>
             <option value="no" localization TC="　不能" SC="　不能"></option>
@@ -421,6 +422,11 @@ function cm_option() {
       <div class="row" id="submit">
         <div class="cell body">
           <input type="submit" value="" localization TC="搜尋" SC="搜寻" style="height: 100%; width: 100%;" />
+        </div>
+      </div>
+      <div class="row" id="random">
+        <div class="cell body">
+          <input type="button" value="" localization TC="隨機機體" SC="随机机体" onclick="window.location.href = 'search_v2?id=random';" style="height: 100%; width: 100%;" />
         </div>
       </div>
     </div>

@@ -179,15 +179,18 @@ function wpn($no) {
       <td></td>
       <td>";
   }
-  $sql = "SELECT GROUP_CONCAT(`tag` ORDER BY LENGTH(`tag`) SEPARATOR '<br>') AS tag FROM `tag_test2` WHERE `id` = ? AND `no` = ? GROUP BY `id`, `no`;";
-  $result = $pdo->prepare($sql);
-  $result->execute([$id, $no]);
-  if ($result->rowCount() == 1) {
-    while ($row = $result->fetch()) {
-      $html .= (($no == 8 || $no == 9) ? "" : $row["tag"]);
-    }
-  } else if ($s2 == 1) {
+  if ($s2 == 1) {
     $html .= tos("光束盾", "光束盾");
+  }
+  else {
+    $sql = "SELECT GROUP_CONCAT(`tag` ORDER BY LENGTH(`tag`) SEPARATOR '<br>') AS tag FROM `tag_test2` WHERE `id` = ? AND `no` = ? GROUP BY `id`, `no`;";
+    $result = $pdo->prepare($sql);
+    $result->execute([$id, $no]);
+    if ($result->rowCount() == 1) {
+      while ($row = $result->fetch()) {
+        $html .= (($no == 8 || $no == 9) ? "" : $row["tag"]);
+      }
+    }
   }
   $html .= "</td>
     </tr>
@@ -285,7 +288,7 @@ function material() {
       if ($parents[$index] != "") {
         $html .= "<a href='?id={$parents[$index]}'><img srcc='{$parents[$index]}' class='unit' tit='".unit_name($parents[$index])."'></a>";
       }
-        $index++;
+      $index++;
       $html .= "</td>";
     }
     $html .= "</tr>";
@@ -293,7 +296,16 @@ function material() {
   $html .= "</table>";
   return $html;
 }
-$id = intval($_GET["id"]);
+if ($_GET["id"] == "random") {
+  $sql = "SELECT `id` FROM `unit` ORDER BY RAND() LIMIT 1;";
+  $result = $pdo->prepare($sql);
+  $result->execute();
+  $id = $result->fetch()["id"];
+  header("Location: search_v2?id=$id");
+}
+else {
+  $id = intval($_GET["id"]);
+}
 $title = unit_name($id)." - ";
 if ($id != null) {
   $sql = "SELECT `tag0`, `tag4`, `sp2` FROM `unit` WHERE `id` = ?;";
@@ -302,7 +314,7 @@ if ($id != null) {
   if ($result->rowCount() >= 1) {
     while($row = $result->fetch()) {
       $query_html = "
-<div id='result'>
+<div id='id'>
   <br>
   <table>
     <tr>
@@ -363,7 +375,6 @@ if ($id != null) {
         $hex2 = ";".strtoupper(dechex(hexdec($hex[2].$hex[3])+1))." ".$hex[0].$hex[1];
       }
       $query_html .= "<script>$(\"input[name='name']\").val('".$hex1.$hex2."');</script>";
-      echo "<!--{$query_html}-->";
     }
   }
 } else {

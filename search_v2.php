@@ -3,7 +3,7 @@ require_once "inc/php/util.php";
 require_once "inc/php/cookie.php";
 require_once "inc/php/db.php";
 require_once "inc/php/flow.php";
-$title = $title.($_COOKIE["l"] == "TC" ? "SD高達 資料庫" : "SD敢达 资料库");
+$title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
 ?>
 <html>
 <head>

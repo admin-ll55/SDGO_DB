@@ -1,0 +1,10 @@
+Options -Indexes
+RewriteEngine on
+RewriteBase /sdgo/
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s.+\.php.*
+RewriteRule ^(.*)\.php$ $1 [L,R=301]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php
+DirectoryIndex search_v2.php
+Header set Access-Control-Allow-Origin "*"

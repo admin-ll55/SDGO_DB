@@ -64,11 +64,11 @@ function ch_l(l) {
   });
   $("div.row#prop div.cell.body").width($("form.container.form_unit div.container.body div.container:first-child").outerWidth()-$("div.row#prop div.cell.header").outerWidth()-16);
   $("div.row#order, div.row#sort").children("div.cell.header").width($("div.cell.header.home").width());
-  $("div.row#submit div.cell.body").width($("form.container.form_unit div.container.body div.container:last-child").width()-17);
+  $("div.row#submit div.cell.body, div.row#random div.cell.body").width($("form.container.form_unit div.container.body div.container:last-child").width()-17);
   $("select[name='machine'] option[value]").each(function(){
     $(this).html($(this).attr("value"));
   });
-  $("div#result a[text]").each(function(){
+  $("div#id a[text]").each(function(){
     $(this).html($(this).attr("text"));
   });
 }
@@ -107,32 +107,48 @@ function form_submit(form, key, value) {
   });
 }
 $(document).ready(function(){
+  if (typeof r != "undefined") {
+    var temp = "";
+    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='skl1'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
+    for (var i = 0; i < r[0].length; i++) {
+      temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]);
+    }
+    $("div#container").append(temp);
+    temp = null;
+  }
+  $("div#loading").remove();
+
+
   ch_fs("<?=$_COOKIE["fs"]?>")
   ch_l("<?=$_COOKIE["l"]?>");
-  $("img.unit").mousemove(function(e){
-    $("div#tooltip").text($(this).attr("tit")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
-  }).mouseout(function(){
-    $("div#tooltip").hide().css({"left":"0"});
-  });
-  $("img.skill, img.sp").mousemove(function(e){
-    $("div#tooltip").html($(this).attr("tit").replace(/\n/g, "<br>")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
-  }).mouseout(function(){
-    $("div#tooltip").hide().css({"left":"0"});
-  });
+  if ($("div#result").length == 0) {
+    $("img.unit").mousemove(function(e){
+      $("div#tooltip").text($(this).attr("tit")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
+    }).mouseout(function(){
+      $("div#tooltip").hide().css({"left":"0"});
+    });
+    $("img.skill, img.sp").mousemove(function(e){
+      $("div#tooltip").html($(this).attr("tit").replace(/\n/g, "<br>")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
+    }).mouseout(function(){
+      $("div#tooltip").hide().css({"left":"0"});
+    });
+  }
   $("img.unit").each(function(){
-    $(this).attr("src", prefix[1]+unit[1][unit[0].indexOf($(this).attr("srcc"))]+".png");
+    if (unit[0].indexOf($(this).attr("srcc")) != 1)
+      $(this).attr("src", prefix[1]+unit[1][unit[0].indexOf($(this).attr("srcc"))]+".png");
   });
   $("img.weapon").each(function(){
-    $(this).attr("src", prefix[0]+weapon[1][weapon[0].indexOf($(this).attr("srcc"))]+".gif");
+    if (weapon[0].indexOf($(this).attr("srcc")) != 1)
+      $(this).attr("src", prefix[0]+weapon[1][weapon[0].indexOf($(this).attr("srcc"))]+".gif");
   });
   $("img.pos").each(function(){
-    $(this).attr("src", pos[1][pos[0].indexOf($(this).attr("srcc"))]);
+    if (pos[0].indexOf($(this).attr("srcc")) != 1)
+      $(this).attr("src", pos[1][pos[0].indexOf($(this).attr("srcc"))]);
   });
   $("img.skill, img.sp").each(function(){
-    //key = $(this).attr("srcc");
-    //index = skl[0].indexOf(key);
-    //title = skl[1][index]+"\n\n"+skl[2][index];
-    //$(this).attr("tit", title).attr("src", prefix[0]+skl[3][index]+".gif");
-    $(this).attr("src", prefix[0]+skl[3][skl[0].indexOf($(this).attr("srcc"))]+".gif");
+    if (skl[0].indexOf($(this).attr("srcc")) != -1)
+      $(this).attr("src", prefix[0]+skl[3][skl[0].indexOf($(this).attr("srcc"))]+".gif");
+    else
+      $(this).remove();
   });
 });

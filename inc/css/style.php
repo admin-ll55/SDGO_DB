@@ -91,8 +91,9 @@ form.container.form_unit > div.container.body > div.container:last-child {
 form.container.form_unit > div.container.body > div.container:last-child > div.row > div.cell.body {
   width: 80px;
 }
-form.container.form_unit > div.container.body > div.container:last-child > div.row#submit {
-  height: 50%;
+form.container.form_unit > div.container.body > div.container:last-child > div.row#submit,
+form.container.form_unit > div.container.body > div.container:last-child > div.row#random {
+  height: 25%;
 }
 form.container.form_unit > div.container.body > div.container > div.row {
   height: 16.66%;
@@ -110,10 +111,40 @@ form.container.form_cm > div.container.body > div.container > div.row > div.cell
 form#machine button {
   background-color: transparent;
 }
-div#result {
+div#result, div#id {
   margin: 0 auto;
   width: 1080px;
   min-width: 1080px;
+  text-align: center;
+}
+div.unit-cell {
+  display: inline-block;
+  margin: 0 4px;
+}
+div.unit-cell div#unit img {
+  padding-bottom: 2px;
+}
+div.unit-cell div#skl1,
+div.unit-cell div#skl2 {
+  float: left;
+}
+div.unit-cell div#skl1 img,
+div.unit-cell div#skl2 img {
+  padding-right: 2px;
+  height: 48px;
+  width: 48px;
+}
+div.unit-cell div#sp1 {
+  float: right;
+}
+div.unit-cell div#sp2 {
+  clear: right;
+  float: right;
+}
+div.unit-cell div#sp1 img,
+div.unit-cell div#sp2 img {
+  width: 24px;
+  height: 24px;
 }
 
 /*original*/
