@@ -76,11 +76,20 @@ if ($_POST["wpn"] != "" && $_POST["eff"] == "") {
     $script .= $s;
     $not = "NOT";
   }
-  $sql .= " AND (`unit`.`id` {$not} IN (
-  SELECT `weapon_wpn`.`id`
-  FROM `weapon` AS weapon_wpn
-  WHERE `weapon_wpn`.`wpn` = '{$_POST["wpn"]}'
-  ))";
+  if ($_POST["wpn"] == "tag0") {
+    $sql .= " AND (`unit`.`id` {$not} IN (
+    SELECT `unit_tag0`.`id`
+    FROM `unit` AS unit_tag0
+    WHERE `unit_tag0`.`tag0` = '1'
+    ))";
+  }
+  else {
+    $sql .= " AND (`unit`.`id` {$not} IN (
+    SELECT `weapon_wpn`.`id`
+    FROM `weapon` AS weapon_wpn
+    WHERE `weapon_wpn`.`wpn` = '{$_POST["wpn"]}'
+    ))";
+  }
   $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
 }
 //eff
@@ -99,53 +108,63 @@ if ($_POST["eff"] != "" && $_POST["wpn"] == "") {
 }
 //wpn eff link
 if ($_POST["wpn"] != "" && $_POST["eff"] != "") {
-  $ex = "";
-  $not = "";
-  if ($s = not("wpn")) {
-    $script .= $s;
-    $ex = "!";
-  }
-  if ($s = not("eff")) {
-    $script .= $s;
-    $not = "NOT";
-  }
-  if (($ex == "" && $not == "") || ($ex != "" && $not != "")) {
+  if ($_POST["wpn"] == "tag0") {
     $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `link`.`id`
-    FROM (
-      SELECT `weapon_link`.`id`, `weapon_link`.`wpn`, IFNULL(GROUP_CONCAT(`tag_link`.`tag`), '') AS tag
-      FROM `weapon` AS weapon_link
-        LEFT JOIN `tag_test2` AS tag_link
-          ON `weapon_link`.`id` = `tag_link`.`id`
-            AND `weapon_link`.`no` = `tag_link`.`no`
-      GROUP BY `weapon_link`.`id`, `weapon_link`.`wpn`
-    ) AS link
-    WHERE `link`.`wpn` = '{$_POST["wpn"]}'
-      AND `link`.`tag` LIKE '%{$_POST["eff"]}%'
+    SELECT `unit_tag0`.`id`
+    FROM `unit` AS unit_tag0
+    WHERE `unit_tag0`.`tag0` = '1'
     ))";
+    $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
   }
   else {
-    $sql .= " AND (`unit`.`id` IN (
-    SELECT `".($ex == ""?"weapon":"tag")."_link`.`id`
-    FROM `".($ex == ""?"weapon":"tag_test2")."` AS ".($ex == ""?"weapon":"tag")."_link
-    WHERE `".($ex == ""?"weapon":"tag")."_link`.`".($ex == ""?"wpn":"tag")."` ".($ex == ""?"= '{$_POST["wpn"]}'":"LIKE '%{$_POST["eff"]}%'")."
-    ))
-    AND (`unit`.`id` NOT IN (
-    SELECT `link`.`id`
-    FROM (
-      SELECT `weapon_link`.`id`, `weapon_link`.`wpn`, IFNULL(GROUP_CONCAT(`tag_link`.`tag`), '') AS tag
-      FROM `weapon` AS weapon_link
-        LEFT JOIN `tag_test2` AS tag_link
-          ON `weapon_link`.`id` = `tag_link`.`id`
-            AND `weapon_link`.`no` = `tag_link`.`no`
-      GROUP BY `weapon_link`.`id`, `weapon_link`.`no`
+    $ex = "";
+    $not = "";
+    if ($s = not("wpn")) {
+      $script .= $s;
+      $ex = "!";
+    }
+    if ($s = not("eff")) {
+      $script .= $s;
+      $not = "NOT";
+    }
+    if (($ex == "" && $not == "") || ($ex != "" && $not != "")) {
+      $sql .= " AND (`unit`.`id` {$not} IN (
+      SELECT `link`.`id`
+      FROM (
+        SELECT `weapon_link`.`id`, `weapon_link`.`wpn`, IFNULL(GROUP_CONCAT(`tag_link`.`tag`), '') AS tag
+        FROM `weapon` AS weapon_link
+          LEFT JOIN `tag_test2` AS tag_link
+            ON `weapon_link`.`id` = `tag_link`.`id`
+              AND `weapon_link`.`no` = `tag_link`.`no`
+        GROUP BY `weapon_link`.`id`, `weapon_link`.`wpn`
       ) AS link
-    WHERE `link`.`wpn` = '{$_POST["wpn"]}'
-      AND `link`.`tag` LIKE '%{$_POST["eff"]}%'
-    ))";
+      WHERE `link`.`wpn` = '{$_POST["wpn"]}'
+        AND `link`.`tag` LIKE '%{$_POST["eff"]}%'
+      ))";
+    }
+    else {
+      $sql .= " AND (`unit`.`id` IN (
+      SELECT `".($ex == ""?"weapon":"tag")."_link`.`id`
+      FROM `".($ex == ""?"weapon":"tag_test2")."` AS ".($ex == ""?"weapon":"tag")."_link
+      WHERE `".($ex == ""?"weapon":"tag")."_link`.`".($ex == ""?"wpn":"tag")."` ".($ex == ""?"= '{$_POST["wpn"]}'":"LIKE '%{$_POST["eff"]}%'")."
+      ))
+      AND (`unit`.`id` NOT IN (
+      SELECT `link`.`id`
+      FROM (
+        SELECT `weapon_link`.`id`, `weapon_link`.`wpn`, IFNULL(GROUP_CONCAT(`tag_link`.`tag`), '') AS tag
+        FROM `weapon` AS weapon_link
+          LEFT JOIN `tag_test2` AS tag_link
+            ON `weapon_link`.`id` = `tag_link`.`id`
+              AND `weapon_link`.`no` = `tag_link`.`no`
+        GROUP BY `weapon_link`.`id`, `weapon_link`.`no`
+        ) AS link
+      WHERE `link`.`wpn` = '{$_POST["wpn"]}'
+        AND `link`.`tag` LIKE '%{$_POST["eff"]}%'
+      ))";
+    }
+    $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
+    $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
   }
-  $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
-  $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
 }
 //origin
 if ($_POST["origin"] != ""){
