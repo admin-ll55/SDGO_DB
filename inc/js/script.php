@@ -34,7 +34,14 @@ function ch_l(l) {
     $(this).html($(this).val());
     if (l == "SC") {
       for (var i = 0; i < eff[0].length; i++) {
-        $(this).html($(this).html().replace(eff[0][i], "　"+eff[1][i]));
+        $(this).html($(this).html().replace(eff[0][i], eff[1][i]));
+      };
+    }
+  });
+  $("table#armament td:last-child").each(function(){
+    if (l == "SC") {
+      for (var i = 0; i < eff[0].length; i++) {
+        $(this).html($(this).html().replace(eff[0][i], eff[1][i]));
       };
     }
   });
