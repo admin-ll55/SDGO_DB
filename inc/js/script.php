@@ -98,7 +98,7 @@ function form_submit(form, key, value) {
 $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
-    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail'><span id='pos'><img class='pos' srcc='<6>' /></span> <span id='rank'><5></span></div><div id='skl1'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
+    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail'><a href='search_v2?pos=<6>'><span id='pos'><img class='pos' srcc='<6>' /></span></a> <span id='rank'><5></span></div><div id='skl1'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
     for (var i = 0; i < r[0].length; i++) {
       temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,r[6][i]);
     }

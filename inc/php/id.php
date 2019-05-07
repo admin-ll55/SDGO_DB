@@ -28,7 +28,7 @@ function origin() {
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
-      return "<a href='?origin={$row["origin"]}'>{$row["name_".$_COOKIE["l"]]}</a>";
+      return "<a href='search_v2?origin={$row["origin"]}'>{$row["name_".$_COOKIE["l"]]}</a>";
     }
   }
 }
@@ -42,25 +42,25 @@ function unit_info() {
       return "
     <tr>
       <td>ID: ".$id."</td>
-      <td>".$row["rank"]."</td>
-      <td><img srcc='".$row["pos"]."' class='pos'></td>
+      <td>{$row["rank"]}</td>
+      <td><a href='search_v2?pos={$row["pos"]}'><img srcc='{$row["pos"]}' class='pos'></a></td>
     </tr>
     <tr>
       <td rowspan='5'><img srcc='".$id."' class='unit' tit='".unit_name($id)."' /></td>
       <td>".tos("攻擊", "攻击")."</td>
-      <td>".$row["atk"]."</td>
+      <td>{$row["atk"]}</td>
     </tr>
     <tr>
       <td>".tos("防禦", "防御")."</td>
-      <td>".$row["def"]."</td>
+      <td>{$row["def"]}</td>
     </tr>
     <tr>
       <td>".tos("速度", "速度")."</td>
-      <td>".$row["spd"]."</td>
+      <td>{$row["spd"]}</td>
     </tr>
     <tr>
       <td>".tos("操控", "操控")."</td>
-      <td>".$row["ctl"]."</td>
+      <td>{$row["ctl"]}</td>
     </tr>
     <tr>
       <td>".tos("總和", "总和")."</td>
@@ -68,7 +68,7 @@ function unit_info() {
     </tr>
     <tr>
       <td>".tos("鎖敵距離", "锁敌距离")."</td>
-      <td colspan='2'>".$row["lock"]."</td>
+      <td colspan='2'>{$row["lock"]}</td>
     </tr>
 ";
     }
@@ -85,7 +85,7 @@ function in_cm() {
         $temp = explode("<br>", $row["in_cm"]);
         $in_cm = "";
         for ($x = 0; $x < sizeof($temp); $x++) {
-          $in_cm .= "<a href='?machine={$temp[$x]}'>[{$temp[$x]}]</a>　";
+          $in_cm .= "<a href='search_v2?machine={$temp[$x]}'>[{$temp[$x]}]</a>　";
         }
         return "<tr><td colspan='3'>　".tos("扭蛋機", "扭蛋机").":　{$in_cm}</td></tr>";
       }
@@ -137,10 +137,10 @@ function skl_sp() {
       ($row["sp2"] != '' ? "<td>".tos("必殺二", "必杀二")."</td>" : "")."
     </tr>
     <tr>
-      <td><a href='?skl={$row["skl1"]}'><img class='skill' srcc='{$row["skl1"]}' tit='{$row["skl1_desc"]}' /></a></td>
-      <td><a href='?skl={$row["skl2"]}'><img class='skill' srcc='{$row["skl2"]}' tit='{$row["skl2_desc"]}' /></a></td>
-      <td><a href='?sp={$row["sp1"]}'><img class='sp' srcc='{$row["sp1"]}' tit='{$row["sp1_desc"]}' /></a></td>".
-      ($row["sp2"] != '' ? "<td><a href='?sp={$row["sp2"]}'><img class='sp' srcc='{$row["sp2"]}' tit='{$row["sp2_desc"]}' /></a></td>" : "")."
+      <td><a href='search_v2?skl={$row["skl1"]}'><img class='skill' srcc='{$row["skl1"]}' tit='{$row["skl1_desc"]}' /></a></td>
+      <td><a href='search_v2?skl={$row["skl2"]}'><img class='skill' srcc='{$row["skl2"]}' tit='{$row["skl2_desc"]}' /></a></td>
+      <td><a href='search_v2?sp={$row["sp1"]}'><img class='sp' srcc='{$row["sp1"]}' tit='{$row["sp1_desc"]}' /></a></td>".
+      ($row["sp2"] != '' ? "<td><a href='search_v2?sp={$row["sp2"]}'><img class='sp' srcc='{$row["sp2"]}' tit='{$row["sp2_desc"]}' /></a></td>" : "")."
     </tr>
   </table>
 ";
@@ -158,7 +158,7 @@ function wpn($no) {
     while ($row = $result->fetch()) {
       $html .= "
     <tr".($row["tag0"] == "1" && $row["wpn"] == "32" ? " bgcolor='#DDDDFF'" : "").">
-      <td><img srcc='{$row["wpn"]}' class='weapon'></td>
+      <td>".($row["wpn"]==0||$row["wpn"]==999?"":"<a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]==0||$row["wpn"]==999?"":"</a>")."</td>
       <td>{$row["rng"]}</td>
       <td>{$row["dmg"]}".(($no == 8 || $no == 9) ? "%" : "")."</td>
       <td>".(($no == 8 || $no == 9) ? "" : $row["sets"])."</td>
@@ -228,12 +228,12 @@ function blueprint() {
   </tr>
   <tr>
     <td bgcolor='#DDDDFF'>
-      <a href='?id={$row["a"]}'><img srcc='{$row["a"]}' class='unit' tit='".unit_name($row["a"])."'></a>
+      <a href='search_v2?id={$row["a"]}'><img srcc='{$row["a"]}' class='unit' tit='".unit_name($row["a"])."'></a>
     </td>".
-    ($row["b"] != "" ? "<td><a href='?id={$row["b"]}'><img srcc='{$row["b"]}' class='unit' tit='".unit_name($row["b"])."'></a></td>" : "").
-    ($row["c"] != "" ? "<td><a href='?id={$row["c"]}'><img srcc='{$row["c"]}' class='unit' tit='".unit_name($row["c"])."'></a></td>" : "").
-    ($row["d"] != "" ? "<td><a href='?id={$row["d"]}'><img srcc='{$row["d"]}' class='unit' tit='".unit_name($row["d"])."'></a></td>" : "").
-    ($row["e"] != "" ? "<td><a href='?id={$row["e"]}'><img srcc='{$row["e"]}' class='unit' tit='".unit_name($row["e"])."'></a></td>" : "")."
+    ($row["b"] != "" ? "<td><a href='search_v2?id={$row["b"]}'><img srcc='{$row["b"]}' class='unit' tit='".unit_name($row["b"])."'></a></td>" : "").
+    ($row["c"] != "" ? "<td><a href='search_v2?id={$row["c"]}'><img srcc='{$row["c"]}' class='unit' tit='".unit_name($row["c"])."'></a></td>" : "").
+    ($row["d"] != "" ? "<td><a href='search_v2?id={$row["d"]}'><img srcc='{$row["d"]}' class='unit' tit='".unit_name($row["d"])."'></a></td>" : "").
+    ($row["e"] != "" ? "<td><a href='search_v2?id={$row["e"]}'><img srcc='{$row["e"]}' class='unit' tit='".unit_name($row["e"])."'></a></td>" : "")."
   </tr>
   <tr>
     <td bgcolor='#DDDDFF'>Lv {$row["aa"]}</td>".
@@ -286,7 +286,7 @@ function material() {
     for ($j = 0; $j < $column; $j++) {
       $html .= "<td".($is_key[$index] == $id ? " bgcolor='#DDDDFF'" : "").">";
       if ($parents[$index] != "") {
-        $html .= "<a href='?id={$parents[$index]}'><img srcc='{$parents[$index]}' class='unit' tit='".unit_name($parents[$index])."'></a>";
+        $html .= "<a href='search_v2?id={$parents[$index]}'><img srcc='{$parents[$index]}' class='unit' tit='".unit_name($parents[$index])."'></a>";
       }
       $index++;
       $html .= "</td>";
