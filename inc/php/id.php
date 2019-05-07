@@ -151,13 +151,13 @@ function wpn($no) {
   global $pdo, $id;
   $html = "";
   $s2 = 0;
-  $sql = "SELECT `wpn`, `rng`, `dmg`, `sets`, `cd` FROM `unit`, `weapon` WHERE `unit`.`id` = `weapon`.`id` AND `unit`.`id` = ? AND `weapon`.`no` = ?;";
+  $sql = "SELECT `tag0`, `wpn`, `rng`, `dmg`, `sets`, `cd` FROM `unit`, `weapon` WHERE `unit`.`id` = `weapon`.`id` AND `unit`.`id` = ? AND `weapon`.`no` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id, $no]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
       $html .= "
-    <tr>
+    <tr".($row["tag0"] == "1" && $row["wpn"] == "32" ? " bgcolor='#DDDDFF'" : "").">
       <td><img srcc='{$row["wpn"]}' class='weapon'></td>
       <td>{$row["rng"]}</td>
       <td>{$row["dmg"]}".(($no == 8 || $no == 9) ? "%" : "")."</td>
@@ -340,7 +340,7 @@ if ($id != null) {
   ".
   skl_sp()."
   <br>
-  <table id='armament'".($row["tag0"] == "1" ? " bgcolor='#DDDDFF'" : "").">
+  <table id='armament'>
     <tr style='font-weight: bold;'>
       <td>".tos("武器", "武器")."</td>
       <td>".tos("射程距離", "射程距离")."</td>
