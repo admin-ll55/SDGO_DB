@@ -1,6 +1,6 @@
 <?php
 $query_html = "";
-$key = ["skl","sp","wpn","eff","origin","pos"];
+$key = ["skl","sp","wpn","origin","pos"];
 if (array_keys($_GET)[0] == "id") {
   require_once "inc/php/id.php";
 }
