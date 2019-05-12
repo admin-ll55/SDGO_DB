@@ -8,9 +8,9 @@ function td($id) {
     while ($row = $result->fetch()) {
       return "
     <td rank='{$row["rank"]}'>
-      <button type='button' onclick=\"$('form#machine').attr('action', 'search_v2?id=$id').submit();\">
+      <a href='search_v2?id={$id}'>
         <img class='unit' srcc='{$id}' tit='{$row["unit_name_".$_COOKIE["l"]]}'>
-      </button>
+      </a>
     </td>
 ";
     }
@@ -29,7 +29,7 @@ if ($_GET["machine"] != NULL) {
 <br>
 <br>
 <br>
-<form id='machine'>
+<div id='machine'>
 <table id='machine'>
   <tr>
     <td colspan='2'><b>".$machine.$row["machine"]."</b></td>
@@ -44,7 +44,7 @@ if ($_GET["machine"] != NULL) {
 ".td($row["e"]).td($row["f"])."
   </tr>
 </table>
-</form>
+</div>
 <script>
 $(\"select[name='machine'] option[value='{$row["machine"]}']\")[0].selected = 'selected';
 $(document).ready(function(){

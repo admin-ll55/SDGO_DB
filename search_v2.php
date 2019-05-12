@@ -19,7 +19,7 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
   <style><?php require "inc/css/style.php"; ?></style>
   <script><?php require "inc/js/jquery.php"; ?></script>
 </head>
-<body localization="TC" fs="16">
+<body localization="<?=$_COOKIE["l"]?>" fs="<?=$_COOKIE["fs"]?>">
 <?php
 require_once "inc/php/helper.php";
 require_once "inc/php/form.php";

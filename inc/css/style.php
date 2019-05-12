@@ -1,176 +1,4 @@
-body {
-  margin: 0 auto;
-  text-align: center;
-}
-div#wrapper {
-  margin: 0 auto;
-  text-align: center;
-  width: 1080px;
-  min-width: 1080px;
-}
-div.cell.header.home:hover, form#machine button:hover {
-  cursor: pointer;
-}
-input[type="checkbox"], input[type="submit"], input[type="button"], button {
-  margin: 0;
-  border: 0;
-}
-
-/*form*/
-.container, div.row, div.cell {
-  position: relative;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-div.cell {
-  display: inline-flex;
-}
-form.container {
-  display: inline-block;
-  vertical-align: top;
-}
-form.container > div.container {
-  position: relative;
-  margin: 0;
-  padding: 7.5px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
-  text-align: center;
-}
-form.container > div.container.header {
-  border-top: 1px solid black;
-}
-form.container > div.container.body > div.container {
-  position: relative;
-  display: inline-block;
-  vertical-align: top;
-  height: 265px;
-}
-form.container > div.container.body > div.container > div.row > div.cell {
-  margin-top: 1px;
-  padding: 7.5px;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  vertical-align: middle;
-  align-items: center;
-  min-height: calc(100% - 15px);
-}
-form.container > div.container.body > div.container > div.row > div.cell:nth-child(1) {
-  border-left: 1px solid black;
-}
-form.container > div.container.body > div.container > div.row:nth-child(1) > div.cell {
-  margin-top: 0;
-  border-top: 1px solid black;
-}
-form.container > div.container.body > div.container > div.row > div.cell > input,
-form.container > div.container.body > div.container > div.row > div.cell > select {
-  width: 100%;
-  height: 100%;
-}
-
-/*details*/
-label.not > span {
-  border-bottom: 1px dotted black;
-}
-div.row#prop {
-  height: 50%;
-}
-div.cell.header span {
-  width: 100%;
-  text-align: center;
-}
-div.container.header {
-  font-weight: bold;
-}
-form.container.form_unit > div.container.body > div.container:last-child {
-  width: auto;
-}
-form.container.form_unit > div.container.body > div.container:last-child > div.row > div.cell.body {
-  width: 80px;
-  height: calc(50% - 17px);
-}
-form.container.form_unit > div.container.body > div.container:last-child > div.row#submit,
-form.container.form_unit > div.container.body > div.container:last-child > div.row#random {
-  height: 25%;
-}
-form.container.form_unit > div.container.body > div.container > div.row {
-  height: 16.66%;
-}
-form.container.form_unit > div.container.body > div.container > div.row > div.cell.body {
-  width: 200px;
-  height: calc(100% - 17px);
-}
-form.container.form_cm > div.container.body > div.container > div.row {
-  height: 50%;
-}
-form.container.form_cm > div.container.body > div.container > div.row > div.cell {
-  margin: 0;
-}
-form.container.form_cm > div.container.body > div.container > div.row > div.cell.body {
-  height: calc(50% - 17px);
-  width: 100px;
-}
-form#machine button {
-  background-color: transparent;
-}
-div#result, div#id {
-  margin: 0 auto;
-  width: 1080px;
-  min-width: 1080px;
-  text-align: center;
-}
-div.unit-cell {
-  display: inline-block;
-  margin: 4px;
-}
-div.unit-cell div#unit img {
-  padding-bottom: 2px;
-}
-div.unit-cell div#skl1,
-div.unit-cell div#skl2 {
-  float: left;
-}
-div.unit-cell div#skl1 img,
-div.unit-cell div#skl2 img {
-  padding-right: 2px;
-  height: 48px;
-  width: 48px;
-}
-div.unit-cell div#sp1 {
-  float: right;
-}
-div.unit-cell div#sp2 {
-  clear: right;
-  float: right;
-}
-div.unit-cell div#sp1 img,
-div.unit-cell div#sp2 img {
-  width: 24px;
-  height: 24px;
-}
-img.pos {
-  vertical-align: text-bottom;
-}
-
 /*original*/
-table {
-  border-collapse: collapse;
-  text-align: center;
-  margin: 0 auto;
-}
-table td {
-  border: 1px solid black;
-  padding: 5px;
-}
-form table, form table td {
-  text-align: left;
-  border: 0;
-}
-form table td {
-  padding: 0;
-}
 option:hover {
   background-color: #DDDDFF;
 }
@@ -191,15 +19,6 @@ body[fs="18"] * {
 }
 body[fs="16"] * {
   font-size: 16px;
-}
-body[fs='20'] table#form > tbody > tr:nth-child(2) > td {
-  height: 225px;
-}
-body[fs='18'] table#form > tbody > tr:nth-child(2) > td {
-  height: 213px;
-}
-body[fs='16'] table#form > tbody > tr:nth-child(2) > td {
-  height: 195px;
 }
 div#warning {
   display: hidden;
@@ -263,18 +82,16 @@ body[fs='18'] div#fs18,
 body[fs='16'] div#fs16 {
   background-color: #DDDDFF;
 }
-table#machine {
+table {
   margin-left: auto;
   margin-right: auto;
-  border: 1px solid black;
   border-collapse: collapse;
   text-align: center;
   white-space: nowrap;
 }
-table#machine th,
-table#machine td {
+table th,
+table td {
   border: 1px solid black;
-  border-collapse: collapse;
   text-align: center;
   padding: 5px;
 }
@@ -301,6 +118,214 @@ div#tooltip {
   border: 1px solid black;
   font-weight: bold;
   padding: 5px;
+  text-align: left;
 }
 
+/*general*/
+body {
+  margin: 0 auto;
+  text-align: center;
+}
+div#wrapper, div#footer, div#result, div#id, div#machine {
+  margin: 0 auto;
+  text-align: center;
+  width: 1080px;
+  min-width: 1080px;
+}
+input[type="checkbox"], input[type="submit"], input[type="button"], button {
+  margin: 0;
+  border: 0;
+}
 
+/*form*/
+form.container {
+  display: inline-block;
+}
+div.container {
+  vertical-align: top;
+  display: inline-block;
+  height: 240px;
+}
+form table.inner > tbody > tr > td {
+  height: calc(100% / 6);
+}
+form input[type="text"], form select {
+  width: 200px;
+  height: 100%;
+}
+form table#prop, form table#prop td {
+  border: 0;
+  padding: 0;
+  text-align: left;
+}
+form table.inner {
+  height: 100%;
+}
+form div.container:last-child td:last-child {
+  width: 100px;
+}
+form div.container:last-child td select {
+  width: 100%;
+}
+form div.container:last-child td input {
+  width: 100%;
+  height: 100%;
+}
+td.mobile {
+  display: none;
+}
+td.mobile.hide {
+  display: table-cell;
+}
+table.mobile {
+  display: none;
+}
+table.mobile.hide {
+  display: table;
+}
+div.mobile {
+  display: none;
+}
+div.mobile.hide {
+  display: block;
+}
+select[name="machine"] {
+  width: 40px;
+}
+@media only screen and (max-width:1100px) {
+body[fs="20"] * {
+  font-size: 60px;
+}
+body[fs="18"] * {
+  font-size: 54px;
+}
+body[fs="16"] * {
+  font-size: 48px;
+}
+body[fs="20"] img[srcc="localization.png"],
+body[fs="20"] img[srcc="magnifier.png"],
+body[fs="20"] img[srcc="top.png"] {
+  width: 76px;
+  height: 76px;
+}
+body[fs="18"] img[srcc="localization.png"],
+body[fs="18"] img[srcc="magnifier.png"],
+body[fs="18"] img[srcc="top.png"] {
+  width: 70px;
+  height: 70px;
+}
+body[fs="16"] img[srcc="localization.png"],
+body[fs="16"] img[srcc="magnifier.png"],
+body[fs="16"] img[srcc="top.png"] {
+  width: 64px;
+  height: 64px;
+}
+form div.container,
+form div.container table.inner {
+  width: 100%;
+  display: block;
+  height: unset;
+}
+form table.inner input[type="checkbox"] {
+  width: 26px;
+  height: 26px;
+}
+form table.outer {
+  width: 864px;
+}
+td.mobile {
+  display: table-cell;
+}
+td.mobile.hide {
+  display: none;
+}
+table.mobile {
+  display: table;
+}
+table.mobile.hide {
+  display: none;
+}
+div.mobile {
+  display: block;
+}
+div.mobile.hide {
+  display: none;
+}
+form table.inner td.width-99 {
+  width: 99%;
+}
+form input[type="text"], form select {
+  width: 100%;
+}
+form div.container:last-child td:last-child {
+  width: 49%;
+}
+form.form_cm div.container:last-child td {
+  width: 1%;
+}
+img.pos {
+  width: 65px;
+  height: auto;
+}
+img.weapon {
+  width: 186px;
+  height: auto;
+}
+img.skill, img.sp {
+  width: 146px;
+  height: auto;
+}
+img.unit {
+  width: 265px;
+  height: auto;
+}
+td[rowspan] img.unit {
+  width: 500px;
+  height: auto;
+}
+table#machine img.unit {
+  width: 400px;
+  height: auto;
+}
+table#machine tr:not(:first-child) td[rank]:before {
+  transform: scale(3);
+  transform-origin: top left;
+}
+}
+
+/*details*/
+label.not > span {
+  border-bottom: 1px dotted black;
+}
+div.unit-cell {
+  display: inline-block;
+  margin: 4px;
+}
+div.unit-cell div#unit img {
+  padding-bottom: 2px;
+}
+div.unit-cell div#skl1,
+div.unit-cell div#skl2 {
+  float: left;
+}
+div.unit-cell div#skl1 img,
+div.unit-cell div#skl2 img {
+  padding-right: 2px;
+  height: 48px;
+  width: 48px;
+}
+div.unit-cell div#sp1 {
+  float: right;
+}
+div.unit-cell div#sp2 {
+  clear: right;
+  float: right;
+}
+div.unit-cell div#sp1 img,
+div.unit-cell div#sp2 img {
+  width: 24px;
+  height: 24px;
+}
+img.pos {
+  vertical-align: text-bottom;
+}

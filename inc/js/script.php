@@ -4,19 +4,19 @@ var weapon = [["0","1","2","3","4","5","6","11","12","13","14","15","16","21","2
 var pos = [['r','s','p'],['data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwC98RfG2u+OvGlz4c8N38un6HazC2klt32PcyZx970z26ADJ61iN4E1Xw1ZRavouoalaSkKzXMUx4b1dM8qT3OAe3vS0jxBafDjxjrOka1bXRvZZJFjZlj8qUNjAkLMODjr24Ndz4j13QtK8Ia1FBMt09/ZiCW+TabaMlSGVX/jI44AJOB71z76s+lw+F548tPb+tX089Tu/hT8TIfEHh+RfEc0NrrFjKbe47LKQOHHpn0orwr4H/D7Vde8M3F9C8sULzYR8lfMGP8AP50VSnK2x508NQcrudvI91+NPgDw/wCJtJa+1O1P2yLCrLE21vxNeK+C/hX4fvtfsLK+kv7i138RSTjavPYAe9FFKp8RrhdaN2fVukaZaaRp8Njp0Kw20QwqqP1PvRRRW547d3dn/9k=','data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDY+IPjTW/HHje58KeGtUXStPgYwtNuKmeT+7kc8kcDpXHXul6h4Qh06/0bXNRg1GdXM0byAGKRGwVdR64HWsS+vbfwT8R7yw1+Cct9sMu/yg6MCAASCwyMjmvU9fsWXwNrr+ITaW9nd2xkstP+R5vMY7lcvjcxBzjOeDg9K+lo0k6bhB21svP5fj6bs8NzUuWpPW+v/A+R6D8KPiTb+J/DfmaxIlvqVq5gnGOHI/iGPXmivEPgT4G1jV/B8l0jNEj3DEEgktwB6+360VxfVMNLWc+Vvp2F/aGKg3GFJySur9z2r41+AdA8TaK97qlqTdw8JLG21ufevK/CXw50q61G00+8vNUubLIXypbgYxnpwoOOenSiiujAtqin3uvkebmlSUMTOMXZafifTOmWFrpljDZ2MKQ20ShURRgAUUUV4Em222fWwioxSirI/9k=','data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAUABUDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDR+I3jPxB428Xahofhy+nsNA047Lma2JV3w2GdmHO0HsOw5zXO3vhfUfBdu+p6Rr19aXy3jws0MzbXIUEO2ThgQehFZum67F8O/iVf6R4gtmSK4uiGvGUbkUnG7PQqf4gRjHPavV/Ft1aabod3qVq9uVtLUvZxlwy+ZsOHZj1OOmTgDNfNY/FVKVVJ3u9jhqSknqdV8J/iTD4l8Mb9elittXtZDBc4GFkI6OvpkdvXPbFFeLfBjwHrXiXwxLqzSSw/aJySQ4XcepOM+4P40V7kalS2qudSlK2x7V8ZfAPh/wAUaQ13qtoTcx4Cyxttb868k8HfDPRrzVbKxvrrVLuxWRQltNc5jT6LjHbvmiioq/GTPc+m9MsLXS7GGzsIUht4htVFGAKKKK7EbH//2Q==']];
 var prefix = ["https://s2.ax1x.com/2019/01/23/kV","https://s2.ax1x.com/2019/05/02/Et"];
 function ch_l(l) {
-  $("body[localization]").attr("localization", l);
-  $("form#settings div[text]").each(function(){
+  $("td[localization], span[localization], option[localization]").each(function(){
+    $(this).html($(this).attr(l));
+  });
+  $("div[localization], option[text], a[text]").each(function(){
     $(this).html($(this).attr("text"));
   });
-  $("div.container.header[localization]").each(function(){
-    $(this).html($(this).attr(l));
+  $("input[type='button'], input[type='submit']").each(function(){
+    $(this).val($(this).attr(l));
   });
-  $("div[localization]").each(function(){
-    $(this).children("span").html($(this).attr(l));
+  $("select[name='machine'] option[value]").each(function(){
+    $(this).html($(this).attr("value"));
   });
-  $("option[localization]").each(function(){
-    $(this).html($(this).attr(l));
-  });
+/*
   $("input[type='button']").each(function(){
     $(this).val($(this).attr(l));
   });
@@ -26,43 +26,19 @@ function ch_l(l) {
   $("select[name='skl'] option[text]").each(function(){
     $(this).html($(this).attr("text"));
   });
-  var eff = [
-    ["狙擊","擴散","緩速","追尾","修理","牽引","抽氣","貫通","瞬移","蓄力","倒地","隱形","無格衝","7秒I力場","發射硬直","槍械故障","裝填下降","一時硬直","迎擊模式","突進格鬥","滑鼠反轉","全方位攻撃","格鬥反擊無效","6秒內推進量增加","彈藥減少不可變形","雷達顯示命中機體","判定依射擊武器決定","7秒內防禦力大幅增加","7秒內受到光束的傷害-70%"],
-    ["狙击","扩散","缓速","追尾","修理","牵引","抽气","贯通","瞬移","蓄力","倒地","隐形","无格冲","7秒I力场","发射硬直","枪械故障","装填下降","一时硬直","迎击模式","突进格斗","鼠标反转","全方位攻击","格斗反击无效","6秒内推进量增加","弹药减少不可变形","雷达显示命中机体","判定依射击武器决定","7秒内防御力大幅增加","7秒内受到光束的伤害-70%"]
-  ];
-  $("select[name='eff'] option").each(function(){
-    $(this).html($(this).val());
-    if (l == "SC") {
-      for (var i = 0; i < eff[0].length; i++) {
-        $(this).html($(this).html().replace(eff[0][i], eff[1][i]));
-      };
-    }
-  });
-  $("table#armament td:last-child").each(function(){
-    if (l == "SC") {
-      for (var i = 0; i < eff[0].length; i++) {
-        $(this).html($(this).html().replace(eff[0][i], eff[1][i]));
-      };
-    }
-  });
   $("select[name='origin'] option[text]").each(function(){
     $(this).html($(this).attr("text"));
   });
-  $("span[localization]").each(function(){
+  $("").each(function(){
     $(this).html($(this).attr(l));
   });
   $("div.row#prop div.cell.body").width($("form.container.form_unit div.container.body div.container:first-child").outerWidth()-$("div.row#prop div.cell.header").outerWidth()-16);
   $("div.row#order, div.row#sort").children("div.cell.header").width($("div.cell.header.home").width());
   $("div.row#submit div.cell.body, div.row#random div.cell.body").width($("form.container.form_unit div.container.body div.container:last-child").width()-17);
-  $("select[name='machine'] option[value]").each(function(){
-    $(this).html($(this).attr("value"));
-  });
   $("div#id a[text]").each(function(){
     $(this).html($(this).attr("text"));
   });
-}
-function ch_fs(fs) {
-  $("body[fs]").attr("fs", fs);
+*/
 }
 function auto_correct(e, s) {
   if (e.prev().length && s != "s") {
@@ -98,7 +74,7 @@ function form_submit(form, key, value) {
 $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
-    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail'><a href='search_v2?pos=<6>'><span id='pos'><img class='pos' srcc='<6>' /></span></a> <span id='rank'><5></span></div><div id='skl1'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
+    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>'><span id='pos'><img class='pos' srcc='<6>' /></span></a> <span id='rank'><5></span></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
     for (var i = 0; i < r[0].length; i++) {
       temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,r[6][i]);
     }
@@ -107,8 +83,7 @@ $(document).ready(function(){
   }
   $("div#loading").remove();
 
-
-  ch_fs("<?=$_COOKIE["fs"]?>")
+  
   ch_l("<?=$_COOKIE["l"]?>");
   if ($("div#result").length == 0) {
     $("img.unit").mousemove(function(e){

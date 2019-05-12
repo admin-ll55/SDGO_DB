@@ -12,6 +12,7 @@ $sql = "SELECT *
 FROM `unit`
 WHERE 1=1";
 $script = "";
+$sql_data = [];
 //unit name
 if ($_POST["name"] != "") {
   if ($s = not("name")) {
@@ -22,35 +23,35 @@ if ($_POST["name"] != "") {
   $sql .= " AND `unit`.`id` {$not} IN (
   SELECT `id1`
   FROM `id_ex`
-  WHERE `unit_name_TC` LIKE '%{$_POST["name"]}%'
-    OR `unit_name_SC` LIKE '%{$_POST["name"]}%'
+  WHERE `unit_name_TC` LIKE ?
+    OR `unit_name_SC` LIKE ?
   )";
+  array_push($sql_data, "%{$_POST["name"]}%", "%{$_POST["name"]}%");
   $script .= "$(\"input[name='name']\").val(\"{$_POST["name"]}\");";
 }
 //skill
 if ($_POST["skl"] != "") {
-  $or_and = "OR";
   $not = "";
   if ($s = not("skl")) {
     $script .= $s;
-    $em = "!";
-    $or_and = "AND";
     $not = "NOT";
   }
   if (preg_match("/^[0-9]{3}$/", $_POST["skl"])) {
     $sql .= " AND (`unit`.`id` {$not} IN (
     SELECT `unit_skl`.`id`
     FROM `unit` AS unit_skl
-    WHERE `unit_skl`.`skl1` = '{$_POST["skl"]}'
-      OR `unit_skl`.`skl2` = '{$_POST["skl"]}'
+    WHERE `unit_skl`.`skl1` = ?
+      OR `unit_skl`.`skl2` = ?
     ))";
+    array_push($sql_data, "{$_POST["skl"]}", "{$_POST["skl"]}");
   } else {
     $sql .= " AND (`unit`.`id` {$not} IN (
     SELECT `unit_skl`.`id`
     FROM `unit` AS unit_skl, `skill` AS skill_skl
-    WHERE (`unit_skl`.`skl1` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE '%{$_POST["skl"]}%')
-      OR (`unit_skl`.`skl2` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE '%{$_POST["skl"]}%')
+    WHERE (`unit_skl`.`skl1` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE ?)
+      OR (`unit_skl`.`skl2` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE ?)
     ))";
+    array_push($sql_data, "{$_POST["skl"]}", "{$_POST["skl"]}");
   }
   $script .= "$(\"select[name='skl'] option[value='{$_POST["skl"]}']\").attr('selected','selected');";
 }
@@ -64,9 +65,10 @@ if ($_POST["sp"] != "") {
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_sp`.`id`
   FROM `unit` AS unit_sp
-  WHERE `unit_sp`.`sp1` = '{$_POST["sp"]}'
-    OR `unit_sp`.`sp2` = '{$_POST["sp"]}'
+  WHERE `unit_sp`.`sp1` = ?
+    OR `unit_sp`.`sp2` = ?
   ))";
+  array_push($sql_data, "{$_POST["sp"]}", "{$_POST["sp"]}");
   $script .= "$(\"select[name='sp'] option[value='{$_POST["sp"]}']\").attr('selected',true);";
 }
 //wpn
@@ -87,8 +89,9 @@ if ($_POST["wpn"] != "" && $_POST["eff"] == "") {
     $sql .= " AND (`unit`.`id` {$not} IN (
     SELECT `weapon_wpn`.`id`
     FROM `weapon` AS weapon_wpn
-    WHERE `weapon_wpn`.`wpn` = '{$_POST["wpn"]}'
+    WHERE `weapon_wpn`.`wpn` = ?
     ))";
+    array_push($sql_data, "{$_POST["wpn"]}");
   }
   $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
 }
@@ -100,10 +103,11 @@ if ($_POST["eff"] != "" && $_POST["wpn"] == "") {
     $not = "NOT";
   }
   $sql .= " AND (`unit`.`id` {$not} IN (
-  SELECT `tag_eff`.`id`
-  FROM `tag_test2` AS tag_eff
-  WHERE `tag_eff`.`tag` LIKE '%{$_POST["eff"]}%'
+  SELECT `weapon_tag`.`id`
+  FROM `weapon_tag`
+  WHERE `weapon_tag`.`tag` = ?
   ))";
+  array_push($sql_data, "{$_POST["eff"]}");
   $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
 }
 //wpn eff link
@@ -137,24 +141,20 @@ if ($_POST["wpn"] != "" && $_POST["eff"] != "") {
       $not = "NOT";
     }
     $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `link`.`id`
-    FROM (
-      SELECT `weapon_link`.`id`, `weapon_link`.`wpn`, IFNULL(GROUP_CONCAT(`tag_link`.`tag`), '') AS tag
-      FROM `weapon` AS weapon_link
-        LEFT JOIN `tag_test2` AS tag_link
-          ON `weapon_link`.`id` = `tag_link`.`id`
-            AND `weapon_link`.`no` = `tag_link`.`no`
-      GROUP BY `weapon_link`.`id`, `weapon_link`.`wpn`
-    ) AS link
-    WHERE `link`.`wpn` = '{$_POST["wpn"]}'
-      AND `link`.`tag` LIKE '%{$_POST["eff"]}%'
+    SELECT `weapon`.`id`
+    FROM `weapon`, `weapon_tag`
+    WHERE `weapon`.`id` = `weapon_tag`.`id`
+      AND `weapon`.`no` = `weapon_tag`.`no`
+      AND `weapon`.`wpn` = ? AND `weapon_tag`.`tag` = ?
     ))";
+    array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["eff"]}");
     if (($wpn == "" && $eff != "") || ($wpn != "" && $eff == "")) {
       $sql .= " AND (`unit`.`id` IN (
-      SELECT `".($wpn == ""?"weapon":"tag")."_link`.`id`
-      FROM `".($wpn == ""?"weapon":"tag_test2")."` AS ".($wpn == ""?"weapon":"tag")."_link
-      WHERE `".($wpn == ""?"weapon":"tag")."_link`.`".($wpn == ""?"wpn":"tag")."` ".($wpn == ""?"= '{$_POST["wpn"]}'":"LIKE '%{$_POST["eff"]}%'")."
+      SELECT `".($wpn == ""?"weapon":"weapon_tag")."_link`.`id`
+      FROM `".($wpn == ""?"weapon":"weapon_tag")."` AS ".($wpn == ""?"weapon":"weapon_tag")."_link
+      WHERE `".($wpn == ""?"weapon":"weapon_tag")."_link`.`".($wpn == ""?"wpn":"tag")."` = ?
       ))";
+      array_push($sql_data, ($wpn == ""?$_POST["wpn"]:$_POST["eff"]));
     }
     $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
     $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
@@ -170,8 +170,9 @@ if ($_POST["origin"] != ""){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_origin`.`id`
   FROM `unit` AS unit_origin
-  WHERE `unit_origin`.`origin` = '{$_POST["origin"]}'
+  WHERE `unit_origin`.`origin` = ?
   ))";
+  array_push($sql_data, "{$_POST["origin"]}");
   $script .= "$(\"select[name='origin'] option[value='{$_POST["origin"]}']\").attr('selected',true);";
 }
 //rank
@@ -184,8 +185,9 @@ if ($_POST["rank"] != ""){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_rank`.`id`
   FROM `unit` AS unit_rank
-  WHERE `unit_rank`.`rank` LIKE '{$_POST["rank"]}'
+  WHERE `unit_rank`.`rank` LIKE ?
   ))";
+  array_push($sql_data, "{$_POST["rank"]}");
   $script .= "$(\"select[name='rank'] option[value='{$_POST["rank"]}']\").attr('selected',true);";
 }
 //pos
@@ -198,8 +200,9 @@ if ($_POST["pos"] != ""){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_pos`.`id`
   FROM `unit` AS unit_pos
-  WHERE `unit_pos`.`pos` = '{$_POST["pos"]}'
+  WHERE `unit_pos`.`pos` = ?
   ))";
+  array_push($sql_data, "{$_POST["pos"]}");
   $script .= "$(\"select[name='pos'] option[value='{$_POST["pos"]}']\").attr('selected',true);";
 }
 //tag
@@ -362,13 +365,10 @@ if ($_POST["order"] == "ASC"){
 if ($_POST["order"] == "") {
   $sql .= "DE";
 }
-$sql .= "SC";
-if ($_POST["sort"] != "tot" && $_POST["sort"] != ""){
-  $sql .= ", `atk`+`def`+`spd`+`ctl` DESC, `unit`.`id` ASC;";
-}
-$query_html .= "<!--\n{$sql}\n-->";
+$sql .= "SC;";
+$query_html .= "<!--\n{$sql}\n".implode($sql_data, "\n")."\n-->";
 $result = $pdo->prepare($sql);
-$result->execute();
+$result->execute($sql_data);
 $temp = array_fill(0, 6, "");
 if ($result->rowCount() >= 1) {
   while($row = $result->fetch()) {
