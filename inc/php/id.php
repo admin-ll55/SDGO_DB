@@ -339,7 +339,7 @@ function material() {
   $row = ceil(sqrt(sizeof($parents)));
   $column = floor(sizeof($parents)/$row);
   $index = 0;
-  $html = "<br><table id='material' class='mobile'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
+  $html .= "<table id='material' class='mobile'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
   for ($i = 0; $i < $row; $i++) {
     $html .= "<tr>";
     for ($j = 0; $j < $column; $j++) {
