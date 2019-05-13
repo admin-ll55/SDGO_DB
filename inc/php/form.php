@@ -66,7 +66,6 @@ function cm_option() {
   return $html;
 }
 ?>
-<br/>
 <div id="wrapper">
 
 <form class="container form_unit" action="search_v2" method="post">

@@ -126,14 +126,40 @@ body {
   margin: 0 auto;
   text-align: center;
 }
-div#wrapper, div#footer, div#result, div#id, div#machine {
+nav, div#wrapper, div#footer, div#result, div#id, div#machine {
   margin: 0 auto;
   text-align: center;
   width: 1080px;
   min-width: 1080px;
 }
+div#wrapper {
+  margin-top: 40px;
+}
 input[type="checkbox"], input[type="submit"], input[type="button"], button {
   margin: 0;
+  border: 0;
+}
+
+/*nav*/
+nav > button {
+  margin: 25px auto 0 auto;
+  padding: 0;
+  border: 1px solid black;
+  background-color: transparent;
+}
+nav > button:hover {
+  background-color: #DDDDFF;
+}
+nav > button > table {
+  margin: 0 10px;
+  width: 40px;
+  height: 50px;
+}
+nav > button > table td {
+  border: 0;
+  border-top: 1px solid black;
+}
+nav > button > table tr:first-child td {
   border: 0;
 }
 
@@ -183,10 +209,12 @@ table.mobile {
 table.mobile.hide {
   display: table;
 }
-div.mobile {
+div.mobile, 
+button.mobile {
   display: none;
 }
-div.mobile.hide {
+div.mobile.hide, 
+button.mobile.hide {
   display: block;
 }
 select[name="machine"] {
@@ -245,10 +273,12 @@ table.mobile {
 table.mobile.hide {
   display: none;
 }
-div.mobile {
+div.mobile,
+button.mobile {
   display: block;
 }
-div.mobile.hide {
+div.mobile.hide,
+button.mobile.hide {
   display: none;
 }
 form table.inner td.width-99 {

@@ -433,7 +433,7 @@ if ($id != null) {
       if ($row["tag4"] == "1") {
         $hex2 = ";".strtoupper(dechex(hexdec($hex[2].$hex[3])+1))." ".$hex[0].$hex[1];
       }
-      $query_html .= "<script>$(\"input[name='name']\").val('".$hex1.$hex2."');</script>";
+      $query_html .= "<script>$(\"input[name='name']\").val('".$hex1.$hex2."');$('div#wrapper').addClass('mobile hide');</script>";
     }
   }
 } else {

@@ -397,6 +397,6 @@ $query_html .= "
   <br>
   <div id='loading'>".tos("加載中…<br><br>請耐心等候", "加载中…<br><br>请耐心等候")."<br></div>
   <div id='container'></div>";
-$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";
+$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];$('div#wrapper').addClass('mobile hide');";
 $query_html .= "<script>".$script."</script></div>";
 ?>

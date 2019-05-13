@@ -83,7 +83,9 @@ $(document).ready(function(){
   }
   $("div#loading").remove();
 
-  
+  $("nav > button").click(function(){
+    $(this).next().toggleClass("mobile hide");
+  });
   ch_l("<?=$_COOKIE["l"]?>");
   if ($("div#result").length == 0) {
     $("img.unit").mousemove(function(e){

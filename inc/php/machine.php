@@ -27,8 +27,6 @@ if ($_GET["machine"] != NULL) {
       $title = $machine.$row["machine"]." - ";
       $query_html = "
 <br>
-<br>
-<br>
 <div id='machine'>
 <table id='machine'>
   <tr>
@@ -51,6 +49,7 @@ $(document).ready(function(){
   $('img.unit').each(function(){
     $(this).attr('src', prefix[1]+unit[1][unit[0].indexOf($(this).attr('srcc'))]+'.png');
   });
+  $('div#wrapper').addClass('mobile hide');
 });
 </script>
 ";
