@@ -384,7 +384,7 @@ if ($id != null) {
     </tr>
   </table>
   <br>
-  <table>
+  <table id='info'>
     <tr>
       <td colspan='3' style='font-weight: bold;'>".unit_name($id)."</td>
     </tr>
