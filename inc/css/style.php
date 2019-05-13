@@ -359,3 +359,8 @@ div.unit-cell div#sp2 img {
 img.pos {
   vertical-align: text-bottom;
 }
+div#id table#info td {
+  max-width: 727px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
