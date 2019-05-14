@@ -185,9 +185,10 @@ if ($_POST["rank"] != ""){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_rank`.`id`
   FROM `unit` AS unit_rank
-  WHERE `unit_rank`.`rank` LIKE ?
+  WHERE `unit_rank`.`rank` ".($_POST["rank"]!="SABC"?"LIKE ?":"IN ('S','A','B','C')")."
   ))";
-  array_push($sql_data, "{$_POST["rank"]}");
+  if ($_POST["rank"] != "SABC")
+    array_push($sql_data, "{$_POST["rank"]}");
   $script .= "$(\"select[name='rank'] option[value='{$_POST["rank"]}']\").attr('selected',true);";
 }
 //pos
@@ -263,11 +264,11 @@ if ($_POST["tag"] == "no"){
 //prop
 if (sizeof($_POST["prop"]) > 0) {
   if (in_array("ma", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w1`.`id` FROM `weapon` AS w1 WHERE `w1`.`no` IN ('6', '7') AND `w1`.`rng` = 1 GROUP BY `w1`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w1`.`id` FROM `unit` AS w1 WHERE `w1`.`ma` = '1' OR `w1`.`rma` = '1')";
     $script .= "$(\"input[name^='prop'][value='ma']\").prop('checked', true);";
   }
   if (in_array("ca", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w2`.`id` FROM `weapon` AS w2 WHERE `w2`.`no` IN ('6', '7') AND `w2`.`dmg` = 1 GROUP BY `w2`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w2`.`id` FROM `unit` AS w2 WHERE `w2`.`ca` = '1' OR `w2`.`rca` = '1')";
     $script .= "$(\"input[name^='prop'][value='ca']\").prop('checked', true);";
   }
   if (in_array("big", $_POST["prop"])) {

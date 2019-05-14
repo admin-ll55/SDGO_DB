@@ -197,6 +197,12 @@ form div.container:last-child td input {
   width: 100%;
   height: 100%;
 }
+tr.mobile {
+  display: none;
+}
+tr.mobile.hide {
+  display: table-row;
+}
 td.mobile {
   display: none;
 }
@@ -260,6 +266,12 @@ form table.inner input[type="checkbox"] {
 }
 form table.outer {
   width: 864px;
+}
+tr.mobile {
+  display: table-row;
+}
+tr.mobile.hide {
+  display: none;
 }
 td.mobile {
   display: table-cell;

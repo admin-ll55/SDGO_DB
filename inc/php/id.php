@@ -6,7 +6,7 @@ function id2() {
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
-      return ($row["id2"] != "" ? "<td><a href='https://www.yukict.com/bbs/viewthread.php?action=printable&tid=".$row["id2"]."' target='_blank' text='YUKI'></a></td>" : "");
+      return $row["id2"];
     }
   }
 }
@@ -32,9 +32,18 @@ function origin() {
     }
   }
 }
+function unit_info_helper($a, $b, $c) {
+  return "
+    <tr>
+      <td>{$a}</td>
+      <td".($c<0?" colspan='2'":"").">{$b}</td>
+      ".($c>0?"<td>{$c}</td>":"")."
+    </tr>
+";
+}
 function unit_info() {
   global $pdo, $id;
-  $sql = "SELECT `rank`, `pos`, `atk`, `def`, `spd`, `ctl`, `lock` FROM `unit` WHERE `unit`.`id` = ?;";
+  $sql = "SELECT `hp`, `rank`, `pos`, `atk`, `def`, `spd`, `ctl`, `ratk`, `rdef`, `rspd`, `rctl`, `lock`, `rlock` FROM `unit` WHERE `unit`.`id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
@@ -46,31 +55,18 @@ function unit_info() {
       <td><a href='search_v2?pos={$row["pos"]}'><img srcc='{$row["pos"]}' class='pos'></a></td>
     </tr>
     <tr>
-      <td rowspan='5'><img srcc='".$id."' class='unit' tit='".unit_name($id)."' alt='".unit_name($id)."' /></td>
-      <td>".tos("攻擊", "攻击")."</td>
-      <td>{$row["atk"]}</td>
+      <td colspan='3'><img srcc='".$id."' class='unit' tit='".unit_name($id)."' alt='".unit_name($id)."' /></td>
     </tr>
     <tr>
-      <td>".tos("防禦", "防御")."</td>
-      <td>{$row["def"]}</td>
-    </tr>
-    <tr>
-      <td>".tos("速度", "速度")."</td>
-      <td>{$row["spd"]}</td>
-    </tr>
-    <tr>
-      <td>".tos("操控", "操控")."</td>
-      <td>{$row["ctl"]}</td>
-    </tr>
-    <tr>
-      <td>".tos("總和", "总和")."</td>
-      <td>".($row["atk"]+$row["def"]+$row["spd"]+$row["ctl"])."</td>
-    </tr>
-    <tr>
-      <td>".tos("鎖敵距離", "锁敌距离")."</td>
-      <td colspan='2'>{$row["lock"]}</td>
-    </tr>
-";
+      <td>".tos("血量", "血量")."</td>
+      <td colspan='2'>{$row["hp"]}</td>
+    </tr>".
+    unit_info_helper(tos("攻擊", "攻击"),$row["atk"],$row["ratk"]).
+    unit_info_helper(tos("防禦", "防御"),$row["def"],$row["rdef"]).
+    unit_info_helper(tos("速度", "速度"),$row["spd"],$row["rspd"]).
+    unit_info_helper(tos("操控", "操控"),$row["ctl"],$row["rctl"]).
+    unit_info_helper(tos("總和", "总和"),$row["atk"]+$row["def"]+$row["spd"]+$row["ctl"],$row["ratk"]+$row["rdef"]+$row["rspd"]+$row["rctl"]).
+    unit_info_helper(tos("鎖敵距離", "锁敌距离"),$row["lock"],$row["rlock"]);
     }
   }
 }
@@ -87,7 +83,7 @@ function in_cm() {
         for ($x = 0; $x < sizeof($temp); $x++) {
           $in_cm .= "<a href='search_v2?machine={$temp[$x]}'>[{$temp[$x]}]</a>　";
         }
-        return "<tr><td colspan='3'>　".tos("扭蛋機", "扭蛋机").":　{$in_cm}</td></tr>";
+        return "<tr><td>".tos("扭蛋機", "扭蛋机")."</td><td colspan='2'>{$in_cm}</td></tr>";
       }
     }
   }
@@ -121,8 +117,8 @@ function skl_sp() {
   global $pdo, $id;
   $sql = "SELECT `unit`.`skl1`, (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`skl1` = `skl`) AS skl1_desc,
                  `unit`.`skl2`, (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`skl2` = `skl`) AS skl2_desc,
-                 `unit`.`sp1`,  (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`sp1` = `skl`)  AS sp1_desc,
-                 `unit`.`sp2`,  (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`sp2` = `skl`)  AS sp2_desc
+                 `unit`.`sp1`, CONCAT((SELECT `name_{$_COOKIE["l"]}` FROM `skill` WHERE `unit`.`sp1` = `skl`), '\n\n', '".tos("傷害", "伤害")."：', `unit`.`sp1dmg`) AS sp1_desc,
+                 `unit`.`sp2`, CONCAT((SELECT `name_{$_COOKIE["l"]}` FROM `skill` WHERE `unit`.`sp2` = `skl`), '\n\n', '".tos("傷害", "伤害")."：', `unit`.`sp2dmg`) AS sp2_desc
           FROM `unit` WHERE `id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
@@ -223,19 +219,46 @@ function wpn($no) {
 ";
   return preg_replace("/-1(\.00)?/", "?", $html);
 }
-function ma_ca($no) {
+function ma_ca($no, $tag4) {
   global $pdo, $id;
-  $sql = "SELECT `rng`, `dmg` FROM `weapon` WHERE `id` = ? AND `no` = ?;";
+  $hex = strtoupper(dechex(intval($id)));
+  if ($tag4 == "") {
+    $hex = $hex[2].$hex[3]." ".$hex[0].$hex[1];
+  }
+  else {
+    $hex = strtoupper(dechex(hexdec($hex[2].$hex[3])+1))." ".$hex[0].$hex[1];
+  }
+  $ma = "ma";
+  $ca = "ca";
+  if ($no == 1) {
+    $ma = "r{$ma}";
+    $ca = "r{$ca}";
+  }
+  $sql = "SELECT `$ma`, `$ca` FROM `unit` WHERE `id` = ?;";
   $result = $pdo->prepare($sql);
-  $result->execute([$id, $no+6]);
+  $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
       return "
-<tr><td colspan='8'>".
-($row["rng"] == "1" ? "［MA］" : "").
-($row["dmg"] == "1" ? "［".tos("格鬥反擊", "格斗反击")."］" : "").
-"</td></tr>
-";
+<tr>
+<td colspan='3'>".tos("型態代碼：", "型态代码：")."<input type='text' value='{$hex}' size='5' /></td>
+<td colspan='3' class='mobile hide'>".($row[$ma] == "1" || $row[$ca] == "1"?tos("型態特性：", "型态特性："):"").
+($row[$ma] == "1" ? "MA" : "").
+($row[$ma] == "1" && $row[$ca] == "1" ? "、" : "").
+($row[$ca] == "1" ? tos("格鬥反擊", "格斗反击") : "").
+"</td>".
+($row[$ma] == "1" || $row[$ca] == "1"?
+"</tr>
+<tr class='mobile'>
+<td colspan='3'>".tos("型態特性：", "型态特性：").
+($row[$ma] == "1" ? "MA" : "").
+($row[$ma] == "1" && $row[$ca] == "1" ? "、" : "").
+($row[$ca] == "1" ? tos("格鬥反擊", "格斗反击") : "").
+"</td>
+</tr>
+"
+:
+"");
     }
   }
 }
@@ -370,7 +393,7 @@ if ($id != null) {
   $sql = "SELECT `tag0`, `tag4`, `sp2` FROM `unit` WHERE `id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
-  if ($result->rowCount() >= 1) {
+  if ($result->rowCount() == 1) {
     while($row = $result->fetch()) {
       $query_html = "
 <div id='id'>
@@ -380,7 +403,7 @@ if ($id != null) {
       <td><a href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank' text='CFO'></a></td>
       <td><a href='https://www.olgame.tw/sds/robot_detail.php?id={$id}' target='_blank' text='OLG'></a></td>
       <td><a href='https://sdplayer.club/detail.html?id={$id}' target='_blank' text='SDP'></a></td>
-      ".id2()."
+      <td><a href='https://www.yukict.com/bbs/viewthread.php?tid=".id2()."' target='_blank' text='YUKI'></a></td>
     </tr>
   </table>
   <br>
@@ -412,7 +435,7 @@ if ($id != null) {
     wpn(1).
     wpn(2).
     wpn(8).
-    ma_ca(0);
+    ma_ca(0, "");
       if (($row["sp2"] != '')) {
         $query_html .= "
         <tr>
@@ -422,21 +445,16 @@ if ($id != null) {
         wpn(4).
         wpn(5).
         wpn(9).
-        ma_ca(1);
+        ma_ca(1, $row["tag4"]);
       }
       $query_html .= "</table>";
       $query_html .= blueprint();
-      $query_html .= material()."</div>";
-      $hex = strtoupper(dechex(intval($id)));
-      $hex1 = $hex[2].$hex[3]." ".$hex[0].$hex[1];
-      $hex2 = "";
-      if ($row["tag4"] == "1") {
-        $hex2 = ";".strtoupper(dechex(hexdec($hex[2].$hex[3])+1))." ".$hex[0].$hex[1];
-      }
-      $query_html .= "<script>$(\"input[name='name']\").val('".$hex1.$hex2."');$('div#wrapper').addClass('mobile hide');</script>";
+      $query_html .= material()."</div><script>$('div#wrapper').addClass('mobile hide');</script>";
     }
+  } else {
+    header("Location: search_v2");
   }
 } else {
-  echo "<script>window.location.href = 'search_v2';</script>";
+  header("Location: search_v2");
 }
 ?>
