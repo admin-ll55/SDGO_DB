@@ -1,4 +1,5 @@
 Options -Indexes
+ErrorDocument 404 /search_v2?404
 RewriteEngine on
 RewriteBase /sdgo/
 RewriteCond %{THE_REQUEST} ^[A-Z]+\s.+\.php.*
