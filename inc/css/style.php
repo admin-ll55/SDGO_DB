@@ -42,7 +42,6 @@ form#settings {
   z-index: 1000;
 }
 form#settings div {
-  cursor: pointer;
   border: 1px solid black;
   margin: 5px;
   padding: 5px;
@@ -66,9 +65,8 @@ img[srcc='top.png'] {
   top: 40px;
   right: 0;
   margin: 10px;
-  border-radius: 16px;
+  border-radius: 999px;
   transition: background-color 1s;
-  cursor: pointer;
   z-index: 1000;
 }
 img[srcc='top.png']:hover {
@@ -126,11 +124,15 @@ body {
   margin: 0 auto;
   text-align: center;
 }
-nav, div#wrapper, div#footer, div#result, div#id, div#machine {
+nav, div#wrapper, div#footer, div#machine {
+  margin: 0 auto;
+  text-align: center;
+  width: 1100px;
+}
+div#result, div#id {
   margin: 0 auto;
   text-align: center;
   width: 1080px;
-  min-width: 1080px;
 }
 div#wrapper {
   margin-top: 40px;
@@ -197,6 +199,15 @@ form div.container:last-child td input {
   width: 100%;
   height: 100%;
 }
+input[type='button'], input[type='submit'], a, img.unit, button.mobile, img[srcc='top.png'], form#settings div, select, label, input[type='checkbox'] {
+  cursor: url("data:image/gif;base64,R0lGODlhIAAgALMAAAAAABQUFP/dtf+0a+J6AAAAAJQAMZwUQf///yAAAAB7zgAAAAAAAxAAANMAAPfGuSH+JUNyZWF0ZWQgYnkgZkNvZGVyIEdyYXBoaWNzIFByb2Nlc3NvcgAAIfkEBQEAAAAsAAAAACAAIAADBNMQyEmrvTjrTYP/wQV+mScMKCqE3ZkOK9uiRG3H32nvhDyNn8ILVSgCfZrAkGgwIDmSgGtYaB6eG+mSVjVcPRzTNkWoFmxgkWc8LJ93z0D5JSS23UV0p1a3+198TW8yHnNsW3x5BSxaRYeINo4rAEp/j4B8KSFSMZdLaJyMm1RFjp96aR2VpimsO4tYP6xLpbU9WVNsPLe4ujyLUJSQv7xZhruvehYjkcivb8VRAnyRechgCIPL03gEMEeM1j0kUVopkxha3d5IQL0vMcEl7vL19vYRADs="), auto;
+}
+input[type='text'] {
+  cursor: url("data:image/gif;base64,R0lGODlhIAAgALMAAAAAABQUFEBAQP/dtf+0a+J6AAAAAJQAMZwUQf///wB7zgAAAAAAAxAAANMAAPfDaSH+JUNyZWF0ZWQgYnkgZkNvZGVyIEdyYXBoaWNzIFByb2Nlc3NvcgAAIfkEBQEAAAAsAAAAACAAIAADBPMwyAmqvTjjSbX/lhCA5CeWKHZWXLe1ozpKA2HbQ2wF9U3kOoCIZysYj8BJ7cgs6E4wicFnM1ijl1UmQK0eDsGM9kLsGr6IcFZd7hbOh7QaICG3u4T3wWAMc3N0EnhuVkdBXD8Bbz5TVVRGfIY7VZCMN40+kExPHIOekHwGnCyeg0xTgEIxiKVulQQxK6ytmZWpslRWunhMgSGriFa5mKd1FQLIFAHCg7rOTnYcdD2lTdAkd49NoimzN9Zv19iLeeCafb47HEeR5m/tiqk85+/tTXUJkXyp06B8iVjo6CsA6wW1RB/mFUK4pQWINkBSYJNmIQIAOw=="), auto;
+}
+body {
+  cursor: url("data:image/gif;base64,R0lGODlhIAAgAKIAAAAAABQUFP+0a//dteJ6AJQAMZwUQQAAACH+JUNyZWF0ZWQgYnkgZkNvZGVyIEdyYXBoaWNzIFByb2Nlc3NvcgAAIf8LTkVUU0NBUEUyLjADAQAAACH5BAkBAAAALAAAAAAgACAAAgOUCLrc/jDKSau9OOvNewwg6CmhYJrhBp4sK17BELR0HFixMNOuIFO5He9ECBB0EtBAN2QVCcXkUtg0PaOQGRV1okKN2IaWJ9x+w4xVlQct3hzbtfP7iMutdPidnRc3Q2pEbW9wgTpbgW4vcFMlQ4B9jHt4kZJ3bWh1S3KYmZprnYQTMZtzoRhKA52Yi6ggoa0cgKIPCQAh+QQJAQAAACwCAAEAHgAfAAIDqwihoPGsyUnnWvHWTTHDHid616OJaKqubLuZkOvAgWDbdMzVAsHfQNxgIAhZiL5f8PZgVgLIQEG5LE4JuGNPSq36rgRfg9ecVoPfYkA8UxTPS59gqhubgz9lmPu845loX0ZNcGdhSR2FhYeDinCMiY5ee5FVNIGUHYQ4VJtJdWNEMHAwmR1EkjaHbE+ojqtGWq+wKFCKq6wjQ3G4ubVQA72MsSkmuCYymsgoCQAh+QQJAQAAACwCAAEAHgAfAAIDugihoPGsreUgbYzqmKW/3ORhl8iR6GONmXpicCzPdKWC8w2RzzAIQIHmJvEBB7uAUUBoNoWBILDHdDaHuod0O83iSIUoV7qrgcXjadgsCaelhIDhC4u638B4QViLovFMfjQBd2RBf1drMYR/h45wejhagFxOZRKUaZaLmWObdZ2VV5xpOltWXypkjZOBLos/N283ozJKoVW1tj+ZqH28gFZxZrd4wnSwwEHCumw9A8yWyH0Px5dsOURmCQAh+QQFAQAAACwEAAcAHAAZAAIDkQi6rPGvyQaruLfCCcIlHiZiwTAIgVQKYDiKD8msYOG+mU1kzlnfOFZAR2hlPLagqIYKtCIeoBIksEUcyZHrVhymFl7cdtS1gaVKTLEFTqfX34572m3PcXC72LLMn28xMC5PcR0nfHsPdTMndx9+jI5rIBMrc5OUlY10kJqbapiZHA4lA6FwhaOkTpMbqqMarwkAOw=="), auto;
+}
 tr.mobile {
   display: none;
 }
@@ -226,7 +237,20 @@ button.mobile.hide {
 select[name="machine"] {
   width: 40px;
 }
+img.origin {
+  width: 200px;
+  height: auto;
+}
+table#info tr td:first-child {
+  font-weight: bold;
+}
+table#info svg {
+  width: 20px;
+}
 @media only screen and (max-width:1100px) {
+table#info svg {
+  width: 65px;
+}
 body[fs="20"] * {
   font-size: 60px;
 }
@@ -264,6 +288,9 @@ form table.inner input[type="checkbox"] {
   width: 26px;
   height: 26px;
 }
+form div.container:not(:first-child) table.inner tr:first-child td {
+  border-top: 0;
+}
 form table.outer {
   width: 864px;
 }
@@ -299,8 +326,8 @@ form table.inner td.width-99 {
 form input[type="text"], form select {
   width: 100%;
 }
-form div.container:last-child td:last-child {
-  width: 49%;
+form div.container table.inner tr#sort td {
+  width: 1%;
 }
 form.form_cm div.container:last-child td {
   width: 1%;
@@ -332,6 +359,10 @@ table#machine img.unit {
 table#machine tr:not(:first-child) td[rank]:before {
   transform: scale(3);
   transform-origin: top left;
+}
+img.origin {
+  width: 500px;
+  height: auto;
 }
 }
 

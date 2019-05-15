@@ -12,61 +12,69 @@ function id2() {
 }
 function unit_name($id) {
   global $pdo;
-  $sql = "SELECT `unit_name_{$_COOKIE["l"]}` FROM `unit`, `id_ex` WHERE `unit`.`id` = `id_ex`.`id1` AND `unit`.`id` = ?;";
+  $sql = "SELECT `unit_name_{$_COOKIE["l"]}` AS unit_name FROM `unit`, `id_ex` WHERE `unit`.`id` = `id_ex`.`id1` AND `unit`.`id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
-      return $row["unit_name_{$_COOKIE["l"]}"];
+      return $row["unit_name"];
     }
   }
 }
 function origin() {
   global $pdo, $id;
-  $sql = "SELECT `unit`.`origin`, `name_{$_COOKIE["l"]}` FROM `unit`, `origin` WHERE `unit`.`origin` = `origin`.`origin` AND `unit`.`id` = ?;";
+  $sql = "SELECT `unit`.`origin`, `name_{$_COOKIE["l"]}` AS name FROM `unit`, `origin` WHERE `unit`.`origin` = `origin`.`origin` AND `unit`.`id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
-      return "<a href='search_v2?origin={$row["origin"]}'>{$row["name_".$_COOKIE["l"]]}</a>";
+      return "<a href='search_v2?origin={$row["origin"]}'><img class='origin' srcc='{$row["origin"]}' alt='{$row["name"]}' /></a>";
     }
   }
 }
-function unit_info_helper($a, $b, $c) {
+function unit_info_helper($a) {
   return "
     <tr>
-      <td>{$a}</td>
-      <td".($c<0?" colspan='2'":"").">{$b}</td>
-      ".($c>0?"<td>{$c}</td>":"")."
+      <td>{$a[0]}</td>
+      <td".($a[2]<0?" colspan='2'":"").">{$a[1]}</td>
+      ".($a[2]>0?"<td>{$a[2]}</td>":"")."
     </tr>
 ";
 }
 function unit_info() {
-  global $pdo, $id;
+  global $pdo, $id, $meta;
   $sql = "SELECT `hp`, `rank`, `pos`, `atk`, `def`, `spd`, `ctl`, `ratk`, `rdef`, `rspd`, `rctl`, `lock`, `rlock` FROM `unit` WHERE `unit`.`id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
+      $unit_name = unit_name($id);
+      $atk = [tos("攻擊", "攻击"),$row["atk"],$row["ratk"]];
+      $def = [tos("防禦", "防御"),$row["def"],$row["rdef"]];
+      $spd = [tos("速度", "速度"),$row["spd"],$row["rspd"]];
+      $ctl = [tos("操控", "操控"),$row["ctl"],$row["rctl"]];
+      $tot = [tos("總和", "总和"),$row["atk"]+$row["def"]+$row["spd"]+$row["ctl"],$row["ratk"]+$row["rdef"]+$row["rspd"]+$row["rctl"]];
+      $loc = [tos("鎖敵距離", "锁敌距离"),$row["lock"],$row["rlock"]];
+      array_push($meta, $unit_name, $id, $row["rank"], ($row["pos"]=="r"?"近":($row["pos"]=="s"?"中":tos("遠","远"))).tos("距離","距离"), [tos("血量", "血量"),$row["hp"]], $atk, $def, $spd, $ctl, $tot, $loc);
       return "
     <tr>
-      <td>ID: ".$id."</td>
-      <td>{$row["rank"]}</td>
-      <td><a href='search_v2?pos={$row["pos"]}'><img srcc='{$row["pos"]}' class='pos'></a></td>
+      <td colspan='3'><img srcc='{$id}' class='unit' tit='{$unit_name}' alt='{$unit_name}' /></td>
     </tr>
     <tr>
-      <td colspan='3'><img srcc='".$id."' class='unit' tit='".unit_name($id)."' alt='".unit_name($id)."' /></td>
+      <td>ID: <input type='text' value='{$id}' size='4' /></td>
+      <td>{$row["rank"]}</td>
+      <td><a href='search_v2?pos={$row["pos"]}'><img srcc='{$row["pos"]}' class='pos'></a></td>
     </tr>
     <tr>
       <td>".tos("血量", "血量")."</td>
       <td colspan='2'>{$row["hp"]}</td>
     </tr>".
-    unit_info_helper(tos("攻擊", "攻击"),$row["atk"],$row["ratk"]).
-    unit_info_helper(tos("防禦", "防御"),$row["def"],$row["rdef"]).
-    unit_info_helper(tos("速度", "速度"),$row["spd"],$row["rspd"]).
-    unit_info_helper(tos("操控", "操控"),$row["ctl"],$row["rctl"]).
-    unit_info_helper(tos("總和", "总和"),$row["atk"]+$row["def"]+$row["spd"]+$row["ctl"],$row["ratk"]+$row["rdef"]+$row["rspd"]+$row["rctl"]).
-    unit_info_helper(tos("鎖敵距離", "锁敌距离"),$row["lock"],$row["rlock"]);
+    unit_info_helper($atk).
+    unit_info_helper($def).
+    unit_info_helper($spd).
+    unit_info_helper($ctl).
+    unit_info_helper($tot).
+    unit_info_helper($loc);
     }
   }
 }
@@ -81,7 +89,10 @@ function in_cm() {
         $temp = explode("<br>", $row["in_cm"]);
         $in_cm = "";
         for ($x = 0; $x < sizeof($temp); $x++) {
-          $in_cm .= "<a href='search_v2?machine={$temp[$x]}'>[{$temp[$x]}]</a>　";
+          if ($x > 0) {
+            $in_cm .= " ";
+          }
+          $in_cm .= "<a href='search_v2?machine={$temp[$x]}'>[{$temp[$x]}]</a>";
         }
         return "<tr><td>".tos("扭蛋機", "扭蛋机")."</td><td colspan='2'>{$in_cm}</td></tr>";
       }
@@ -89,71 +100,60 @@ function in_cm() {
   }
 }
 function tags() {
-  global $pdo, $id;
+  global $pdo, $id, $meta;
   $html = "";
   $sql = [
     "SELECT `tag1` AS tag FROM `unit` WHERE `id` = $id;",
     "SELECT `tag3` AS tag FROM `unit` WHERE `id` = $id;",
     "SELECT `tag4` AS tag FROM `unit` WHERE `id` = $id;"
   ];
-  $text = [["大型", "裝甲解除", "技能激活"],["大型", "装甲解除", "技能激活"]];
+  $text = [["大型", "裝甲解除", "技能激活"],["大型", "装甲解除", "技能激活"],[]];
   for ($i = 0; $i < count($sql); $i++) {
     $result = $pdo->prepare($sql[$i]);
     $result->execute();
     if ($result->rowCount() == 1) {
       while ($row = $result->fetch()) {
         if ($row["tag"] == "1") {
-          if ($html == "") {
-            $html .= "<tr><td colspan='3'>";
+          if ($html != "") {
+            $html .= "、";
           }
-          $html .= "［".tos($text[0][$i], $text[1][$i])."］";
+          $html .= tos($text[0][$i], $text[1][$i]);
+          array_push($text[2], tos($text[0][$i], $text[1][$i]));
         }
       }
     }
   }
-  return $html;
+  array_push($meta, implode($text[2], ", "));
+  return ($html==""?"":"<tr><td>特性</td><td colspan='2'>{$html}</td></tr>");
 }
 function skl_sp() {
   global $pdo, $id;
   $sql = "SELECT `unit`.`skl1`, (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`skl1` = `skl`) AS skl1_desc,
                  `unit`.`skl2`, (SELECT CONCAT(`name_{$_COOKIE["l"]}`, '\n\n', `desc_{$_COOKIE["l"]}`) FROM `skill` WHERE `unit`.`skl2` = `skl`) AS skl2_desc,
-                 `unit`.`sp1`, CONCAT((SELECT `name_{$_COOKIE["l"]}` FROM `skill` WHERE `unit`.`sp1` = `skl`), '\n\n', '".tos("傷害", "伤害")."：', `unit`.`sp1dmg`) AS sp1_desc,
-                 `unit`.`sp2`, CONCAT((SELECT `name_{$_COOKIE["l"]}` FROM `skill` WHERE `unit`.`sp2` = `skl`), '\n\n', '".tos("傷害", "伤害")."：', `unit`.`sp2dmg`) AS sp2_desc
+                 `unit`.`sp1`, `unit`.`sp1dmg` AS sp1_dmg,
+                 `unit`.`sp2`, `unit`.`sp2dmg` AS sp2_dmg
           FROM `unit` WHERE `id` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute([$id]);
   if ($result->rowCount() == 1) {
     while ($row = $result->fetch()) {
       return "
-  <table id='skl_sp' class='mobile hide'>
-    <tr style='font-weight: bold;'>
+    <tr>
       <td>".tos("技能一", "技能一")."</td>
+      <td><a href='search_v2?skl={$row["skl1"]}'><img class='skill' srcc='{$row["skl1"]}' alt='{$row["skl1_desc"]}' /></a></td>
+      <td><a><svg tit='{$row["skl1_desc"]}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='currentColor' d='M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z'></path></svg></a></td>
+    </tr>
+    <tr>
       <td>".tos("技能二", "技能二")."</td>
-      <td>".tos("必殺一", "必杀一")."</td>".
-      ($row["sp2"] != '' ? "<td>".tos("必殺二", "必杀二")."</td>" : "")."
+      <td><a href='search_v2?skl={$row["skl2"]}'><img class='skill' srcc='{$row["skl2"]}' alt='{$row["skl2_desc"]}' /></a></td>
+      <td><a><svg tit='{$row["skl2_desc"]}' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='currentColor' d='M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z'></path></svg></a></td>
     </tr>
     <tr>
-      <td><a href='search_v2?skl={$row["skl1"]}'><img class='skill' srcc='{$row["skl1"]}' tit='{$row["skl1_desc"]}' alt='{$row["skl1_desc"]}' /></a></td>
-      <td><a href='search_v2?skl={$row["skl2"]}'><img class='skill' srcc='{$row["skl2"]}' tit='{$row["skl2_desc"]}' alt='{$row["skl2_desc"]}' /></a></td>
-      <td><a href='search_v2?sp={$row["sp1"]}'><img class='sp' srcc='{$row["sp1"]}' tit='{$row["sp1_desc"]}' alt='{$row["sp1_desc"]}' /></a></td>".
-      ($row["sp2"] != '' ? "<td><a href='search_v2?sp={$row["sp2"]}'><img class='sp' srcc='{$row["sp2"]}' tit='{$row["sp2_desc"]}' alt='{$row["sp2_desc"]}' /></a></td>" : "")."
-    </tr>
-  </table>
-  <table id='skl_sp' class='mobile'>
-    <tr>
-      <td style='font-weight: bold;'>".tos("技能一", "技能一")."</td>
-      <td><a href='search_v2?skl={$row["skl1"]}'><img class='skill' srcc='{$row["skl1"]}' tit='{$row["skl1_desc"]}' alt='{$row["skl1_desc"]}' /></a></td>
-    </tr>
-    <tr>
-      <td style='font-weight: bold;'>".tos("技能二", "技能二")."</td>
-      <td><a href='search_v2?skl={$row["skl2"]}'><img class='skill' srcc='{$row["skl2"]}' tit='{$row["skl2_desc"]}' alt='{$row["skl2_desc"]}' /></a></td>
-    </tr>
-    <tr>
-      <td style='font-weight: bold;'>".tos("必殺一", "必杀一")."</td>
-      <td><a href='search_v2?sp={$row["sp1"]}'><img class='sp' srcc='{$row["sp1"]}' tit='{$row["sp1_desc"]}' alt='{$row["sp1_desc"]}' /></a></td>
+      <td>".tos("必殺一", "必杀一")."</td>
+      <td><a href='search_v2?sp={$row["sp1"]}'><img class='sp' srcc='{$row["sp1"]}' alt='{$row["sp1_desc"]}' /></a></td>
+      <td>{$row["sp1_dmg"]}</td>
     </tr>".
-      ($row["sp2"] != '' ? "<tr><td style='font-weight: bold;'>".tos("必殺二", "必杀二")."</td><td><a href='search_v2?sp={$row["sp2"]}'><img class='sp' srcc='{$row["sp2"]}' tit='{$row["sp2_desc"]}' alt='{$row["sp2_desc"]}' /></a></td></tr>" : "")."
-  </table>
+      ($row["sp2"] != '' ? "<tr><td>".tos("必殺二", "必杀二")."</td><td><a href='search_v2?sp={$row["sp2"]}'><img class='sp' srcc='{$row["sp2"]}' alt='{$row["sp2_desc"]}' /></a></td><td>{$row["sp2_dmg"]}</td></tr>" : "")."
 ";
     }
   }
@@ -161,7 +161,6 @@ function skl_sp() {
 function wpn($no) {
   global $pdo, $id;
   $html = "";
-  $s2 = 0;
   $sql = "SELECT `tag0`, `wpn`, `rng`, `dmg`, `sets`, `cd` 
   FROM `unit`, `weapon` 
     LEFT JOIN `weapon_tag` 
@@ -177,41 +176,33 @@ function wpn($no) {
       $html .= "
     <tr".($row["tag0"] == "1" && $row["wpn"] == "32" ? " bgcolor='#DDDDFF'" : "").">
       <td>".($row["wpn"]==0||$row["wpn"]==999?"":"<a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]==0||$row["wpn"]==999?"":"</a>")."</td>
-      <td class='mobile hide'>{$row["rng"]}</td>
+      <td>{$row["rng"]}</td>
       <td>{$row["dmg"]}".(($no == 8 || $no == 9) ? "%" : "")."</td>
-      <td class='mobile hide'>".(($no == 8 || $no == 9) ? "" : $row["sets"])."</td>
-      <td class='mobile hide'>{$row["cd"]}</td>
+      <td>".(($no == 8 || $no == 9) ? "" : $row["sets"])."</td>
+      <td>{$row["cd"]}</td>
       <td>";
-      if (($no == 8 || $no == 9) && $row["sets"] == "1") {
-        $s2 = 1;
-      }
     }
   }
   else {
     $html .= "
     <tr>
       <td><img srcc='999' class='weapon'></td>
-      <td class='mobile hide'>-</td>
       <td>-</td>
-      <td class='mobile hide'></td>
-      <td class='mobile hide'></td>
+      <td>-</td>
+      <td></td>
+      <td></td>
       <td>";
   }
-  if ($s2 == 1) {
-    $html .= tos("光束盾", "光束盾");
-  }
-  else {
-    $sql = "SELECT GROUP_CONCAT(`tag_{$_COOKIE["l"]}` ORDER BY LENGTH(`tag_{$_COOKIE["l"]}`) SEPARATOR '<br>') AS tag 
-    FROM `tag`, `weapon_tag`
-    WHERE `tag`.`id` = `weapon_tag`.`tag`
-      AND `weapon_tag`.`id` = ? AND `weapon_tag`.`no` = ? 
-    GROUP BY `weapon_tag`.`id`, `weapon_tag`.`no`;";
-    $result = $pdo->prepare($sql);
-    $result->execute([$id, $no]);
-    if ($result->rowCount() == 1) {
-      while ($row = $result->fetch()) {
-        $html .= (($no == 8 || $no == 9) ? "" : $row["tag"]);
-      }
+  $sql = "SELECT GROUP_CONCAT(`tag_{$_COOKIE["l"]}` ORDER BY LENGTH(`tag_{$_COOKIE["l"]}`) SEPARATOR '<br>') AS tag 
+  FROM `tag`, `weapon_tag`
+  WHERE `tag`.`id` = `weapon_tag`.`tag`
+    AND `weapon_tag`.`id` = ? AND `weapon_tag`.`no` = ? 
+  GROUP BY `weapon_tag`.`id`, `weapon_tag`.`no`;";
+  $result = $pdo->prepare($sql);
+  $result->execute([$id, $no]);
+  if ($result->rowCount() == 1) {
+    while ($row = $result->fetch()) {
+      $html .= $row["tag"];
     }
   }
   $html .= "</td>
@@ -241,21 +232,14 @@ function ma_ca($no, $tag4) {
     while ($row = $result->fetch()) {
       return "
 <tr>
-<td colspan='3'>".tos("型態代碼：", "型态代码：")."<input type='text' value='{$hex}' size='5' /></td>
-<td colspan='3' class='mobile hide'>".($row[$ma] == "1" || $row[$ca] == "1"?tos("型態特性：", "型态特性："):"").
+<td colspan='3'>".tos("型態代碼：", "型态代码：")."<input type='text' value='{$hex}' size='4' /></td>
+<td colspan='3'>".($row[$ma] == "1" || $row[$ca] == "1"?tos("型態特性：", "型态特性："):"").
 ($row[$ma] == "1" ? "MA" : "").
 ($row[$ma] == "1" && $row[$ca] == "1" ? "、" : "").
 ($row[$ca] == "1" ? tos("格鬥反擊", "格斗反击") : "").
 "</td>".
 ($row[$ma] == "1" || $row[$ca] == "1"?
 "</tr>
-<tr class='mobile'>
-<td colspan='3'>".tos("型態特性：", "型态特性：").
-($row[$ma] == "1" ? "MA" : "").
-($row[$ma] == "1" && $row[$ca] == "1" ? "、" : "").
-($row[$ca] == "1" ? tos("格鬥反擊", "格斗反击") : "").
-"</td>
-</tr>
 "
 :
 "");
@@ -389,6 +373,7 @@ else {
   $id = intval($_GET["id"]);
 }
 $title = unit_name($id)." - ";
+$meta = [];
 if ($id != null) {
   $sql = "SELECT `tag0`, `tag4`, `sp2` FROM `unit` WHERE `id` = ?;";
   $result = $pdo->prepare($sql);
@@ -409,26 +394,25 @@ if ($id != null) {
   <br>
   <table id='info'>
     <tr>
-      <td colspan='3' style='font-weight: bold;'>".unit_name($id)."</td>
+      <td colspan='3'>".unit_name($id)."</td>
     </tr>
     <tr>
       <td colspan='3'>".origin()."</td>
     </tr>".
     unit_info().
     in_cm().
-    tags()."
+    tags().
+    skl_sp()."
   </table>
   <br>
-  ".
-  skl_sp()."
-  <br>
+  <div style='overflow: auto;width: 765px;margin: 0 auto;'>
   <table id='armament'>
     <tr style='font-weight: bold;'>
       <td>".tos("武器", "武器")."</td>
-      <td class='mobile hide'>".tos("射程距離", "射程距离")."</td>
+      <td>".tos("射程距離", "射程距离")."</td>
       <td>".tos("攻擊傷害", "攻击伤害")."</td>
-      <td class='mobile hide'>".tos("彈藥數量", "弹药数量")."</td>
-      <td class='mobile hide'>".tos("裝填時間", "装填时间")."</td>
+      <td>".tos("彈藥數量", "弹药数量")."</td>
+      <td>".tos("裝填時間", "装填时间")."</td>
       <td>".tos("武器效果", "武器效果")."</td>
     </tr>".
     wpn(0).
@@ -447,12 +431,14 @@ if ($id != null) {
         wpn(9).
         ma_ca(1, $row["tag4"]);
       }
-      $query_html .= "</table>";
+      $query_html .= "</table></div>";
       $query_html .= blueprint();
       $query_html .= material()."</div><script>$('div#wrapper').addClass('mobile hide');</script>";
+      $meta_description = "{$meta[0]}, ID: {$meta[1]} , {$meta[2]} RANK, {$meta[3]}, {$meta[4][0]}: {$meta[4][1]}, {$meta[5][0]}: {$meta[5][1]}, {$meta[6][0]}: {$meta[6][1]}, {$meta[7][0]}: {$meta[7][1]}, {$meta[8][0]}: {$meta[8][1]}, {$meta[9][0]}: {$meta[9][1]}, {$meta[10][0]}: {$meta[10][1]}, {$meta[11]}";
     }
   } else {
-    header("Location: search_v2");
+    $title = tos("小護士","小护士")." - ";
+    $query_html = "<a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a>";
   }
 } else {
   header("Location: search_v2");

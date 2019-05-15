@@ -13,7 +13,8 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
 ?>
 <html>
 <head>
-  <meta http-equiv="Content-Type"content="text/html; charset=UTF-8"/>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="description" content="<?=$meta_description?>"/>
   <title><?=$title?></title>
   <link rel="icon" type="image/png" href="https://s2.ax1x.com/2019/01/23/kV2znK.png" />
   <style><?php require_once "inc/css/style.php"; ?></style>

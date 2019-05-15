@@ -51,7 +51,7 @@ if ($_POST["skl"] != "") {
     WHERE (`unit_skl`.`skl1` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE ?)
       OR (`unit_skl`.`skl2` = `skill_skl`.`skl` AND `skill_skl`.`desc_TC` LIKE ?)
     ))";
-    array_push($sql_data, "{$_POST["skl"]}", "{$_POST["skl"]}");
+    array_push($sql_data, "%{$_POST["skl"]}%", "%{$_POST["skl"]}%");
   }
   $script .= "$(\"select[name='skl'] option[value='{$_POST["skl"]}']\").attr('selected','selected');";
 }
@@ -284,7 +284,7 @@ if (sizeof($_POST["prop"]) > 0) {
     $script .= "$(\"input[name^='prop'][value='s1']\").prop('checked', true);";
   }
   if (in_array("s2", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `weapon` AS w6 WHERE `w6`.`wpn` = '999' AND `w6`.`sets` = 1 GROUP BY `w6`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `weapon_tag` AS w6 WHERE `w6`.`tag` = 999 GROUP BY `w6`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s2']\").prop('checked', true);";
   }
   if (in_array("bp", $_POST["prop"])) {
@@ -393,11 +393,11 @@ if ($result->rowCount() >= 1) {
 }
 $query_html .= "
 <br>
-<div id='result'>
+<div".($result->rowCount()?" id='result'":"").">
   <div id='count'>".tos("結果數量", "结果数量").": ".$result->rowCount()."</div>
   <br>
   <div id='loading'>".tos("加載中…<br><br>請耐心等候", "加载中…<br><br>请耐心等候")."<br></div>
-  <div id='container'></div>";
+  <div id='container' style='display: none;'><a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a></div>";
 $script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];$('div#wrapper').addClass('mobile hide');";
 $query_html .= "<script>".$script."</script></div>";
 ?>

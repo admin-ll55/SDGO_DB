@@ -1,19 +1,28 @@
 <?php
 $query_html = "";
-$key = ["skl","sp","wpn","origin","pos"];
-if (array_keys($_GET)[0] == "id") {
-  require_once "inc/php/id.php";
+$meta_description = "";
+$key = ["skl","sp","wpn","eff","origin","rank","pos","tag","prop"];
+if (array_key_exists($key[5], $_GET)) {
+  $_GET[$key[5]] = strtoupper($_GET[$key[5]]);
+  $_POST[$key[5]] = strtoupper($_POST[$key[5]]);
 }
-else if (in_array(array_keys($_GET)[0], $key)) {
-  foreach ($_GET as $q => $v) {
-    $_POST[$q] = $v;
-  }
-  require_once "inc/php/query.php";
+if (array_key_exists($key[6], $_GET)) {
+  $_GET[$key[6]] = strtoupper($_GET[$key[6]]);
+  $_POST[$key[6]] = strtoupper($_POST[$key[6]]);
+}
+if (array_keys($_GET)[0] == "404") {
+  require_once "inc/php/404.php";
+}
+else if (array_keys($_GET)[0] == "id") {
+  require_once "inc/php/id.php";
 }
 else if (array_keys($_GET)[0] == "machine") {
   require_once "inc/php/machine.php";
 }
 else if (count($_POST) >= 11) {
   require_once "inc/php/query.php";
+}
+else if (in_array(array_keys($_GET)[0], $key)) {
+  require_once "inc/php/category.php";
 }
 ?>

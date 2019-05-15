@@ -29,12 +29,12 @@ function wpn_option() {
 function eff_option() {
   global $pdo;
   $html = "";
-  $sql = "SELECT `id`, `tag_{$_COOKIE["l"]}` AS tag FROM `tag` ORDER BY `id` ASC;";
+  $sql = "SELECT `id`, `tag_{$_COOKIE["l"]}` AS tag FROM `tag` WHERE `id` != 999 ORDER BY `id` ASC;";
   $result = $pdo->prepare($sql);
   $result->execute();
   if ($result->rowCount() >= 1) {
     while($row = $result->fetch()) {
-      $html .= "            <option text='　{$row["tag"]}' value='{$row["id"]}'></option>\n";
+      $html .= "            <option text='{$row["tag"]}' value='{$row["id"]}'></option>\n";
     }
   }
   return $html;
@@ -47,7 +47,7 @@ function origin_option() {
   $result->execute();
   if ($result->rowCount() >= 1) {
     while($row = $result->fetch()) {
-      $html .= "            <option text='　{$row["name"]}' value='{$row["origin"]}'></option>\n";
+      $html .= "            <option text='{$row["name"]}' value='{$row["origin"]}'></option>\n";
     }
   }
   return $html;
@@ -55,7 +55,7 @@ function origin_option() {
 function cm_option() {
   global $pdo;
   $html = "";
-  $sql = "SELECT `machine` FROM `capsule`;";
+  $sql = "SELECT `machine` FROM `capsule` ORDER BY `machine` ASC;";
   $result = $pdo->prepare($sql);
   $result->execute();
   if ($result->rowCount() >= 1) {
@@ -83,7 +83,7 @@ function cm_option() {
               <input type="text" name="name" value="" />
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="name" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -133,7 +133,7 @@ function cm_option() {
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="skl" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -143,14 +143,14 @@ function cm_option() {
             <td class="width-99">
               <select name="sp">
                 <option value=""></option>
-                <option value="012" localization TC="　亂舞型" SC="　乱舞型"></option>
-                <option value="013" localization TC="　全彈發射型" SC="　全弹发射型"></option>
-                <option value="014" localization TC="　地圖炮型" SC="　地图炮型"></option>
-                <option value="231" localization TC="　突撃型" SC="　突击型"></option>
+                <option value="012" localization TC="亂舞型" SC="乱舞型"></option>
+                <option value="013" localization TC="全彈發射型" SC="全弹发射型"></option>
+                <option value="014" localization TC="地圖炮型" SC="地图炮型"></option>
+                <option value="231" localization TC="突撃型" SC="突击型"></option>
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="sp" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -161,42 +161,42 @@ function cm_option() {
               <select name="wpn">
                 <option value=""></option>
 <!--?=wpn_option()?-->
-                <option localization="" tc="　格鬥" sc="　格斗" value="1"></option>
-                <option localization="" tc="　斧" sc="　斧" value="2"></option>
-                <option localization="" tc="　光束軍刀" sc="　光束军刀" value="3"></option>
-                <option localization="" tc="　實體刀" sc="　实体刀" value="4"></option>
-                <option localization="" tc="　擊" sc="　击" value="5"></option>
-                <option localization="" tc="　斬" sc="　斩" value="6"></option>
-                <option localization="" tc="　熱能鞭" sc="　热能鞭" value="11"></option>
-                <option localization="" tc="　火箭錨" sc="　火箭锚" value="12"></option>
-                <option localization="" tc="　飛鏢" sc="　飞镖" value="13"></option>
-                <option localization="" tc="　劍氣" sc="　剑气" value="14"></option>
-                <option localization="" tc="　護盾" sc="　护盾" value="15"></option>
-                <option localization="" tc="　拳" sc="　拳" value="16"></option>
-                <option localization="" tc="　光束擴散炮" sc="　光束扩散炮" value="21"></option>
-                <option localization="" tc="　火神炮" sc="　火神炮" value="22"></option>
-                <option localization="" tc="　狀態彈" sc="　状态弹" value="23"></option>
-                <option localization="" tc="　浮游炮(射擊型)" sc="　浮游炮(射击型)" value="25"></option>
-                <option localization="" tc="　浮游炮(近接型)" sc="　浮游炮(近接型)" value="26"></option>
-                <option localization="" tc="　浮游炮(反射型)" sc="　浮游炮(反射型)" value="27"></option>
-                <option localization="" tc="　浮游炮(追尾型)" sc="　浮游炮(追尾型)" value="28"></option>
-                <option localization="" tc="　噴槍" sc="　喷枪" value="31"></option>
-                <option localization="" tc="　光束步槍" sc="　光束步枪" value="32"></option>
-                <option localization="" tc="　光束步槍(3連射)" sc="　光束步枪(3连射)" value="tag0"></option>
-                <option localization="" tc="　機關槍" sc="　机关枪" value="33"></option>
-                <option localization="" tc="　火箭炮" sc="　火箭炮" value="34"></option>
-                <option localization="" tc="　擴散炮" sc="　扩散炮" value="35"></option>
-                <option localization="" tc="　飛彈" sc="　飞弹" value="36"></option>
-                <option localization="" tc="　羽毛" sc="　羽毛" value="37"></option>
-                <option localization="" tc="　線性步槍" sc="　线性步枪" value="38"></option>
-                <option localization="" tc="　格林機槍" sc="　格林机枪" value="39"></option>
-                <option localization="" tc="　加農炮" sc="　加农炮" value="41"></option>
-                <option localization="" tc="　超視炮" sc="　超视炮" value="42"></option>
-                <option localization="" tc="　狙擊槍" sc="　狙击枪" value="43"></option>
+                <option localization="" tc="格鬥" sc="格斗" value="1"></option>
+                <option localization="" tc="斧" sc="斧" value="2"></option>
+                <option localization="" tc="光束軍刀" sc="光束军刀" value="3"></option>
+                <option localization="" tc="實體刀" sc="实体刀" value="4"></option>
+                <option localization="" tc="擊" sc="击" value="5"></option>
+                <option localization="" tc="斬" sc="斩" value="6"></option>
+                <option localization="" tc="熱能鞭" sc="热能鞭" value="11"></option>
+                <option localization="" tc="火箭錨" sc="火箭锚" value="12"></option>
+                <option localization="" tc="飛鏢" sc="飞镖" value="13"></option>
+                <option localization="" tc="劍氣" sc="剑气" value="14"></option>
+                <option localization="" tc="護盾" sc="护盾" value="15"></option>
+                <option localization="" tc="拳" sc="拳" value="16"></option>
+                <option localization="" tc="光束擴散炮" sc="光束扩散炮" value="21"></option>
+                <option localization="" tc="火神炮" sc="火神炮" value="22"></option>
+                <option localization="" tc="狀態彈" sc="状态弹" value="23"></option>
+                <option localization="" tc="浮游炮(射擊型)" sc="浮游炮(射击型)" value="25"></option>
+                <option localization="" tc="浮游炮(近接型)" sc="浮游炮(近接型)" value="26"></option>
+                <option localization="" tc="浮游炮(反射型)" sc="浮游炮(反射型)" value="27"></option>
+                <option localization="" tc="浮游炮(追尾型)" sc="浮游炮(追尾型)" value="28"></option>
+                <option localization="" tc="噴槍" sc="喷枪" value="31"></option>
+                <option localization="" tc="光束步槍" sc="光束步枪" value="32"></option>
+                <option localization="" tc="光束步槍(3連射)" sc="光束步枪(3连射)" value="tag0"></option>
+                <option localization="" tc="機關槍" sc="机关枪" value="33"></option>
+                <option localization="" tc="火箭炮" sc="火箭炮" value="34"></option>
+                <option localization="" tc="擴散炮" sc="扩散炮" value="35"></option>
+                <option localization="" tc="飛彈" sc="飞弹" value="36"></option>
+                <option localization="" tc="羽毛" sc="羽毛" value="37"></option>
+                <option localization="" tc="線性步槍" sc="线性步枪" value="38"></option>
+                <option localization="" tc="格林機槍" sc="格林机枪" value="39"></option>
+                <option localization="" tc="加農炮" sc="加农炮" value="41"></option>
+                <option localization="" tc="超視炮" sc="超视炮" value="42"></option>
+                <option localization="" tc="狙擊槍" sc="狙击枪" value="43"></option>
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="wpn" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -210,7 +210,7 @@ function cm_option() {
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="eff" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -224,7 +224,7 @@ function cm_option() {
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="origin" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -268,7 +268,7 @@ function cm_option() {
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="rank" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -278,13 +278,13 @@ function cm_option() {
             <td class="width-99">
               <select name="pos">
                 <option value=""></option>
-                <option value="r" localization TC="　近" SC="　近"></option>
-                <option value="s" localization TC="　中" SC="　中"></option>
-                <option value="p" localization TC="　遠" SC="　远"></option>
+                <option value="r" localization TC="近" SC="近"></option>
+                <option value="s" localization TC="中" SC="中"></option>
+                <option value="p" localization TC="遠" SC="远"></option>
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="pos" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -294,14 +294,14 @@ function cm_option() {
             <td class="width-99">
               <select name="tag">
                 <option value=""></option>
-                <option value="tag2" localization TC="　自由" SC="　自由"></option>
-                <option value="tag3" localization TC="　裝甲解除" SC="　装甲解除"></option>
-                <option value="tag4" localization TC="　技能激活" SC="　技能激活"></option>
-                <option value="no" localization TC="　不能" SC="　不能"></option>
+                <option value="tag2" localization TC="自由" SC="自由"></option>
+                <option value="tag3" localization TC="裝甲解除" SC="装甲解除"></option>
+                <option value="tag4" localization TC="技能激活" SC="技能激活"></option>
+                <option value="no" localization TC="不能" SC="不能"></option>
               </select>
             </td>
             <td>
-              <label class="not">
+              <label class="not" localization TC="NOT解釋：勾選後結果不包括左方所選條件" SC="NOT解释：勾选后结果不包括左方所选条件">
                 <input type="checkbox" name="not[]" value="tag" /><span localization TC='NOT' SC='NOT'></span>
               </label>
             </td>
@@ -375,7 +375,7 @@ function cm_option() {
         </div>
         <div class="container">
         <table class="inner">
-          <tr>
+          <tr id="sort">
             <td localization TC="排序" SC="排序"></td>
             <td>
               <select name="sort">
