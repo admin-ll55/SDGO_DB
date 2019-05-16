@@ -14,7 +14,12 @@ if (array_keys($_GET)[0] == "404") {
   require_once "inc/php/404.php";
 }
 else if (array_keys($_GET)[0] == "id") {
-  require_once "inc/php/id.php";
+  if (preg_match("/[0-9]{5},[0-9]{5}/", $_GET["id"])) {
+    require_once "inc/php/compare.php";
+  }
+  else {
+    require_once "inc/php/id.php";
+  }
 }
 else if (array_keys($_GET)[0] == "machine") {
   require_once "inc/php/machine.php";

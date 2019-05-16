@@ -50,10 +50,66 @@ function resetform(){
   })
   $("form.container.form_unit input[type=checkbox]").prop('checked',false);
 }
-function setcookie(key, value) {
+function setcookie(key, value, reload) {
   $("form#settings input[name='"+key+"']").val(value);
   document.cookie = key+"="+value+";";
-  window.location.reload();
+  if (reload)
+    window.location.reload();
+}
+function getcookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2)
+    return parts.pop().split(";").shift();
+}
+function add_compare(e) {
+  var id = $("table#info img.unit")[0];
+  var cid = id.getAttribute("srcc");
+  var ucid = getcookie("ucid");
+  if (ucid != undefined) {
+    ucid = JSON.parse(ucid);
+    if (ucid.length == 2) {
+      window.location.href = "search_v2?id="+ucid[0]+","+ucid[1];
+      return;
+    }
+  } else {
+    ucid = [];
+  }
+  if (ucid.indexOf(cid) == -1) {
+    ucid.push(cid);
+    if (ucid.length == 2) {
+      e.text("✓");
+    }
+    setcookie("ucid", JSON.stringify(ucid), false);
+    nuid = $("<div ucid='"+cid+"' onclick='dcid($(this));'><img class='unit' src='"+id.getAttribute("src")+"' tit='<?=tos("刪除","删除")?>' /><div id='dcid'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-times-circle fa-w-16 fa-9x'><path fill='currentColor' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z' class=''></path></svg></div></div>");
+    nuid.mousemove(function(e){
+      $("div#tooltip").text($(this).children("img").attr("tit")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
+    }).mouseout(function(){
+      $("div#tooltip").hide().css({"left":"0"});
+    });
+    e.before(nuid);
+  }
+}
+function dcid(e) {
+  var cid = e.attr("ucid");
+  var ucid = getcookie("ucid");
+  if (ucid != undefined) {
+    ucid = JSON.parse(ucid);
+  } else {
+    ucid = [];
+  }
+  var index = ucid.indexOf(cid);
+  if (index != -1) {
+    ucid.splice(index, 1);
+    console.log(ucid.length);
+    if (ucid.length != 2) {
+      $("div#add").text("＋");
+    }
+    console.log(ucid);
+    setcookie("ucid", JSON.stringify(ucid), false);
+    $("div#tooltip").hide().css({"left":"0"});
+    e.remove();
+  }
 }
 $(document).ready(function(){
   if (typeof r != "undefined") {
@@ -81,7 +137,7 @@ $(document).ready(function(){
       $("div#tooltip").hide().css({"left":"0"});
     });
     $("table#info svg").mousemove(function(e){
-      $("div#tooltip").html($(this).attr("tit").replace(/\n/g, "<br>")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
+      $("div#tooltip").html($(this).attr("tit").replace(/<n>/g, "<br>")).css({"top":e.pageY+30+"px", "left":e.pageX-$("div#tooltip").outerWidth()/2+"px"}).show();
     }).mouseout(function(){
       $("div#tooltip").hide().css({"left":"0"});
     });

@@ -1,22 +1,4 @@
 <?php
-function td($id) {
-  global $pdo, $mn;
-  $sql = "SELECT `unit`.`rank`, `id_ex`.`unit_name_{$_COOKIE["l"]}` AS unit_name FROM `unit`, `id_ex` WHERE `unit`.`id` = `id_ex`.`id1` AND `id` = ?;";
-  $result = $pdo->prepare($sql);
-  $result->execute([$id]);
-  if ($result->rowCount() == 1) {
-    while ($row = $result->fetch()) {
-      array_push($mn, "[{$row["rank"]}]{$row["unit_name"]}");
-      return "
-    <td rank='{$row["rank"]}'>
-      <a href='search_v2?id={$id}'>
-        <img class='unit' srcc='{$id}' tit='{$row["unit_name"]}'>
-      </a>
-    </td>
-";
-    }
-  }
-}
 $title = "";
 $mn = [];
 $machine = tos("扭蛋機", "扭蛋机")." ";

@@ -1,12 +1,4 @@
 <?php
-function not($k) {
-  if (sizeof($_POST["not"]) > 0) {
-    if (in_array($k,$_POST["not"])) {
-      return "$(\"input[name^='not'][value='$k']\").prop('checked', true);";
-    }
-  }
-  return "";
-}
 $title = tos("搜尋結果", "搜寻结果")." - ";
 $sql = "SELECT *
 FROM `unit`
