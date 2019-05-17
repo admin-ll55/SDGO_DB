@@ -33,7 +33,7 @@ div#warning.show {
   padding: 10px;
   background-color: #ffffdd;
 }
-div#helper {
+form#settings {
   text-align: center;
   margin: 10px;
   position: fixed;
@@ -41,14 +41,14 @@ div#helper {
   top: 40px;
   z-index: 1000;
 }
-div#helper > form > div {
+form#settings > div {
   border: 1px solid black;
   margin: 5px;
   padding: 5px;
   background-color: #FFF;
   transition: background-color 1s;
 }
-div#helper > form > div:hover,
+form#settings > div:hover,
 form#compare > div#add:hover {
   background-color: #DDDDFF;
   transition: background-color 1s;
@@ -61,13 +61,13 @@ form, img[srcc], input, div[id] {
   -ms-user-select: none;
   user-select: none;
 }
-img[srcc="top.png"] {
+svg[srcc="top.png"] {
   display: block;
   border-radius: 999px;
   transition: background-color 1s;
   z-index: 1000;
 }
-img[srcc="top.png"]:hover {
+svg[srcc="top.png"]:hover {
   background-color: #DDDDFF;
   transition: background-color 1s;
 }
@@ -77,6 +77,24 @@ body[fs="20"] div#fs20,
 body[fs="18"] div#fs18,
 body[fs="16"] div#fs16 {
   background-color: #DDDDFF;
+}
+body[fs="20"] svg[srcc="localization.png"],
+body[fs="20"] svg[srcc="magnifier.png"],
+body[fs="20"] svg[srcc="top.png"] {
+  width: 30px;
+  height: auto;
+}
+body[fs="18"] svg[srcc="localization.png"],
+body[fs="18"] svg[srcc="magnifier.png"],
+body[fs="18"] svg[srcc="top.png"] {
+  width: 29px;
+  height: auto;
+}
+body[fs="16"] svg[srcc="localization.png"],
+body[fs="16"] svg[srcc="magnifier.png"],
+body[fs="16"] svg[srcc="top.png"] {
+  width: 28px;
+  height: auto;
 }
 table {
   margin-left: auto;
@@ -130,7 +148,7 @@ nav, div#wrapper, div#footer, div#machine, div#compare_wrapper {
 div#result, div#id {
   margin: 0 auto;
   text-align: center;
-  width: 1080px;
+  width: 950px;
 }
 div#wrapper {
   margin-top: 40px;
@@ -242,7 +260,7 @@ form div.container:last-child td input {
   width: 100%;
   height: 100%;
 }
-input[type="button"], input[type="submit"], a, img.unit, button.mobile, img[srcc="top.png"], div#helper div, form#compare div, select, label, input[type="checkbox"], form#compare div#dcid {
+input[type="button"], input[type="submit"], a, img.unit, button.mobile, svg[srcc="top.png"], form#settings div, form#compare div, select, label, input[type="checkbox"], form#compare div#dcid {
   cursor: url("data:image/gif;base64,R0lGODlhIAAgALMAAAAAABQUFP/dtf+0a+J6AAAAAJQAMZwUQf///yAAAAB7zgAAAAAAAxAAANMAAPfGuSH+JUNyZWF0ZWQgYnkgZkNvZGVyIEdyYXBoaWNzIFByb2Nlc3NvcgAAIfkEBQEAAAAsAAAAACAAIAADBNMQyEmrvTjrTYP/wQV+mScMKCqE3ZkOK9uiRG3H32nvhDyNn8ILVSgCfZrAkGgwIDmSgGtYaB6eG+mSVjVcPRzTNkWoFmxgkWc8LJ93z0D5JSS23UV0p1a3+198TW8yHnNsW3x5BSxaRYeINo4rAEp/j4B8KSFSMZdLaJyMm1RFjp96aR2VpimsO4tYP6xLpbU9WVNsPLe4ujyLUJSQv7xZhruvehYjkcivb8VRAnyRechgCIPL03gEMEeM1j0kUVopkxha3d5IQL0vMcEl7vL19vYRADs="), auto;
 }
 input[type="text"] {
@@ -293,6 +311,14 @@ table#info svg {
 form div.container:not(:first-child), form:not(:first-child) {
   margin-left: 5px;
 }
+img.skill,
+img.sp {
+  width: 48px;
+  height: auto;
+}
+span#rank {
+  margin-left: 5px;
+}
 
 /*comapre*/
 div#id.compare {
@@ -327,7 +353,7 @@ form#compare div[ucid] {
 form#compare div[ucid] img,
 form#compare > svg {
   width: 32px;
-  height: 32px;
+  height: auto;
 }
 form#compare div#dcid {
   color: red;
@@ -355,10 +381,16 @@ div#spempty {
 
 /*mobile*/
 @media only screen and (max-width:1100px) {
+div#result, div#id {
+  margin-left: 10px;
+  width: 1080px;
+}
+body[fs="16"][localization="SC"] * {
+  font-family: "DFKai-SB";
+}
 form#compare div[ucid] img,
 form#compare > svg {
-  width: 60px;
-  height: 60px;
+  width: 70px;
 }
 form#compare div#dcid {
   width: 45px;
@@ -415,23 +447,20 @@ div#id.compare svg {
 div#id.compare img.weapon {
   width: 90px;
 }
-body[fs="20"] img[srcc="localization.png"],
-body[fs="20"] img[srcc="magnifier.png"],
-body[fs="20"] img[srcc="top.png"] {
-  width: 76px;
-  height: auto;
-}
-body[fs="18"] img[srcc="localization.png"],
-body[fs="18"] img[srcc="magnifier.png"],
-body[fs="18"] img[srcc="top.png"] {
+body[fs="20"] svg[srcc="localization.png"],
+body[fs="20"] svg[srcc="magnifier.png"],
+body[fs="20"] svg[srcc="top.png"] {
   width: 70px;
-  height: auto;
 }
-body[fs="16"] img[srcc="localization.png"],
-body[fs="16"] img[srcc="magnifier.png"],
-body[fs="16"] img[srcc="top.png"] {
-  width: 64px;
-  height: auto;
+body[fs="18"] svg[srcc="localization.png"],
+body[fs="18"] svg[srcc="magnifier.png"],
+body[fs="18"] svg[srcc="top.png"] {
+  width: 65px;
+}
+body[fs="16"] svg[srcc="localization.png"],
+body[fs="16"] svg[srcc="magnifier.png"],
+body[fs="16"] svg[srcc="top.png"] {
+  width: 60px;
 }
 form div.container,
 form div.container table.inner {

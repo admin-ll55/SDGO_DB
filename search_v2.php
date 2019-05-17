@@ -1,9 +1,6 @@
 <?php
-foreach ($_GET as $q => $v) {
-  $_GET[$q] = preg_replace("/(delete|select|insert|union|update|drop|;|--\s)/i", "在干嘛", $v);
-}
-foreach ($_POST as $q => $v) {
-  $_POST[$q] = preg_replace("/(delete|select|insert|union|update|drop|;|--\s)/i", "在干嘛", $v);
+if (!preg_match("/^\/sdgo\//", $_SERVER["PHP_SELF"])) {
+  die("<b>Please place all files inside a folder named </b><code>sdgo</code><b>.</b>");
 }
 require_once "inc/php/util.php";
 require_once "inc/php/cookie.php";
@@ -18,7 +15,7 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
   <title><?=$title?></title>
   <link rel="icon" type="image/png" href="https://s2.ax1x.com/2019/01/23/kV2znK.png" />
   <style><?=minify(_require("inc/css/style.php"))?></style>
-  <script><?php require_once "inc/js/jquery.php"; ?></script>
+  <script><?=_require("inc/js/jquery.php")?></script>
 </head>
 <body localization="<?=$_COOKIE["l"]?>" fs="<?=$_COOKIE["fs"]?>">
 <?php

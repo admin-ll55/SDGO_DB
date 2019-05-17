@@ -51,8 +51,9 @@ function resetform(){
   $("form.container.form_unit input[type=checkbox]").prop('checked',false);
 }
 function setcookie(key, value, reload) {
+  var d = new Date("December 12, 2020 00:00:00 GMT-04:00");
   $("form#settings input[name='"+key+"']").val(value);
-  document.cookie = key+"="+value+";";
+  document.cookie = key+"="+value+";expires="+d.toGMTString()+";";
   if (reload)
     window.location.reload();
 }
@@ -62,19 +63,23 @@ function getcookie(name) {
   if (parts.length == 2)
     return parts.pop().split(";").shift();
 }
-function add_compare(e) {
-  var id = $("table#info img.unit")[0];
-  var cid = id.getAttribute("srcc");
+function acid(e) {
+  if (!window.location.href.match(/search_v2\?id=[0-9]{5}/))
+    return;
   var ucid = getcookie("ucid");
   if (ucid != undefined) {
     ucid = JSON.parse(ucid);
     if (ucid.length == 2) {
-      window.location.href = "search_v2?id="+ucid[0]+","+ucid[1];
-      return;
+      window.location = "search_v2?id="+ucid[0]+","+ucid[1];
     }
   } else {
     ucid = [];
   }
+  var id = $("table#info img.unit")[0];
+  var cid;
+  if (id == undefined)
+    return;
+  cid = id.getAttribute("srcc");
   if (ucid.indexOf(cid) == -1) {
     ucid.push(cid);
     if (ucid.length == 2) {
@@ -101,11 +106,9 @@ function dcid(e) {
   var index = ucid.indexOf(cid);
   if (index != -1) {
     ucid.splice(index, 1);
-    console.log(ucid.length);
     if (ucid.length != 2) {
       $("div#add").text("＋");
     }
-    console.log(ucid);
     setcookie("ucid", JSON.stringify(ucid), false);
     $("div#tooltip").hide().css({"left":"0"});
     e.remove();

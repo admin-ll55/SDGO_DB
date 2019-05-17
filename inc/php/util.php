@@ -1,4 +1,11 @@
 <?php
+foreach ($_GET as $q => $v) {
+  $_GET[$q] = preg_replace("/(delete|select|insert|union|update|drop|;|--\s)/i", "在干嘛", $v);
+}
+foreach ($_POST as $q => $v) {
+  $_POST[$q] = preg_replace("/(delete|select|insert|union|update|drop|;|--\s)/i", "在干嘛", $v);
+}
+
 //general
 function tos($tc, $sc) {
   return ($_COOKIE["l"] == "TC" ? $tc : $sc);

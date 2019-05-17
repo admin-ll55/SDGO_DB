@@ -5,6 +5,7 @@ if ($_GET["id"] == "random") {
   $result->execute();
   $id = $result->fetch()["id"];
   header("Location: search_v2?id=$id");
+  exit();
 }
 else {
   $id = intval($_GET["id"]);
