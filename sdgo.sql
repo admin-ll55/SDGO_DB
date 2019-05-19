@@ -22,19 +22,6 @@ SET time_zone = "+00:00";
 CREATE DATABASE IF NOT EXISTS `sdgo` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `sdgo`;
 
-DELIMITER $$
---
--- Functions
---
-DROP FUNCTION IF EXISTS `SPLIT_STR`$$
-CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STR` (`x` VARCHAR(255), `delim` VARCHAR(12), `pos` INT) RETURNS VARCHAR(255) CHARSET utf8 BEGIN 
-    RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
-       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
-       delim, '');
-END$$
-
-DELIMITER ;
-
 DROP TABLE IF EXISTS `blueprint`;
 DROP TABLE IF EXISTS `capsule`;
 DROP TABLE IF EXISTS `id_ex`;
