@@ -49,6 +49,9 @@ DROP TABLE IF EXISTS `unit`;
 DROP TABLE IF EXISTS `origin`;
 DROP TABLE IF EXISTS `skill`;
 
+GRANT USAGE ON *.* TO 'sdgo_user'@'localhost' IDENTIFIED BY 'abcd';
+GRANT SELECT ON `sdgo`.* TO 'sdgo_user'@'localhost';
+
 -- --------------------------------------------------------
 
 --
