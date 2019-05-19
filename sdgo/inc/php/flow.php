@@ -1,14 +1,18 @@
 <?php
 $query_html = "";
-$meta_description = "";
+$meta_description = tos("希望你得到想要的機體！","希望你得到想要的机体！");
 $key = ["skl","sp","wpn","eff","origin","rank","pos","tag","prop"];
-if (array_key_exists($key[5], $_GET)) {
-  $_GET[$key[5]] = strtoupper($_GET[$key[5]]);
-  $_POST[$key[5]] = strtoupper($_POST[$key[5]]);
+foreach ([2,5] as $i) {
+  if (array_key_exists($key[$i], $_GET)) {
+    $_GET[$key[$i]] = strtoupper($_GET[$key[$i]]);
+    $_POST[$key[$i]] = strtoupper($_POST[$key[$i]]);
+  }
 }
-if (array_key_exists($key[6], $_GET)) {
-  $_GET[$key[6]] = strtoupper($_GET[$key[6]]);
-  $_POST[$key[6]] = strtoupper($_POST[$key[6]]);
+foreach ([6] as $i) {
+  if (array_key_exists($key[$i], $_GET)) {
+    $_GET[$key[$i]] = strtolower($_GET[$key[$i]]);
+    $_POST[$key[$i]] = strtolower($_POST[$key[$i]]);
+  }
 }
 if (array_keys($_GET)[0] == "404") {
   require_once "inc/php/404.php";
@@ -23,6 +27,9 @@ else if (array_keys($_GET)[0] == "id") {
 }
 else if (array_keys($_GET)[0] == "machine") {
   require_once "inc/php/machine.php";
+}
+else if (array_keys($_GET)[0] == "blueprint") {
+  require_once "inc/php/blueprint.php";
 }
 else if (count($_POST) >= 11) {
   require_once "inc/php/query.php";

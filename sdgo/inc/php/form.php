@@ -93,38 +93,49 @@
               <select name="wpn">
                 <option value=""></option>
 <!--?=wpn_option()?-->
-                <option localization="" tc="格鬥" sc="格斗" value="1"></option>
-                <option localization="" tc="斧" sc="斧" value="2"></option>
-                <option localization="" tc="光束軍刀" sc="光束军刀" value="3"></option>
-                <option localization="" tc="實體刀" sc="实体刀" value="4"></option>
-                <option localization="" tc="擊" sc="击" value="5"></option>
-                <option localization="" tc="斬" sc="斩" value="6"></option>
-                <option localization="" tc="熱能鞭" sc="热能鞭" value="11"></option>
-                <option localization="" tc="火箭錨" sc="火箭锚" value="12"></option>
-                <option localization="" tc="飛鏢" sc="飞镖" value="13"></option>
-                <option localization="" tc="劍氣" sc="剑气" value="14"></option>
-                <option localization="" tc="護盾" sc="护盾" value="15"></option>
-                <option localization="" tc="拳" sc="拳" value="16"></option>
-                <option localization="" tc="光束擴散炮" sc="光束扩散炮" value="21"></option>
-                <option localization="" tc="火神炮" sc="火神炮" value="22"></option>
-                <option localization="" tc="狀態彈" sc="状态弹" value="23"></option>
-                <option localization="" tc="浮游炮(射擊型)" sc="浮游炮(射击型)" value="25"></option>
-                <option localization="" tc="浮游炮(近接型)" sc="浮游炮(近接型)" value="26"></option>
-                <option localization="" tc="浮游炮(反射型)" sc="浮游炮(反射型)" value="27"></option>
-                <option localization="" tc="浮游炮(追尾型)" sc="浮游炮(追尾型)" value="28"></option>
-                <option localization="" tc="噴槍" sc="喷枪" value="31"></option>
-                <option localization="" tc="光束步槍" sc="光束步枪" value="32"></option>
-                <option localization="" tc="光束步槍(3連射)" sc="光束步枪(3连射)" value="tag0"></option>
-                <option localization="" tc="機關槍" sc="机关枪" value="33"></option>
-                <option localization="" tc="火箭炮" sc="火箭炮" value="34"></option>
-                <option localization="" tc="擴散炮" sc="扩散炮" value="35"></option>
-                <option localization="" tc="飛彈" sc="飞弹" value="36"></option>
-                <option localization="" tc="羽毛" sc="羽毛" value="37"></option>
-                <option localization="" tc="線性步槍" sc="线性步枪" value="38"></option>
-                <option localization="" tc="格林機槍" sc="格林机枪" value="39"></option>
-                <option localization="" tc="加農炮" sc="加农炮" value="41"></option>
-                <option localization="" tc="超視炮" sc="超视炮" value="42"></option>
-                <option localization="" tc="狙擊槍" sc="狙击枪" value="43"></option>
+                <option localization="" tc="近武" sc="近武" value="a" style="font-weight:bold;"></option>
+                  <option localization="" tc="　格鬥" sc="　格斗" value="1"></option>
+                  <option localization="" tc="　斧" sc="　斧" value="2"></option>
+                  <option localization="" tc="　光束軍刀" sc="　光束军刀" value="3"></option>
+                  <option localization="" tc="　實體刀" sc="　实体刀" value="4"></option>
+                  <option localization="" tc="　熱能鞭" sc="　热能鞭" value="11"></option>
+                
+                <option localization="" tc="實彈" sc="实弹" value="b" style="font-weight:bold;"></option>
+                  <option localization="" tc="　火箭錨" sc="　火箭锚" value="12"></option>
+                  <option localization="" tc="　飛鏢" sc="　飞镖" value="13"></option>
+                  <option localization="" tc="　拳" sc="　拳" value="16"></option>
+                  <option localization="" tc="　火神炮" sc="　火神炮" value="22"></option>
+                  <option localization="" tc="　狀態彈" sc="　状态弹" value="23"></option>
+                  <option localization="" tc="　機關槍" sc="　机关枪" value="33"></option>
+                  <option localization="" tc="　火箭炮" sc="　火箭炮" value="34"></option>
+                  <option localization="" tc="　擴散炮" sc="　扩散炮" value="35"></option>
+                  <option localization="" tc="　飛彈" sc="　飞弹" value="36"></option>
+                  <option localization="" tc="　線性步槍" sc="　线性步枪" value="38"></option>
+                
+                <option localization="" tc="光槍" sc="光枪" value="c" style="font-weight:bold;"></option>
+                  <option localization="" tc="　光束擴散炮" sc="　光束扩散炮" value="21"></option>
+                  <option localization="" tc="　噴槍" sc="　喷枪" value="31"></option>
+                  <option localization="" tc="　光束步槍" sc="　光束步枪" value="32"></option>
+                  <option localization="" tc="　格林機槍" sc="　格林机枪" value="39"></option>
+                
+                <option localization="" tc="浮游" sc="浮游" value="d" style="font-weight:bold;"></option>
+                  <option localization="" tc="　浮游炮(射擊型)" sc="　浮游炮(射击型)" value="25"></option>
+                  <option localization="" tc="　浮游炮(近接型)" sc="　浮游炮(近接型)" value="26"></option>
+                  <option localization="" tc="　浮游炮(反射型)" sc="　浮游炮(反射型)" value="27"></option>
+                  <option localization="" tc="　浮游炮(追尾型)" sc="　浮游炮(追尾型)" value="28"></option>
+                
+                <option localization="" tc="超視" sc="超视" value="e" style="font-weight:bold;"></option>
+                  <option localization="" tc="　加農炮" sc="　加农炮" value="41"></option>
+                  <option localization="" tc="　超視炮" sc="　超视炮" value="42"></option>
+                  <option localization="" tc="　狙擊槍" sc="　狙击枪" value="43"></option>
+                
+                <option localization="" tc="三國" sc="三国" value="f" style="font-weight:bold;"></option>
+                  <option localization="" tc="　擊" sc="　击" value="5"></option>
+                  <option localization="" tc="　斬" sc="　斩" value="6"></option>
+                  <option localization="" tc="　劍氣" sc="　剑气" value="14"></option>
+                  <option localization="" tc="　羽毛" sc="　羽毛" value="37"></option>
+                
+                <option localization="" tc="特效" sc="特效" value="g" style="font-weight:bold;"></option>
               </select>
             </td>
             <td>

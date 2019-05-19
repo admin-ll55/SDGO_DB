@@ -1,4 +1,7 @@
 /*original*/
+button {
+  background-color: transparent;
+}
 option:hover {
   background-color: #DDDDFF;
 }
@@ -143,7 +146,7 @@ body {
 nav, div#wrapper, div#footer, div#machine, div#compare_wrapper {
   margin: 0 auto;
   text-align: center;
-  width: 1100px;
+  width: 1080px;
 }
 div#result, div#id {
   margin: 0 auto;
@@ -260,7 +263,7 @@ form div.container:last-child td input {
   width: 100%;
   height: 100%;
 }
-input[type="button"], input[type="submit"], a, img.unit, button.mobile, svg[srcc="top.png"], form#settings div, form#compare div, select, label, input[type="checkbox"], form#compare div#dcid {
+input[type="button"], input[type="submit"], a, img.unit, button, svg[srcc="top.png"], form#settings div, form#compare div, select, label, input[type="checkbox"], form#compare div#dcid {
   cursor: url("data:image/gif;base64,R0lGODlhIAAgALMAAAAAABQUFP/dtf+0a+J6AAAAAJQAMZwUQf///yAAAAB7zgAAAAAAAxAAANMAAPfGuSH+JUNyZWF0ZWQgYnkgZkNvZGVyIEdyYXBoaWNzIFByb2Nlc3NvcgAAIfkEBQEAAAAsAAAAACAAIAADBNMQyEmrvTjrTYP/wQV+mScMKCqE3ZkOK9uiRG3H32nvhDyNn8ILVSgCfZrAkGgwIDmSgGtYaB6eG+mSVjVcPRzTNkWoFmxgkWc8LJ93z0D5JSS23UV0p1a3+198TW8yHnNsW3x5BSxaRYeINo4rAEp/j4B8KSFSMZdLaJyMm1RFjp96aR2VpimsO4tYP6xLpbU9WVNsPLe4ujyLUJSQv7xZhruvehYjkcivb8VRAnyRechgCIPL03gEMEeM1j0kUVopkxha3d5IQL0vMcEl7vL19vYRADs="), auto;
 }
 input[type="text"] {
@@ -378,11 +381,29 @@ div#spempty {
   justify-content: center;
   align-items: center;
 }
+img.unit.material {
+  width: 120px;
+}
 
 /*mobile*/
 @media only screen and (max-width:1100px) {
-div#result, div#id {
-  margin-left: 10px;
+table#blueprint.mobile button.expand {
+  width: 100px;
+}
+table#blueprint.mobile:not(.hide) tr {
+  display: none;
+}
+table#blueprint.mobile:not(.hide) tr.show {
+  display: table-row !important;
+}
+table#blueprint.mobile td,
+table#materials.mobile td {
+  max-width: 727px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+div#result, div#id, div#materials {
+  margin-left: 0px;
   width: 1080px;
 }
 body[fs="16"][localization="SC"] * {
@@ -531,6 +552,9 @@ img.skill, img.sp {
 img.unit {
   width: 265px;
   height: auto;
+}
+img.unit.material {
+  width: 200px;
 }
 td[rowspan] img.unit {
   width: 500px;

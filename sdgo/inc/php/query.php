@@ -1,6 +1,6 @@
 <?php
 $title = tos("搜尋結果", "搜寻结果")." - ";
-$sql = "SELECT *
+$sql = "SELECT `id`,`skl1`,`skl2`,`sp1`,`sp2`,`rank`,`pos`
 FROM `unit`
 WHERE 1=1";
 $script = "";
@@ -11,7 +11,6 @@ if ($_POST["name"] != "") {
     $script .= $s;
     $not = "NOT";
   }
-  $_POST["name"] = preg_replace("/'/", "_", $_POST["name"]);
   $sql .= " AND `unit`.`id` {$not} IN (
   SELECT `id1`
   FROM `id_ex`
@@ -19,7 +18,7 @@ if ($_POST["name"] != "") {
     OR `unit_name_SC` LIKE ?
   )";
   array_push($sql_data, "%{$_POST["name"]}%", "%{$_POST["name"]}%");
-  $script .= "$(\"input[name='name']\").val(\"{$_POST["name"]}\");";
+  $script .= "$(\"input[name='name']\").val('".htmlspecialchars($_POST["name"],ENT_QUOTES)."');";
 }
 //skill
 if ($_POST["skl"] != "") {
@@ -70,21 +69,14 @@ if ($_POST["wpn"] != "" && $_POST["eff"] == "") {
     $script .= $s;
     $not = "NOT";
   }
-  if ($_POST["wpn"] == "tag0") {
-    $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `unit_tag0`.`id`
-    FROM `unit` AS unit_tag0
-    WHERE `unit_tag0`.`tag0` = '1'
-    ))";
-  }
-  else {
-    $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `weapon_wpn`.`id`
-    FROM `weapon` AS weapon_wpn
-    WHERE `weapon_wpn`.`wpn` = ?
-    ))";
-    array_push($sql_data, "{$_POST["wpn"]}");
-  }
+  $sql .= " AND (`unit`.`id` {$not} IN (
+  SELECT `weapon_wpn`.`id`
+  FROM `unit_weapon` AS weapon_wpn
+    JOIN `weapon`
+      ON `weapon_wpn`.`wpn` = `weapon`.`wpn`
+  WHERE `weapon_wpn`.`wpn` = ? OR `weapon`.`cat` = ?
+  ))";
+  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}");
   $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
 }
 //eff
@@ -95,62 +87,52 @@ if ($_POST["eff"] != "" && $_POST["wpn"] == "") {
     $not = "NOT";
   }
   $sql .= " AND (`unit`.`id` {$not} IN (
-  SELECT `weapon_tag`.`id`
-  FROM `weapon_tag`
-  WHERE `weapon_tag`.`tag` = ?
+  SELECT `unit_weapon_tag`.`id`
+  FROM `unit_weapon_tag`
+  WHERE `unit_weapon_tag`.`tag` = ?
   ))";
   array_push($sql_data, "{$_POST["eff"]}");
   $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
 }
 //wpn eff link
 if ($_POST["wpn"] != "" && $_POST["eff"] != "") {
-  if ($_POST["wpn"] == "tag0") {
-    $not = "";
-    if ($s = not("wpn")) {
-      $script .= $s;
-      $not = "NOT";
-    }
-    $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `unit_tag0`.`id`
-    FROM `unit` AS unit_tag0
-    WHERE `unit_tag0`.`tag0` = '1'
-    ))";
-    $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
+  $wpn = "";
+  $eff = "";
+  $not = "";
+  if ($s = not("wpn")) {
+    $script .= $s;
+    $wpn = "!";
   }
-  else {
-    $wpn = "";
-    $eff = "";
-    $not = "";
-    if ($s = not("wpn")) {
-      $script .= $s;
-      $wpn = "!";
-    }
-    if ($s = not("eff")) {
-      $script .= $s;
-      $eff = "NOT";
-    }
-    if (!($wpn == "" && $eff == "")) {
-      $not = "NOT";
-    }
-    $sql .= " AND (`unit`.`id` {$not} IN (
-    SELECT `weapon`.`id`
-    FROM `weapon`, `weapon_tag`
-    WHERE `weapon`.`id` = `weapon_tag`.`id`
-      AND `weapon`.`no` = `weapon_tag`.`no`
-      AND `weapon`.`wpn` = ? AND `weapon_tag`.`tag` = ?
-    ))";
-    array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["eff"]}");
-    if (($wpn == "" && $eff != "") || ($wpn != "" && $eff == "")) {
-      $sql .= " AND (`unit`.`id` IN (
-      SELECT `".($wpn == ""?"weapon":"weapon_tag")."_link`.`id`
-      FROM `".($wpn == ""?"weapon":"weapon_tag")."` AS ".($wpn == ""?"weapon":"weapon_tag")."_link
-      WHERE `".($wpn == ""?"weapon":"weapon_tag")."_link`.`".($wpn == ""?"wpn":"tag")."` = ?
-      ))";
-      array_push($sql_data, ($wpn == ""?$_POST["wpn"]:$_POST["eff"]));
-    }
-    $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
-    $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
+  if ($s = not("eff")) {
+    $script .= $s;
+    $eff = "NOT";
   }
+  if (!($wpn == "" && $eff == "")) {
+    $not = "NOT";
+  }
+  $sql .= " AND (`unit`.`id` {$not} IN (
+  SELECT `unit_weapon`.`id`
+  FROM `unit_weapon`
+    JOIN `unit_weapon_tag`
+      ON `unit_weapon`.`id` = `unit_weapon_tag`.`id`
+        AND `unit_weapon`.`no` = `unit_weapon_tag`.`no`
+    JOIN `weapon` ON `unit_weapon`.`wpn` = `weapon`.`wpn`
+  WHERE (`unit_weapon`.`wpn` = ? OR `weapon`.`cat` = ?) AND `unit_weapon_tag`.`tag` = ?
+  ))";
+  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}", "{$_POST["eff"]}");
+  if (($wpn == "" && $eff != "") || ($wpn != "" && $eff == "")) {
+    $sql .= " AND (`unit`.`id` IN (
+    SELECT `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link`.`id`
+    FROM `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."` AS ".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link
+      ".($wpn == ""?"JOIN `weapon` AS weapon_link ON `unit_weapon_link`.`wpn` = `weapon_link`.`wpn`":"")."
+    WHERE `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link`.`".($wpn == ""?"wpn":"tag")."` = ?".($wpn == ""?" OR `weapon_link`.`cat` = ?":"")."
+    ))";
+    array_push($sql_data, ($wpn == ""?$_POST["wpn"]:$_POST["eff"]));
+    if ($wpn == "")
+      array_push($sql_data, $_POST["wpn"]);
+  }
+  $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
 }
 //origin
 if ($_POST["origin"] != ""){
@@ -210,7 +192,7 @@ if ($_POST["tag"] == "tag2"){
   FROM `unit` AS unit_tag
   WHERE `unit_tag`.`tag3` = ''
     AND `unit_tag`.`tag4` = ''
-    AND `unit_tag`.`sp2` != ''
+    AND `unit_tag`.`rlock` > 0
   ))";
   $script .= "$(\"select[name='tag'] option[value='tag2']\").attr('selected',true);";
 }
@@ -268,15 +250,15 @@ if (sizeof($_POST["prop"]) > 0) {
     $script .= "$(\"input[name^='prop'][value='big']\").prop('checked', true);";
   }
   if (in_array("s0", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` NOT IN (SELECT `w4`.`id` FROM `weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w4`.`id` FROM `unit_weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s0']\").prop('checked', true);";
   }
   if (in_array("s1", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w5`.`id` FROM `weapon` AS w5 WHERE `w5`.`wpn` = '999' GROUP BY `w5`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w5`.`id` FROM `unit_weapon` AS w5 WHERE `w5`.`wpn` = '999' GROUP BY `w5`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s1']\").prop('checked', true);";
   }
   if (in_array("s2", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `weapon_tag` AS w6 WHERE `w6`.`tag` = 999 GROUP BY `w6`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `unit_weapon_tag` AS w6 WHERE `w6`.`tag` = 999 GROUP BY `w6`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s2']\").prop('checked', true);";
   }
   if (in_array("bp", $_POST["prop"])) {
@@ -359,9 +341,13 @@ if ($_POST["order"] == "") {
   $sql .= "DE";
 }
 $sql .= "SC;";
-$query_html .= "<!--\n{$sql}\n".implode($sql_data, "\n")."\n-->";
 $result = $pdo->prepare($sql);
 $result->execute($sql_data);
+for ($x = 0; $x < count($sql_data); $x++) {
+  $sql = preg_replace("/\?/", "'{$sql_data[$x]}'", $sql, 1);
+}
+$sql = preg_replace("/\n/", "", $sql);
+$query_html .= "<!--\r{$sql}\r-->";
 $temp = array_fill(0, 6, "");
 if ($result->rowCount() >= 1) {
   while($row = $result->fetch()) {
