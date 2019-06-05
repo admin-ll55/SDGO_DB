@@ -6,6 +6,13 @@ Free hosting sites have limitation of web page daily requests?! It is time to re
 
 # Live Preview | 新版預覽 | 新版预览
 - http://sdgo2018.rf.gd/
+- http://sdgo2018.rf.gd
+- http://sdgo.unaux.com
+- http://sdgo.byethost7.com
+- http://sdgo.byethost13.com
+- http://cfo.rf.gd
+- http://cfo.ezyro.com
+- http://cfo.unaux.com
 
 # Upcoming Plans | 未來計劃 | 未来计划
 - Remove font size | 刪除文字大小 | 删除文字大小
