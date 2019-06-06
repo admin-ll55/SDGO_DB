@@ -769,6 +769,9 @@ div#id.compare.col4 table#info td:last-child {
 }
 }
 @media only screen and (max-width:1100px) {
+a.button.bp {
+  height: 70px;
+}
 div[srcc="hot.png"] {
   bottom: 260px;
 }
