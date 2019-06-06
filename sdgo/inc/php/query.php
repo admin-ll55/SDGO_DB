@@ -3,7 +3,7 @@ $title = tos("搜尋結果", "搜寻结果")." - ";
 $sql = "SELECT `id`,`skl1`,`skl2`,`sp1`,`sp2`,`rank`,`pos`
 FROM `unit`
 WHERE 1=1";
-$script = "";
+$script = "var label_not = [];";
 $sql_data = [];
 //unit name
 if ($_POST["name"] != "") {
@@ -44,7 +44,7 @@ if ($_POST["skl"] != "") {
     ))";
     array_push($sql_data, "%{$_POST["skl"]}%", "%{$_POST["skl"]}%");
   }
-  $script .= "$(\"select[name='skl'] option[value='{$_POST["skl"]}']\").attr('selected','selected');";
+  $script .= "$(\"select[name='skl'] option[value='".htmlspecialchars($_POST["skl"],ENT_QUOTES)."']\").attr('selected','selected');";
 }
 //sp
 if ($_POST["sp"] != "") {
@@ -60,7 +60,7 @@ if ($_POST["sp"] != "") {
     OR `unit_sp`.`sp2` = ?
   ))";
   array_push($sql_data, "{$_POST["sp"]}", "{$_POST["sp"]}");
-  $script .= "$(\"select[name='sp'] option[value='{$_POST["sp"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='sp'] option[value='".htmlspecialchars($_POST["sp"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //wpn
 if ($_POST["wpn"] != "" && $_POST["eff"] == "") {
@@ -74,10 +74,10 @@ if ($_POST["wpn"] != "" && $_POST["eff"] == "") {
   FROM `unit_weapon` AS weapon_wpn
     JOIN `weapon`
       ON `weapon_wpn`.`wpn` = `weapon`.`wpn`
-  WHERE `weapon_wpn`.`wpn` = ? OR `weapon`.`cat` = ?
+  WHERE `weapon_wpn`.`wpn` = ? OR `weapon`.`cat` = ? OR `weapon_wpn`.`type` = ?
   ))";
-  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}");
-  $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
+  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}", "{$_POST["wpn"]}");
+  $script .= "$(\"select[name='wpn'] option[value='".htmlspecialchars($_POST["wpn"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //eff
 if ($_POST["eff"] != "" && $_POST["wpn"] == "") {
@@ -87,12 +87,15 @@ if ($_POST["eff"] != "" && $_POST["wpn"] == "") {
     $not = "NOT";
   }
   $sql .= " AND (`unit`.`id` {$not} IN (
-  SELECT `unit_weapon_tag`.`id`
-  FROM `unit_weapon_tag`
-  WHERE `unit_weapon_tag`.`tag` = ?
+  SELECT `weapon_eff`.`id`
+  FROM `unit_weapon` as weapon_eff
+    LEFT JOIN `unit_weapon_eff` as weapon_eff_eff
+      ON `weapon_eff_eff`.`id` = `weapon_eff`.`id`
+        AND `weapon_eff_eff`.`no` = `weapon_eff`.`no`
+  WHERE `weapon_eff_eff`.`eff` = ?
   ))";
   array_push($sql_data, "{$_POST["eff"]}");
-  $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='eff'] option[value='".htmlspecialchars($_POST["eff"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //wpn eff link
 if ($_POST["wpn"] != "" && $_POST["eff"] != "") {
@@ -113,26 +116,27 @@ if ($_POST["wpn"] != "" && $_POST["eff"] != "") {
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_weapon`.`id`
   FROM `unit_weapon`
-    JOIN `unit_weapon_tag`
-      ON `unit_weapon`.`id` = `unit_weapon_tag`.`id`
-        AND `unit_weapon`.`no` = `unit_weapon_tag`.`no`
+    LEFT JOIN `unit_weapon_eff`
+      ON `unit_weapon`.`id` = `unit_weapon_eff`.`id`
+        AND `unit_weapon`.`no` = `unit_weapon_eff`.`no`
     JOIN `weapon` ON `unit_weapon`.`wpn` = `weapon`.`wpn`
-  WHERE (`unit_weapon`.`wpn` = ? OR `weapon`.`cat` = ?) AND `unit_weapon_tag`.`tag` = ?
+  WHERE (`unit_weapon`.`wpn` = ? OR `weapon`.`cat` = ? OR `unit_weapon`.`type` = ?) AND `unit_weapon_eff`.`eff` = ?
   ))";
-  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}", "{$_POST["eff"]}");
+  array_push($sql_data, "{$_POST["wpn"]}", "{$_POST["wpn"]}", "{$_POST["wpn"]}", "{$_POST["eff"]}");
   if (($wpn == "" && $eff != "") || ($wpn != "" && $eff == "")) {
     $sql .= " AND (`unit`.`id` IN (
-    SELECT `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link`.`id`
-    FROM `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."` AS ".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link
+    SELECT `".($wpn == ""?"unit_weapon":"unit_weapon_eff")."_link`.`id`
+    FROM `".($wpn == ""?"unit_weapon":"unit_weapon_eff")."` AS ".($wpn == ""?"unit_weapon":"unit_weapon_eff")."_link
       ".($wpn == ""?"JOIN `weapon` AS weapon_link ON `unit_weapon_link`.`wpn` = `weapon_link`.`wpn`":"")."
-    WHERE `".($wpn == ""?"unit_weapon":"unit_weapon_tag")."_link`.`".($wpn == ""?"wpn":"tag")."` = ?".($wpn == ""?" OR `weapon_link`.`cat` = ?":"")."
+    WHERE `".($wpn == ""?"unit_weapon":"unit_weapon_eff")."_link`.`".($wpn == ""?"wpn":"eff")."` = ?".
+      ($wpn == ""?" OR `weapon_link`.`cat` = ? OR `unit_weapon_link`.`type` = ?":"")."
     ))";
     array_push($sql_data, ($wpn == ""?$_POST["wpn"]:$_POST["eff"]));
     if ($wpn == "")
-      array_push($sql_data, $_POST["wpn"]);
+      array_push($sql_data, $_POST["wpn"], $_POST["wpn"]);
   }
-  $script .= "$(\"select[name='wpn'] option[value='{$_POST["wpn"]}']\").attr('selected',true);";
-  $script .= "$(\"select[name='eff'] option[value='{$_POST["eff"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='wpn'] option[value='".htmlspecialchars($_POST["wpn"],ENT_QUOTES)."']\").attr('selected',true);";
+  $script .= "$(\"select[name='eff'] option[value='".htmlspecialchars($_POST["eff"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //origin
 if ($_POST["origin"] != ""){
@@ -147,7 +151,7 @@ if ($_POST["origin"] != ""){
   WHERE `unit_origin`.`origin` = ?
   ))";
   array_push($sql_data, "{$_POST["origin"]}");
-  $script .= "$(\"select[name='origin'] option[value='{$_POST["origin"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='origin'] option[value='".htmlspecialchars($_POST["origin"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //rank
 if ($_POST["rank"] != ""){
@@ -163,7 +167,7 @@ if ($_POST["rank"] != ""){
   ))";
   if ($_POST["rank"] != "SABC")
     array_push($sql_data, "{$_POST["rank"]}");
-  $script .= "$(\"select[name='rank'] option[value='{$_POST["rank"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='rank'] option[value='".htmlspecialchars($_POST["rank"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //pos
 if ($_POST["pos"] != ""){
@@ -178,7 +182,7 @@ if ($_POST["pos"] != ""){
   WHERE `unit_pos`.`pos` = ?
   ))";
   array_push($sql_data, "{$_POST["pos"]}");
-  $script .= "$(\"select[name='pos'] option[value='{$_POST["pos"]}']\").attr('selected',true);";
+  $script .= "$(\"select[name='pos'] option[value='".htmlspecialchars($_POST["pos"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //tag
 if ($_POST["tag"] == "tag2"){
@@ -231,7 +235,7 @@ if ($_POST["tag"] == "no"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`sp2` = ''
+  WHERE `unit_tag`.`rlock` < 0
   ))";
   $script .= "$(\"select[name='tag'] option[value='no']\").attr('selected',true);";
 }
@@ -241,25 +245,41 @@ if (sizeof($_POST["prop"]) > 0) {
     $sql .= " AND `unit`.`id` IN (SELECT `w1`.`id` FROM `unit` AS w1 WHERE `w1`.`ma` = '1' OR `w1`.`rma` = '1')";
     $script .= "$(\"input[name^='prop'][value='ma']\").prop('checked', true);";
   }
+  if (in_array("nma", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w1`.`id` FROM `unit` AS w1 WHERE `w1`.`ma` = '1' OR `w1`.`rma` = '1')";
+    $script .= "$(\"input[name^='prop'][value='nma']\").prop('checked', true);";
+  }
   if (in_array("ca", $_POST["prop"])) {
     $sql .= " AND `unit`.`id` IN (SELECT `w2`.`id` FROM `unit` AS w2 WHERE `w2`.`ca` = '1' OR `w2`.`rca` = '1')";
     $script .= "$(\"input[name^='prop'][value='ca']\").prop('checked', true);";
+  }
+  if (in_array("nca", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w2`.`id` FROM `unit` AS w2 WHERE `w2`.`ca` = '1' OR `w2`.`rca` = '1')";
+    $script .= "$(\"input[name^='prop'][value='nca']\").prop('checked', true);";
   }
   if (in_array("big", $_POST["prop"])) {
     $sql .= " AND `unit`.`id` IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`tag1` = '1')";
     $script .= "$(\"input[name^='prop'][value='big']\").prop('checked', true);";
   }
-  if (in_array("s0", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` NOT IN (SELECT `w4`.`id` FROM `unit_weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
-    $script .= "$(\"input[name^='prop'][value='s0']\").prop('checked', true);";
+  if (in_array("nbig", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`tag1` = '1')";
+    $script .= "$(\"input[name^='prop'][value='nbig']\").prop('checked', true);";
   }
-  if (in_array("s1", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w5`.`id` FROM `unit_weapon` AS w5 WHERE `w5`.`wpn` = '999' GROUP BY `w5`.`id`)";
-    $script .= "$(\"input[name^='prop'][value='s1']\").prop('checked', true);";
+  if (in_array("s", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` IN (SELECT `w4`.`id` FROM `unit_weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
+    $script .= "$(\"input[name^='prop'][value='s']\").prop('checked', true);";
+  }
+  if (in_array("ns", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w5`.`id` FROM `unit_weapon` AS w5 WHERE `w5`.`wpn` = '999' GROUP BY `w5`.`id`)";
+    $script .= "$(\"input[name^='prop'][value='ns']\").prop('checked', true);";
   }
   if (in_array("s2", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `unit_weapon_tag` AS w6 WHERE `w6`.`tag` = 999 GROUP BY `w6`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `unit_weapon_eff` AS w6 WHERE `w6`.`eff` = 999 GROUP BY `w6`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s2']\").prop('checked', true);";
+  }
+  if (in_array("ns2", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w6`.`id` FROM `unit_weapon_eff` AS w6 WHERE `w6`.`eff` = 999 GROUP BY `w6`.`id`)";
+    $script .= "$(\"input[name^='prop'][value='ns2']\").prop('checked', true);";
   }
   if (in_array("bp", $_POST["prop"])) {
     $sql .= " AND `unit`.`id` IN (SELECT `blueprint`.`id` FROM `blueprint`)";
@@ -280,52 +300,44 @@ if (sizeof($_POST["prop"]) > 0) {
 }
 $sql .= " ORDER BY ";
 //sort
-if ($_POST["sort"] == "tot"){
-  $sql .= "`atk`+`def`+`spd`+`ctl`";
+$fd = "((`atk`+`def`+`agi`+`spd`+`ratk`+`rdef`+`ragi`+`rspd`)/2)";
+$sp = "(((`sp1dmg`+`sp2dmg`)/2-1999.5)/5225.5*100*1.5)";
+$hp = "((`hp`-10000)/7500*100*1.5)";
+if ($_POST["sort"] == "tot" || $_POST["sort"] == ""){
+  $sql .= "{$fd}+{$sp}+{$hp}";
   $script .= "$(\"select[name='sort'] option[value='tot']\").attr('selected',true);";
 }
 if ($_POST["sort"] == "atk"){
-  $sql .= "`atk`";
+  $sql .= "(`atk`+`ratk`)/2";
   $script .= "$(\"select[name='sort'] option[value='atk']\").attr('selected',true);";
 }
 if ($_POST["sort"] == "def"){
-  $sql .= "`def`";
+  $sql .= "(`def`+`rdef`)/2";
   $script .= "$(\"select[name='sort'] option[value='def']\").attr('selected',true);";
 }
+if ($_POST["sort"] == "agi"){
+  $sql .= "(`agi`+`ragi`)/2";
+  $script .= "$(\"select[name='sort'] option[value='agi']\").attr('selected',true);";
+}
 if ($_POST["sort"] == "spd"){
-  $sql .= "`spd`";
+  $sql .= "(`spd`+`rspd`)/2";
   $script .= "$(\"select[name='sort'] option[value='spd']\").attr('selected',true);";
 }
-if ($_POST["sort"] == "ctl"){
-  $sql .= "`ctl`";
-  $script .= "$(\"select[name='sort'] option[value='ctl']\").attr('selected',true);";
+if ($_POST["sort"] == "hp"){
+  $sql .= "`hp`";
+  $script .= "$(\"select[name='sort'] option[value='hp']\").attr('selected',true);";
 }
-if ($_POST["sort"] == "rng"){
-  $sql .= "MAX(`w0`.`rng`)";
-  $script .= "$(\"select[name='sort'] option[value='rng']\").attr('selected',true);";
+if ($_POST["sort"] == "spdmg"){
+  $sql .= "{$sp}";
+  $script .= "$(\"select[name='sort'] option[value='spdmg']\").attr('selected',true);";
 }
 if ($_POST["sort"] == "id"){
-  $sql .= "`unit`.`id`";
+  $sql .= "`id`";
   $script .= "$(\"select[name='sort'] option[value='id']\").attr('selected',true);";
 }
-if ($_POST["sort"] == "dmg"){
-  $sql .= "MAX(`w0`.`dmg`)";
-  $script .= "$(\"select[name='sort'] option[value='dmg']\").attr('selected',true);";
-}
-if ($_POST["sort"] == "sets"){
-  $sql .= "MAX(`w0`.`sets`)";
-  $script .= "$(\"select[name='sort'] option[value='sets']\").attr('selected',true);";
-}
-if ($_POST["sort"] == "cd"){
-  $sql .= "MAX(`w0`.`cd`)";
-  $script .= "$(\"select[name='sort'] option[value='cd']\").attr('selected',true);";
-}
 if ($_POST["sort"] == "lock"){
-  $sql .= "`unit`.`lock`";
+  $sql .= "(`lock`+`rlock`)/2";
   $script .= "$(\"select[name='sort'] option[value='lock']\").attr('selected',true);";
-}
-if ($_POST["sort"] == "") {
-  $sql .= "`atk`+`def`+`spd`+`ctl`";
 }
 $sql .= " ";
 //order
@@ -340,7 +352,11 @@ if ($_POST["order"] == "ASC"){
 if ($_POST["order"] == "") {
   $sql .= "DE";
 }
-$sql .= "SC;";
+$sql .= "SC";
+if (!($_POST["sort"] == "tot" || $_POST["sort"] == "")){
+  $sql .= ", {$fd} DESC";
+}
+$sql .= ";";
 $result = $pdo->prepare($sql);
 $result->execute($sql_data);
 for ($x = 0; $x < count($sql_data); $x++) {
@@ -370,12 +386,12 @@ if ($result->rowCount() >= 1) {
   }
 }
 $query_html .= "
-<br>
 <div".($result->rowCount()?" id='result'":"").">
+  <br>
   <div id='count'>".tos("結果數量", "结果数量").": ".$result->rowCount()."</div>
   <br>
   <div id='loading'>".tos("加載中…<br><br>請耐心等候", "加载中…<br><br>请耐心等候")."<br></div>
   <div id='container' style='display: none;'><a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a></div>";
-$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];$('div#wrapper').addClass('mobile hide');";
+$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";
 $query_html .= "<script>".$script."</script></div>";
 ?>

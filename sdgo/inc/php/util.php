@@ -24,12 +24,18 @@ function _setcookie($k, $v) {
   setcookie($k, $v, mktime(0, 0, 0, 12, 31, 2020));
 }
 //id.php
-function unit_info_helper($a) {
+function unit_info_helper($a, $r, $c, $t) {
+  $bo = "";
+  $be = "";
+  if (!$c) {
+    $bo = "(";
+    $be = ")";
+  }
   return "
-      <tr>
+      <tr{$t}>
         <td>{$a[0]}</td>
-        <td".($a[2]<0?" colspan='2'":"").">{$a[1]}</td>
-        ".($a[2]>0?"<td>{$a[2]}</td>":"")."
+        <td".($r<0?" colspan='2'":"").">{$bo}{$a[1]}{$be}</td>
+        ".($r<0?"":"<td>{$bo}{$a[2]}{$be}</td>")."
       </tr>
 ";
 }
@@ -37,11 +43,16 @@ function unit_info($id) {
   global $pdo, $meta;
   if ($row = API::call(["type"=>"unit_info","data"=>["id"=>$id]])) {
     $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$id]]);
+    $confirmed = true;
+    $hp = number_format(($row["hp"]-10000)/7500*100*1.5,0);
+    $sp1 = number_format(($row["sp1dmg"]-4000)/3950*100*1.5,0);
+    $sp2 = number_format(($row["sp2dmg"]-4000)/3950*100*1.5,0);
     $atk = [tos("攻擊", "攻击"),$row["atk"],$row["ratk"]];
     $def = [tos("防禦", "防御"),$row["def"],$row["rdef"]];
+    $agi = [tos("敏捷", "敏捷"),$row["agi"],$row["ragi"]];
     $spd = [tos("速度", "速度"),$row["spd"],$row["rspd"]];
-    $ctl = [tos("操控", "操控"),$row["ctl"],$row["rctl"]];
-    $tot = [tos("總和", "总和"),$row["atk"]+$row["def"]+$row["spd"]+$row["ctl"],$row["ratk"]+$row["rdef"]+$row["rspd"]+$row["rctl"]];
+    $sp = [tos("必殺", "必杀"),$sp1,$sp2];
+    $tot = [tos("六圍總和", "六围总和"),$row["atk"]+$row["def"]+$row["spd"]+$sp1+$row["agi"]+$hp,$row["ratk"]+$row["rdef"]+$row["rspd"]+$sp2+$row["ragi"]+$hp];
     $loc = [tos("鎖敵距離", "锁敌距离"),$row["lock"],$row["rlock"]];
     array_push($meta, $unit_name, $id, $row["rank"], ($row["pos"]=="r"?"近":($row["pos"]=="s"?"中":tos("遠","远"))).tos("距離","距离"), [tos("血量", "血量"),$row["hp"]], $atk, $def, $spd, $ctl, $tot, $loc);
     return "
@@ -49,20 +60,21 @@ function unit_info($id) {
     <td colspan='3'><a href='search_v2?id={$id}'><img srcc='{$id}' class='unit' tit='{$unit_name}' alt='{$unit_name}' /></a></td>
   </tr>
   <tr>
-    <td>ID: <input type='text' value='{$id}' size='4' /></td>
-    <td>{$row["rank"]}</td>
-    <td><a href='search_v2?pos={$row["pos"]}'><img srcc='{$row["pos"]}' class='pos'></a></td>
+    <td>ID: <input type='text' content='id' value='{$id}' size='4' /></td>
+    <td><a href='search_v2?rank={$row["rank"]}' class='button'>{$row["rank"]}</a></td>
+    <td><a href='search_v2?pos={$row["pos"]}' class='button h28px'><img srcc='{$row["pos"]}' class='pos'></a></td>
   </tr>
   <tr>
     <td>".tos("血量", "血量")."</td>
-    <td colspan='2'>{$row["hp"]}</td>
+    <td colspan='2'>{$row["hp"]}({$hp})</td>
   </tr>".
-  unit_info_helper($atk).
-  unit_info_helper($def).
-  unit_info_helper($spd).
-  unit_info_helper($ctl).
-  unit_info_helper($tot).
-  unit_info_helper($loc);
+  unit_info_helper($atk, $row["rlock"], $confirmed, "").
+  unit_info_helper($def, $row["rlock"], $confirmed, "").
+  unit_info_helper($agi, $row["rlock"], $confirmed, " id='agi'").
+  unit_info_helper($spd, $row["rlock"], $confirmed, "").
+  unit_info_helper($sp, $row["rlock"], !$confirmed, "").
+  unit_info_helper($tot, $row["rlock"], $confirmed, "").
+  unit_info_helper($loc, $row["rlock"], $confirmed, "");
   }
 }
 function wpn($id, $v2) {
@@ -74,12 +86,10 @@ function wpn($id, $v2) {
 }
 function hex($id, $tag4) {
   $hex = strtoupper(dechex(intval($id)));
-  if ($tag4 == "") {
-    return $hex[2].$hex[3]." ".$hex[0].$hex[1];
-  }
-  else {
-    return strtoupper(dechex(hexdec($hex[2].$hex[3])+1))." ".$hex[0].$hex[1];
-  }
+  $hex = [$hex[2].$hex[3], $hex[0].$hex[1]];
+  $hex[0] = str_pad(strtoupper(dechex(hexdec($hex[0])+($tag4==""?0:1))), 2, "0", STR_PAD_LEFT);
+  $hex[1] = str_pad($hex[1], 2, "0", STR_PAD_LEFT);
+  return "<input type='text' value='".$hex[0]." ".$hex[1]."' size='4' content='hex' />";
 }
 function ma_ca($id) {
   return [API::call(["type"=>"ma_ca","data"=>["id"=>$id,"r"=>0]]),API::call(["type"=>"ma_ca","data"=>["id"=>$id,"r"=>1]])];
@@ -121,7 +131,7 @@ function material() {
   for ($i = 0; $i < $row; $i++) {
     $html .= "<tr>";
     for ($j = 0; $j < $column; $j++) {
-      $html .= "<td".($is_key[$index] == $id ? " bgcolor='#DDDDFF'" : "").">";
+      $html .= "<td".($is_key[$index] == $id ? " style='background-color:#DDDDFF;'" : "").">";
       if ($parents[$index] != "") {
         $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$parents[$index]]]);
         $html .= "<a href='search_v2?id={$parents[$index]}'><img srcc='{$parents[$index]}' class='unit' tit='{$unit_name}' alt='{$unit_name}' /></a>";
@@ -132,14 +142,21 @@ function material() {
     $html .= "</tr>";
   }
   $html .= "</table>";
-  $column = 3;//floor(sizeof($parents)/$row);
-  $row = ceil(sqrt(sizeof($parents)));
+  if ($column!=3) {
+    $temp = $column;
+    $column = $row;
+    $row = $temp;
+  }
+  if ($column>3) {
+    $column = 3;
+    $row = ceil(sizeof($parents)/3);
+  }
   $index = 0;
   $html .= "<table id='material' class='mobile'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
   for ($i = 0; $i < $row; $i++) {
     $html .= "<tr>";
     for ($j = 0; $j < $column; $j++) {
-      $html .= "<td".($is_key[$index] == $id ? " bgcolor='#DDDDFF'" : "").">";
+      $html .= "<td".($is_key[$index] == $id ? " style='background-color:#DDDDFF;'" : "").">";
       if ($parents[$index] != "") {
         $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$parents[$index]]]);
         $html .= "<a href='search_v2?id={$parents[$index]}'><img srcc='{$parents[$index]}' class='unit' tit='{$unit_name}' alt='{$unit_name}' /></a>";
@@ -174,15 +191,15 @@ function wpn_option() {
 function eff_option() {
   global $pdo;
   $html = "";
-  $sql = "SELECT `id`, `tag_{$_COOKIE["l"]}` AS tag FROM `tag` WHERE `id` != 999 ORDER BY `id` ASC;";
+  $sql = "SELECT `id`, `eff_{$_COOKIE["l"]}` AS eff FROM `eff` WHERE `id` != 999 ORDER BY `id` ASC;";
   $result = $pdo->prepare($sql);
   $result->execute();
   if ($result->rowCount() >= 1) {
     while($row = $result->fetch()) {
-      $html .= "            <option text='{$row["tag"]}' value='{$row["id"]}'></option>\n";
+      $html .= "            <option text='{$row["eff"]}' value='{$row["id"]}'></option>\n";
     }
   }
-  return $html;
+  return str_replace(".","",$html);
 }
 function origin_option() {
   global $pdo;
@@ -235,7 +252,7 @@ function td($id) {
 function not($k) {
   if (sizeof($_POST["not"]) > 0) {
     if (in_array($k,$_POST["not"])) {
-      return "$(\"input[name^='not'][value='$k']\").prop('checked', true);";
+      return "label_not.push('{$k}');";
     }
   }
   return "";
@@ -243,6 +260,6 @@ function not($k) {
 
 //result.php
 function minify($html) {
-  return preg_replace("/([\r]?\n|(?<=>)\s+(?=<))/", "", preg_replace("/([\r]?\n|(?<=>)\s+(?=<))/", "", $html));
+  return preg_replace("/\s+/", " ", preg_replace("/(?<=>)\s+(?=<)/", "", preg_replace("/[\r]?\n/", "", $html)));
 }
 ?>

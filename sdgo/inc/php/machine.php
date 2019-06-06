@@ -10,8 +10,8 @@ if ($_GET["machine"] != NULL) {
     while($row = $result->fetch()) {
       $title = $machine.$row["machine"]." - ";
       $query_html = "
-<br>
 <div id='machine'>
+<br>
 <table id='machine'>
   <tr>
     <td colspan='2'><b>".$machine.$row["machine"]."</b></td>
@@ -32,12 +32,6 @@ if ($_GET["machine"] != NULL) {
 </div>
 <script>
 $(\"select[name='machine'] option[value='{$row["machine"]}']\")[0].selected = 'selected';
-$(document).ready(function(){
-  $('img.unit').each(function(){
-    $(this).attr('src', prefix[1]+unit[1][unit[0].indexOf($(this).attr('srcc'))]+'.png');
-  });
-  $('div#wrapper').addClass('mobile hide');
-});
 </script>
 ";
       $query_html = str_replace("-1", "不明", $query_html);

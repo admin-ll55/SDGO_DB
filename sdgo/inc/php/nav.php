@@ -1,5 +1,5 @@
 <nav>
-  <button class="mobile">
+  <!--button class="mobile">
     <table>
       <tr>
         <td></td>
@@ -14,6 +14,6 @@
         <td></td>
       </tr>
     </table>
-  </button>
+  </button-->
 <?php require_once "inc/php/form.php";?>
 </nav>

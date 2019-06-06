@@ -16,7 +16,7 @@
       <td><a href="http://sdgo.byethost7.com" target="_blank">sdgo.byethost7.com</a></td>
     </tr>
     <tr>
-      <td colspan="4">DMCA: contact@sdgo2018.rf.gd</td>
+      <td colspan="4">📧<input type="text" content="dmca" value="contact@sdgo2018.rf.gd" size="21" /></td>
     </tr>
   </table>
   <br>

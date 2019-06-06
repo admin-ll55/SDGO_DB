@@ -39,6 +39,7 @@ $bp = "";
 $id = $_GET["blueprint"];
 $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$id]]);
 $title = $unit_name." ".tos("設計圖", "设计图")." - ";
+$query_html = "<div id='blueprint'>";
 $ids = [$id];
 $ids = array_merge($ids, bp_helper($id));
 $unique = array_unique($ids);
@@ -94,9 +95,8 @@ foreach ($unique as $v) {
         bp_helper2("mobile", $blueprint["d"], $blueprint["dd"], $unit_name_d, "<tr><td>", "</td></tr>").
         bp_helper2("mobile", $blueprint["e"], $blueprint["ee"], $unit_name_e, "<tr><td>", "</td></tr>")."
       </tr>
-    </table>
-    ";
+    </table>";
   }
 }
-$query_html .= "</div><script>$('div#wrapper').addClass('mobile hide');$(document).ready(function(){ $('body table#blueprint.mobile:not(.hide)').eq(0).find('tr:not(:nth-child(1)):not(:nth-child(2))').toggleClass('show');$('table#blueprint:nth-of-type(2) button.expand').remove();});</script>";
+$query_html .= "</div><script>$(document).ready(function(){var e=$('body table#blueprint.mobile:not(.hide)').eq(0);e.find('tr:nth-child(2)').toggleClass('expand_compliance');e.find('tr:not(:nth-child(1)):not(:nth-child(2))').toggleClass('show');$('table#blueprint:nth-of-type(2) button.expand').remove();});</script>";
 ?>

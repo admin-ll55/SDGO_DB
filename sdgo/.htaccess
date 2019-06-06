@@ -7,5 +7,6 @@ RewriteRule ^(.*)\.php$ $1 [L,R=301]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME}\.php -f
 RewriteRule ^(.*)$ $1.php
+RewriteRule api search_v2
 DirectoryIndex search_v2.php
-Header set Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Origin "*"

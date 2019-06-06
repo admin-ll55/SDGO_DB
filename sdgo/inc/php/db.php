@@ -5,6 +5,7 @@ $id = "sdgo_user";
 $pw = "abcd";
 try{
   $pdo = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", $id, $pw);
+  $pdo2 = new PDO("mysql:dbname=$dbname;host=$host;charset=UTF8", "sdgo_update", $pw);
 }
 catch(Exception $e) {
   die("<b>Please execute the following sql via phpmyadmin or mysql shell:</b><br/>

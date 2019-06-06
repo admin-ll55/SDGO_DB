@@ -16,12 +16,13 @@ switch($k) {
     array_push($sql_data, $_GET["sp"]);
     break;
   case "wpn":
-    $_GET["wpn"] = preg_match("/([0-9]{2}|[a-g])/", $_GET["wpn"]);
-    $sql = "SELECT '武器' AS col1, `name_{$_COOKIE["l"]}` AS col2, '' AS col3, '' AS col4 FROM `weapon` WHERE `wpn` = ? OR `cat` = ?;";
+    preg_match("/([0-9]{2}|[a-g])/", $_GET["wpn"], $m);
+    $_GET["wpn"] = $m[0];
+    $sql = "SELECT '武器' AS col1, '{$_GET["wpn"]}' AS col2, `name_{$_COOKIE["l"]}` AS col3, '' AS col4 FROM `weapon` WHERE `wpn` = ? OR `cat` = ?;";
     array_push($sql_data, $_GET["wpn"], $_GET["wpn"]);
     break;
   case "eff":
-    $sql = "SELECT '效果' AS col1, `id` AS col2, `tag_{$_COOKIE["l"]}` AS col3, '' AS col4 FROM `tag` WHERE `id` = ?;";
+    $sql = "SELECT '效果' AS col1, `id` AS col2, `eff_{$_COOKIE["l"]}` AS col3, '' AS col4 FROM `eff` WHERE `id` = ?;";
     array_push($sql_data, $_GET["eff"]);
     break;
   case "origin":
@@ -100,11 +101,13 @@ switch($k) {
         $_GET["rank"] = ";";
         break;
     }
-    $sql = "SELECT '".tos("等級","等级")."' AS col1, '{$_GET["rank"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `tag` LIMIT 1;";
+    if ($_GET["rank"] != ";")
+      $sql = "SELECT '".tos("等級","等级")."' AS col1, '{$_GET["rank"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
     break;
   case "pos":
-    $text = ($_GET["pos"]=="r"?"近":($_GET["pos"]=="s"?"中":($_GET["pos"]=="p"?tos("遠","远"):";"))).tos("距離","距离");
-    $sql = "SELECT '".tos("距離","距离")."' AS col1, '{$_GET["pos"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `tag` LIMIT 1;";
+    $text = ($_GET["pos"]=="r"?"近":($_GET["pos"]=="s"?"中":($_GET["pos"]=="p"?tos("遠","远"):";")));
+    if ($_GET["pos"] != ";")
+      $sql = "SELECT '".tos("距離","距离")."' AS col1, '{$_GET["pos"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
     break;
   case "tag":
     if($_GET["tag"]=="tag2"){$text=tos("自由","自由");}
@@ -112,7 +115,8 @@ switch($k) {
     else if($_GET["tag"]=="tag4"){$text=tos("技能激活","技能激活");}
     else if($_GET["tag"]=="no"){$text=tos("不能","不能");}
     else {$_GET["tag"]==";";}
-    $sql = "SELECT '".tos("變型","变型")."' AS col1, '{$_GET["tag"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `tag` LIMIT 1;";
+    if ($_GET["tag"] != ";")
+      $sql = "SELECT '".tos("變型","变型")."' AS col1, '{$_GET["tag"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
     break;
   case "prop":
     break;
