@@ -129,7 +129,7 @@
                 <option value="C" localization TC="　C" SC="　C"></option>
                 <option value="CU" localization TC="　CU" SC="　CU"></option>
                 <option value="" localization TC="其他" SC="其他" disabled style='font-weight: bold;'></option>
-                <option value="SABC" localization TC="　全白" SC="　全白"></option>
+                <option value="SABC" localization TC="　全NORMAL" SC="　全NORMAL"></option>
                 <option value="_S" localization TC="　全SECRET" SC="　全SECRET"></option>
                 <option value="_R" localization TC="　全RARE" SC="　全RARE"></option>
                 <option value="_U" localization TC="　全U" SC="　全U"></option>

@@ -43,6 +43,7 @@ class API {
         return $row["unit_name"];
       }
     }
+    return false;
   }
   private static function origin($id) {
     global $pdo;
@@ -54,6 +55,7 @@ class API {
         return $row;
       }
     }
+    return false;
   }
   private static function unit_info($id) {
     global $pdo;

@@ -216,7 +216,7 @@ function origin_option() {
 }
 function cm_option() {
   global $pdo;
-  $html = "";
+  $html = "            <option value='c' TC='自定義' SC='自定义'></option>\n";
   $sql = "SELECT `machine` FROM `capsule` ORDER BY `machine` ASC;";
   $result = $pdo->prepare($sql);
   $result->execute();

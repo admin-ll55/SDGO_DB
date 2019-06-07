@@ -32,6 +32,7 @@ function ch_l(l) {
   $("select[name='machine'] option[value]").each(function(){
     $(this).html($(this).attr("value"));
   });
+  $("select[name='machine'] option[value]:first-child").html($("select[name='machine'] option[value]:first-child").attr(l));
   $("label.not[localization]").each(function(){
     $(this).attr("tit", $(this).attr(l));
   });
