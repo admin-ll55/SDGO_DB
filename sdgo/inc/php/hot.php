@@ -1,8 +1,8 @@
 <?php
 function get_hot_units() {
-  global $pdo;
+  global $pdo2;
   $sql = "SELECT `id` FROM `hot` WHERE `ct` > 0 ORDER BY `ct` DESC LIMIT 42;";
-  $result = $pdo->prepare($sql);
+  $result = $pdo2->prepare($sql);
   $result->execute();
   if ($result->rowCount() >= 1) {
     while ($row = $result->fetch()) {
