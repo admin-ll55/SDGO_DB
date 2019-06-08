@@ -33,9 +33,9 @@ if ($result->rowCount() == 1) {
 $(\"select[name='machine'] option[value='{$row["machine"]}']\")[0].selected = 'selected';
 </script>
 ";
-    $query_html = str_replace("0 GB", "不明 GB", $query_html);
+    $query_html = str_replace("-1 GB", "不明 GB", $query_html);
     $meta_description = "{$machine}{$row["machine"]} ({$row["cost"]} GB): {$mn[0]}, {$mn[1]}, {$mn[2]}, {$mn[3]}, {$mn[4]}, {$mn[5]}";
-    $meta_description = str_replace("0 GB", "不明 GB", $meta_description);
+    $meta_description = str_replace("-1 GB", "不明 GB", $meta_description);
   }
 } else {
   $query_html = "<br><a href='search_v2?404'>{$err_img}</a>";
