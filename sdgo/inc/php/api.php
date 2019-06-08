@@ -17,7 +17,7 @@ class API {
       <a class='button wiki' href='http://localhost/sdgo/resource/olg/{$id}.html' target='_blank'>
         <img src='https://s2.ax1x.com/2019/05/22/V9VUoj.png' class='wiki' />
       </a>
-      <a class='button wiki' href='http://localhost/sdgo/resource/sdp/bp/www/ok/{$id}.html' target='_blank'>
+      <a class='button wiki' href='http://localhost/sdgo/resource/sdp/www/ok/{$id}.html' target='_blank'>
         <img src='https://s2.ax1x.com/2019/05/22/V9VNwQ.png' class='wiki' />
       </a>
       <a class='button wiki' href='http://localhost/sdgo/resource/yukict/www/ok/{$id2}.html' target='_blank'>

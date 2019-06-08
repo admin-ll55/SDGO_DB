@@ -54,6 +54,6 @@ $(\"select[name='machine'] option[value='c']\")[0].selected = 'selected';
 </script>
 ";
 } else {
-  $query_html = "<br><a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a>";
+  $query_html = "<br><a href='search_v2?404'>{$err_img}</a>";
 }
 ?>

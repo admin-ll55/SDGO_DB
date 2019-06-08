@@ -1,7 +1,8 @@
+<br><div id='home'>
 <?php
-$query_html .= "<br><div id='home'>".
-  _require("inc/php/hot.php").
-  _require("inc/php/main.php").
-  _require("inc/php/news.php").
-  "</div>";
+require_once "inc/php/hot.php";
+require_once "inc/php/main.php";
+require_once "inc/php/daily.php";
+require_once "inc/php/news.php";
 ?>
+</div>

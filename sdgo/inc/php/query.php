@@ -390,8 +390,7 @@ $query_html .= "
   <br>
   <div id='count'>".tos("結果數量", "结果数量").": ".$result->rowCount()."</div>
   <br>
-  <div id='loading'>".tos("加載中…<br><br>請耐心等候", "加载中…<br><br>请耐心等候")."<br></div>
-  <div id='container' style='display: none;'><a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a></div>";
+  <div id='container' style='display: none;'><a href='search_v2?404'>{$err_img}</a></div>";
 $script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";
 $query_html .= "<script>".$script."</script></div>";
 ?>

@@ -60,7 +60,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -115,7 +115,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -172,7 +172,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -225,7 +225,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -325,7 +325,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -396,7 +396,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -434,7 +434,7 @@ CREATE TABLE `customc` (
 
 LOCK TABLES `customc` WRITE;
 /*!40000 ALTER TABLE `customc` DISABLE KEYS */;
-INSERT INTO `customc` VALUES ('10048'),('10059'),('10066'),('10067'),('10070'),('10086'),('10087'),('10089'),('10090'),('10092'),('10093'),('10095'),('10096'),('10098'),('10099'),('10100'),('10103'),('10108'),('10121'),('11019'),('11069'),('11072'),('11077'),('11079'),('11081'),('11082'),('11087'),('12013'),('12015'),('12022'),('12041'),('13019'),('13036'),('14004'),('14013'),('14022'),('14024'),('14026'),('14027'),('14033'),('15001'),('15011'),('15013'),('15025'),('15051'),('15052'),('15053'),('15057'),('15058'),('15061'),('15062'),('15063'),('15074'),('15077'),('15078'),('15084'),('16024'),('16032'),('16050'),('16052'),('16053'),('16055'),('16057'),('16058'),('16060'),('16061'),('17004'),('17028'),('17041'),('17042'),('17043'),('17044'),('17055'),('17056'),('17057'),('17058'),('17061'),('17063'),('17066'),('17068'),('17070'),('17071'),('17072'),('20022'),('20024'),('21021'),('21023'),('21027'),('22001'),('22002'),('22004'),('22005'),('22007'),('22009'),('22035'),('22036'),('22037'),('22053'),('22054'),('22068'),('22071'),('22072'),('22075'),('22077'),('22079'),('22082'),('22084'),('22088'),('22092'),('22095'),('22097'),('22098'),('22100'),('22103'),('22105'),('22109'),('22113'),('22119'),('22122'),('23004'),('23006'),('23007'),('23012'),('23014'),('24003'),('24004'),('24005'),('24008'),('24009'),('24013'),('24015'),('24017'),('24018'),('24203'),('24204'),('24401'),('24402'),('24404'),('24407'),('24409');
+INSERT INTO `customc` VALUES ('10048'),('10059'),('10066'),('10067'),('10070'),('10086'),('10087'),('10089'),('10090'),('10092'),('10093'),('10095'),('10096'),('10098'),('10099'),('10100'),('10103'),('10108'),('10121'),('11019'),('11069'),('11072'),('11077'),('11079'),('11081'),('11082'),('11087'),('12013'),('12015'),('12022'),('12041'),('13019'),('13036'),('14004'),('14013'),('14022'),('14024'),('14026'),('14027'),('14033'),('15001'),('15011'),('15013'),('15025'),('15051'),('15052'),('15053'),('15057'),('15058'),('15061'),('15062'),('15063'),('15074'),('15077'),('15078'),('15084'),('15092'),('15098'),('16024'),('16032'),('16050'),('16052'),('16053'),('16055'),('16057'),('16058'),('16060'),('16061'),('17004'),('17028'),('17041'),('17042'),('17043'),('17044'),('17055'),('17056'),('17057'),('17058'),('17061'),('17063'),('17066'),('17068'),('17070'),('17071'),('17072'),('20022'),('20024'),('21021'),('21023'),('21027'),('21032'),('22001'),('22002'),('22004'),('22005'),('22007'),('22009'),('22035'),('22036'),('22037'),('22053'),('22054'),('22068'),('22071'),('22072'),('22075'),('22077'),('22079'),('22082'),('22084'),('22088'),('22092'),('22095'),('22097'),('22098'),('22100'),('22103'),('22105'),('22109'),('22113'),('22119'),('22122'),('22135'),('23004'),('23006'),('23007'),('23012'),('23014'),('24003'),('24004'),('24005'),('24008'),('24009'),('24013'),('24015'),('24017'),('24018'),('24203'),('24204'),('24401'),('24402'),('24404'),('24407'),('24409'),('24423');
 /*!40000 ALTER TABLE `customc` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -447,7 +447,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -517,7 +517,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -575,7 +575,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -638,7 +638,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:25
+-- Dump completed on 2019-06-08 13:51:55
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -695,7 +695,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:26
+-- Dump completed on 2019-06-08 13:51:56
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -737,5 +737,5 @@ CREATE TABLE `hot` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-06 17:39:26
+-- Dump completed on 2019-06-08 13:51:56
 INSERT INTO `hot`(`id`) SELECT `id` FROM `unit`;

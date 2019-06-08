@@ -8,12 +8,14 @@ foreach ($_POST as $q => $v) {
 }
 
 //general
+$err_img = "<img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'>";
 function tos($tc, $sc) {
   return ($_COOKIE["l"] == "TC" ? $tc : $sc);
 }
 
 //search_v2.php
 function _require($file) {
+  global $err_img;
   ob_start();
   require_once $file;
   return ob_get_clean();

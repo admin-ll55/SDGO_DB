@@ -1,6 +1,6 @@
 <?php
 $query_html = "";
-$meta_description = tos("希望你得到想要的機體！","希望你得到想要的机体！");
+$is_home = false;
 $key = ["skl","sp","wpn","eff","origin","rank","pos","tag","prop"];
 foreach ([5] as $i) {
   if (array_key_exists($key[$i], $_GET)) {
@@ -15,7 +15,7 @@ foreach ([2,6] as $i) {
   }
 }
 if (array_keys($_GET)[0] == "404") {
-  require_once "inc/php/404.php";
+  $query_html = _require("inc/php/404.php");
 }
 else if (array_keys($_GET)[0] == "id") {
   if (preg_match("/[0-9]{5}(,[0-9]{5})+/", $_GET["id"])) {
@@ -57,6 +57,6 @@ else if (in_array(array_keys($_GET)[0], $key)) {
   require_once "inc/php/category.php";
 }
 else {
-  require_once "inc/php/home.php";
+  $is_home = true;
 }
 ?>

@@ -96,6 +96,6 @@ if ($unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$id]])) {
   $query_html .= "</div><script>$(document).ready(function(){var e=$('body table#blueprint.mobile:not(.hide)').eq(0);e.find('tr:nth-child(2)').toggleClass('expand_compliance');e.find('tr:not(:nth-child(1)):not(:nth-child(2))').toggleClass('show');$('table#blueprint:nth-of-type(2) button.expand').remove();});</script>";
 }
 else {
-  $query_html = "<br><a href='search_v2?404'><img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'/></a>";
+  $query_html = "<br><a href='search_v2?404'>{$err_img}</a>";
 }
 ?>

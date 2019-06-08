@@ -7,7 +7,8 @@ function get_released_units() {
   for ($x = 0; $x < count($ids); $x++) {
     if ($ids[$x] != "") {
       $id = $ids[$x];
-      echo "<a href='search_v2?id={$id}'><img class='unit' srcc='{$id}' tit='".API::call(["type"=>"unit_name","data"=>["id"=>$id]])."' /></a>";
+?>
+<a href='search_v2?id=<?=$id?>'><img class='unit' srcc='<?=$id?>' tit='<?=API::call(["type"=>"unit_name","data"=>["id"=>$id]])?>' /></a><?php
     }
   }
 }

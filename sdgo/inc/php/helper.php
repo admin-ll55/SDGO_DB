@@ -1,9 +1,10 @@
 <div id="helper">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" srcc="top.png" onclick="$(window).scrollTop(0);"><path fill="currentColor" d="M264.5 163.5l122.8 122.8c4.7 4.7 4.7 12.3 0 17l-22.6 22.6c-4.7 4.7-12.3 4.7-17 0L256 234.2l-91.7 91.7c-4.7 4.7-12.3 4.7-17 0l-22.6-22.6c-4.7-4.7-4.7-12.3 0-17l122.8-122.8c4.7-4.7 12.3-4.7 17 0zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-48 0c0-110.5-89.5-200-200-200S56 145.5 56 256s89.5 200 200 200 200-89.5 200-200z" class=""></path></svg>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" srcc="back.png" onclick="window.history.back();"><path fill="currentColor" d="M504 256C504 119 393 8 256 8S8 119 8 256s111 248 248 248 248-111 248-248zm-448 0c0-110.5 89.5-200 200-200s200 89.5 200 200-89.5 200-200 200S56 366.5 56 256zm189.1 129.9L123.7 264.5c-4.7-4.7-4.7-12.3 0-17l121.4-121.4c4.7-4.7 12.3-4.7 17 0l19.6 19.6c4.8 4.8 4.7 12.5-.2 17.2L211.2 230H372c6.6 0 12 5.4 12 12v28c0 6.6-5.4 12-12 12H211.2l70.3 67.1c4.9 4.7 5 12.4.2 17.2l-19.6 19.6c-4.7 4.7-12.3 4.7-17 0z" class=""></path></svg>
-<?php if (!count($_GET)&&!count($_POST)) { ?>
+<?php if ($is_home) { ?>
 <div srcc="hot.png" onclick="window.location.href='search_v2#hot';">🔥</div>
 <div srcc="main.png" onclick="window.location.href='search_v2#main';">🆕</div>
+<div srcc="daily.png" onclick="window.location.href='search_v2#daily';">⭐</div>
 <div srcc="news.png" onclick="window.location.href='search_v2#news';">📰</div>
 <?php } ?>
 <form id="settings">
@@ -19,7 +20,12 @@
 if (array_key_exists("ucid", $_COOKIE)) {
   $ucid = json_decode($_COOKIE["ucid"]);
   for ($x = 0; $x < count($ucid); $x++) {
-    echo "<div ucid='{$ucid[$x]}' onclick='dcid($(this));'><img class='unit' srcc='{$ucid[$x]}' tit='".tos("刪除","删除")."' /><div id='dcid'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-times-circle fa-w-16 fa-9x'><path fill='currentColor' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z' class=''></path></svg></div></div>";
+?>
+  <div ucid='<?=$ucid[$x]?>' onclick='dcid($(this));'>
+    <img class='unit' srcc='<?=$ucid[$x]?>' tit='<?=tos("刪除","删除")?>' />
+    <div id='dcid'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-times-circle fa-w-16 fa-9x'><path fill='currentColor' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z' class=''></path></svg></div>
+  </div>
+<?php
   }
 }
 ?>

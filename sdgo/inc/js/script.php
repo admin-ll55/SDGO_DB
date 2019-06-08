@@ -216,7 +216,6 @@ $(document).ready(function(){
       $("input[name^='not'][value='"+label_not[x]+"']").prop('checked',true).parent().addClass("checked");
     }
   }
-  $("div#loading").remove();
 
   $("tr#prop label").click(function(){
     var state = $(this).html().match("×")?false:true;
@@ -305,4 +304,5 @@ $(document).ready(function(){
     }
   });
   var a = $("body > div#id, div#result, div#machine, div#compare_wrapper, div#blueprint"), b = a.length?a[0].scrollIntoView():null;
+  $("div#loading").remove();
 });
