@@ -106,24 +106,20 @@
             <td class="width-99">
               <select name="rank">
                 <option value="" localization TC="" SC=""></option>
-                <option value="" localization TC="S 等級" SC="S 等级" disabled style='font-weight: bold;'></option>
-                <option value="S%" localization TC="　全S" SC="　全S"></option>
+                <option value="S%" localization TC="全S" SC="全S" style='font-weight: bold;'></option>
                 <option value="SS" localization TC="　SS" SC="　SS"></option>
                 <option value="SR" localization TC="　SR" SC="　SR"></option>
                 <option value="S" localization TC="　S" SC="　S"></option>
-                <option value="" localization TC="A 等級" SC="A 等级" disabled style='font-weight: bold;'></option>
-                <option value="A%" localization TC="　全A" SC="　全A"></option>
+                <option value="A%" localization TC="全A" SC="全A" style='font-weight: bold;'></option>
                 <option value="AS" localization TC="　AS" SC="　AS"></option>
                 <option value="AR" localization TC="　AR" SC="　AR"></option>
                 <option value="A" localization TC="　A" SC="　A"></option>
-                <option value="" localization TC="B 等級" SC="B 等级" disabled style='font-weight: bold;'></option>
-                <option value="B%" localization TC="　全B" SC="　全B"></option>
+                <option value="B%" localization TC="全B" SC="全B" style='font-weight: bold;'></option>
                 <option value="BS" localization TC="　BS" SC="　BS"></option>
                 <option value="BR" localization TC="　BR" SC="　BR"></option>
                 <option value="B" localization TC="　B" SC="　B"></option>
                 <option value="BU" localization TC="　BU" SC="　BU"></option>
-                <option value="" localization TC="C 等級" SC="C 等级" disabled style='font-weight: bold;'></option>
-                <option value="C%" localization TC="　全C" SC="　全C"></option>
+                <option value="C%" localization TC="全C" SC="全C" style='font-weight: bold;'></option>
                 <option value="CS" localization TC="　CS" SC="　CS"></option>
                 <option value="CR" localization TC="　CR" SC="　CR"></option>
                 <option value="C" localization TC="　C" SC="　C"></option>

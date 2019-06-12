@@ -8,6 +8,7 @@ $result->execute([$_GET["machine"]]);
 if ($result->rowCount() == 1) {
   while($row = $result->fetch()) {
     $title = $machine.$row["machine"]." - ";
+    $row["cost"] = str_replace("-1 GB", "不明 GB", $row["cost"]);
     $query_html = "
 <div id='machine'>
 <br>
@@ -16,7 +17,7 @@ if ($result->rowCount() == 1) {
     <td colspan='2'><b>".$machine.$row["machine"]."</b></td>
   </tr>
   <tr>
-    <td colspan='2'>".$row["cost"]." GB</td>
+    <td colspan='2'>{$row["cost"]} GB</td>
   </tr>
   <tr>
 ".td($row["a"]).td($row["b"])."
@@ -28,14 +29,11 @@ if ($result->rowCount() == 1) {
 ".td($row["e"]).td($row["f"])."
   </tr>
 </table>
-</div>
 <script>
 $(\"select[name='machine'] option[value='{$row["machine"]}']\")[0].selected = 'selected';
 </script>
-";
-    $query_html = str_replace("-1 GB", "不明 GB", $query_html);
+</div>";
     $meta_description = "{$machine}{$row["machine"]} ({$row["cost"]} GB): {$mn[0]}, {$mn[1]}, {$mn[2]}, {$mn[3]}, {$mn[4]}, {$mn[5]}";
-    $meta_description = str_replace("-1 GB", "不明 GB", $meta_description);
   }
 } else {
   $query_html = "<br><a href='search_v2?404'>{$err_img}</a>";

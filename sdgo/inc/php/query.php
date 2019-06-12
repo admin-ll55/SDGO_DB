@@ -194,8 +194,8 @@ if ($_POST["tag"] == "tag2"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`tag3` = ''
-    AND `unit_tag`.`tag4` = ''
+  WHERE `unit_tag`.`tag3` is null
+    AND `unit_tag`.`tag4` is null
     AND `unit_tag`.`rlock` > 0
   ))";
   $script .= "$(\"select[name='tag'] option[value='tag2']\").attr('selected',true);";
@@ -270,15 +270,15 @@ if (sizeof($_POST["prop"]) > 0) {
     $script .= "$(\"input[name^='prop'][value='s']\").prop('checked', true);";
   }
   if (in_array("ns", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` NOT IN (SELECT `w5`.`id` FROM `unit_weapon` AS w5 WHERE `w5`.`wpn` = '999' GROUP BY `w5`.`id`)";
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w4`.`id` FROM `unit_weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
     $script .= "$(\"input[name^='prop'][value='ns']\").prop('checked', true);";
   }
   if (in_array("s2", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w6`.`id` FROM `unit_weapon_eff` AS w6 WHERE `w6`.`eff` = 999 GROUP BY `w6`.`id`)";
+    $sql .= " AND `unit`.`id` IN (SELECT `w5`.`id` FROM `unit_weapon_eff` AS w5 WHERE `w5`.`eff` = 999 GROUP BY `w5`.`id`)";
     $script .= "$(\"input[name^='prop'][value='s2']\").prop('checked', true);";
   }
   if (in_array("ns2", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` NOT IN (SELECT `w6`.`id` FROM `unit_weapon_eff` AS w6 WHERE `w6`.`eff` = 999 GROUP BY `w6`.`id`)";
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w5`.`id` FROM `unit_weapon_eff` AS w5 WHERE `w5`.`eff` = 999 GROUP BY `w5`.`id`)";
     $script .= "$(\"input[name^='prop'][value='ns2']\").prop('checked', true);";
   }
   if (in_array("bp", $_POST["prop"])) {
@@ -366,7 +366,9 @@ $sql = preg_replace("/\n/", "", $sql);
 $query_html .= "<!--\r{$sql}\r-->";
 $temp = array_fill(0, 6, "");
 if ($result->rowCount() >= 1) {
-  while($row = $result->fetch()) {
+  $result = $result->fetchAll();
+  for ($x=0;$x<count($result);$x++) {
+    $row = $result[$x];
     if ($temp[0] != "") {
       $temp[0] .= ",";
       $temp[1] .= ",";
@@ -386,9 +388,9 @@ if ($result->rowCount() >= 1) {
   }
 }
 $query_html .= "
-<div".($result->rowCount()?" id='result'":"").">
+<div".(count($result)?" id='result'":"").">
   <br>
-  <div id='count'>".tos("結果數量", "结果数量").": ".$result->rowCount()."</div>
+  <div id='count'>".tos("結果數量", "结果数量").": ".count($result)."</div>
   <br>
   <div id='container' style='display: none;'><a href='search_v2?404'>{$err_img}</a></div>";
 $script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";

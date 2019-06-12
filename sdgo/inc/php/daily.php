@@ -1,7 +1,12 @@
 <?php
-  $c = explode("\r\n", minify(_require("inc/home/recommendation.txt")));
-  for ($i = 0; $i < 3; $i++) {
-    $c[$i] = ($c[$i]?"<a href='search_v2?id={$c[$i]}'><img class='unit' srcc='{$c[$i]}' tit='".API::call(["type"=>"unit_name","data"=>["id"=>$c[$i]]])."' /></a>":"");
+  $c = explode(";", minify(_require("inc/home/recommendation.txt")));
+  $i = 0;
+  $x = 0;
+  while ($x < 3) {
+    if (!preg_match("/^#/", $c[$i])) {
+      $c[$x++] = ($c[$i]?"<a href='search_v2?id={$c[$i]}'><img class='unit' srcc='{$c[$i]}' tit='".API::call(["type"=>"unit_name","data"=>["id"=>$c[$i]]])."' /></a>":"");
+    }
+    $i++;
   }
 ?>
 <table id="daily">

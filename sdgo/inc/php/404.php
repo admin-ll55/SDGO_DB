@@ -5,7 +5,7 @@
       <td colspan='3'><?=tos("小護士","小护士")?></td>
     </tr>
     <tr>
-      <td colspan='3'><img class='unit' tit='SDGO' src='https://s2.ax1x.com/2019/01/23/kV2znK.png' /></td>
+      <td colspan='3'><img class='unit' tit='SDGO' src='img/nurse.png' /></td>
     </tr>
     <tr>
       <td colspan='3'><?=$err_img?></td>

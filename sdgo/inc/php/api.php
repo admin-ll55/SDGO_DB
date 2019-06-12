@@ -13,25 +13,16 @@ class API {
   }
   private static function wiki($id) {
     $id2 = self::id2($id);
-    return (@ file_get_contents("http://localhost/sdgo/resource/temp.php")?"<a class='button block wiki' href='http://localhost/sdgo/resource/cfo/www/ok/{$id}.html' target='_blank'>CFOちらうら</a>
-      <a class='button wiki' href='http://localhost/sdgo/resource/olg/{$id}.html' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VUoj.png' class='wiki' />
-      </a>
-      <a class='button wiki' href='http://localhost/sdgo/resource/sdp/www/ok/{$id}.html' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VNwQ.png' class='wiki' />
-      </a>
-      <a class='button wiki' href='http://localhost/sdgo/resource/yukict/www/ok/{$id2}.html' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VdFs.png' class='wiki' />
-      </a>":"<a class='button block wiki' href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank'>CFOちらうら</a>
+    return "<a class='button block wiki' href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank'>CFOちらうら</a>
       <a class='button wiki' href='https://www.olgame.tw/sds/robot_detail.php?id={$id}' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VUoj.png' class='wiki' />
+        <img src='img/wiki/olg.png' class='wiki' />
       </a>
       <a class='button wiki' href='https://sdplayer.club/detail.html?id={$id}' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VNwQ.png' class='wiki' />
+        <img src='img/wiki/sdp.png' class='wiki' />
       </a>
       <a class='button wiki' href='https://www.yukict.com/bbs/viewthread.php?tid={$id2}' target='_blank'>
-        <img src='https://s2.ax1x.com/2019/05/22/V9VdFs.png' class='wiki' />
-      </a>");
+        <img src='img/wiki/yuki.png' class='wiki' />
+      </a>";
   }
   private static function unit_name($id) {
     global $pdo;
@@ -165,9 +156,10 @@ class API {
         ".($v2==1?"<td>{$row["rng"]}</td>":($v2==2?"":""))."
         <td>{$row["dmg"]}</td>
         ".($v2==1?"<td>{$row["sets"]}<cl></td>
-        <td>{$row["cd"]}</td>":($v2==2?"":""))."
+        <td><cd></td>":($v2==2?"":""))."
         <td>";
-        if ($row["type"]=="s"&&$row["cd"]=="") {
+        $html = str_replace("<cd>", ($row["type"]=="s"&&$row["cd"]<0?($row["cd"]*-1).tos("段格鬥", "段格斗"):$row["cd"]), $html);
+        if ($row["type"]=="s"&&$row["cd"]<0) {
           $html = str_replace("<cl>", "下倒地", $html);
         }
         if ($row["wpn"]=="0"||$row["wpn"]=="999") {

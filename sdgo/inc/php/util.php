@@ -8,10 +8,8 @@ foreach ($_POST as $q => $v) {
 }
 
 //general
-$err_img = "<img class='unit' src='https://s2.ax1x.com/2019/05/15/E70aqO.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'>";
-function tos($tc, $sc) {
-  return ($_COOKIE["l"] == "TC" ? $tc : $sc);
-}
+require_once "inc/php/tos.php";
+$err_img = "<img class='unit' src='img/nurse.png' tit='".tos("與服務器連接終止","与服务器连接终止")."'>";
 
 //search_v2.php
 function _require($file) {
@@ -100,6 +98,7 @@ function material() {
   global $pdo, $id;
   $parents = [];
   $is_key = [];
+  $html = "";
   $sql = "SELECT GROUP_CONCAT(`id` ORDER BY `id` SEPARATOR '<br>') AS material FROM `blueprint` WHERE `a` = ? OR `b` = ? OR `c` = ? OR `d` = ? OR `e` = ?;";
   $result = $pdo->prepare($sql);
   $result->execute(array_fill(0, 5, $id));
@@ -128,7 +127,7 @@ function material() {
   }
   $row = floor(sqrt(sizeof($parents)));
   $column = ceil(sizeof($parents)/$row);
-  $index = 0;
+  /*$index = 0;
   $html = "<br><table id='material' class='mobile hide'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
   for ($i = 0; $i < $row; $i++) {
     $html .= "<tr>";
@@ -143,7 +142,7 @@ function material() {
     }
     $html .= "</tr>";
   }
-  $html .= "</table>";
+  $html .= "</table>";*/
   if ($column!=3) {
     $temp = $column;
     $column = $row;
@@ -154,7 +153,7 @@ function material() {
     $row = ceil(sizeof($parents)/3);
   }
   $index = 0;
-  $html .= "<table id='material' class='mobile'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
+  $html .= "<br><table id='material'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
   for ($i = 0; $i < $row; $i++) {
     $html .= "<tr>";
     for ($j = 0; $j < $column; $j++) {

@@ -2,6 +2,12 @@
 $backup_site_url = "https://github.com/admin-ll55/SDGO_DB/wiki/Backup-Sites-%7C-%E5%BE%8C%E5%82%99%E7%B6%B2%E5%9D%80-%7C-%E5%90%8E%E5%A4%87%E7%BD%91%E5%9D%80";
 $source_url = "https://github.com/admin-ll55/SDGO_DB";
 ?>
+2019/06/12
+::
+<?=tos("rfgd網域被炸，目前已改用heroku","rfgd网域被炸，目前已改用heroku")?>
+||
+<?=tos("新增格鬥段數和倒地值","新增格斗段数和倒地值")?>
+;
 2019/06/08
 ::
 <?=tos("新增每日精選","新增每日精选")?>
@@ -29,8 +35,6 @@ $source_url = "https://github.com/admin-ll55/SDGO_DB";
 <?=tos("網頁及數據更新進度","网页及数据更新进度")?>：20%
 ||
 <?=tos("網頁源碼","网页源码")?>：<a class='button' href='<?=$source_url?>' target='blank'><?=tos("點擊查看","点击查看")?></a>
-||
-<?=tos("後備網址","后备网址")?>：<a class='button' href='<?=$backup_site_url?>' target='blank'><?=tos("點擊查看","点击查看")?></a>
 ||
 <?=tos("聯絡電郵","联络电邮")?>：<input type='text' content='dmca' value='contact@sdgo2018.rf.gd' size='21' />
 ;

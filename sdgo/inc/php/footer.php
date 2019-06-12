@@ -1,23 +1,11 @@
 <div id="footer">
-  <br>
-  <br>
-  <br>
-  <table>
-    <tr>
-      <td localization TC="網址分流" SC="网址分流" style="font-weight: bold;">網址分流</td>
-    </tr>
-    <tr>
-      <td><a href="http://sdgo2018.rf.gd" target="_blank">sdgo2018.rf.gd</a></td>
-    </tr>
-    <tr>
-      <td><a href="http://sdgo.unaux.com" target="_blank">sdgo.unaux.com</a></td>
-    </tr>
-    <tr>
-      <td><a href="http://sdgo.byethost7.com" target="_blank">sdgo.byethost7.com</a></td>
-    </tr>
-    <tr>
-      <td colspan="4">📧<input type="text" content="dmca" value="contact@sdgo2018.rf.gd" size="21" /></td>
-    </tr>
-  </table>
-  <br>
+  <p style="max-width: 940px; margin: 1em auto;">
+    This site does not affiliated with any other encyclopedia of SD Gundam Capsule Fighter Online.
+    <br>
+    <br>
+    All images are copyrighted by Softmax.
+    <br>
+    <br>
+    © 2019 admin-ll55 Licensed under Apache License 2.0
+  </p>
 </div>

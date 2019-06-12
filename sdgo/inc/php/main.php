@@ -1,6 +1,6 @@
 <?php
 function get_released_units() {
-  $ids = explode("\r\n", _require("inc/home/released.txt"));
+  $ids = explode(";", minify(_require("inc/home/released.txt")));
   if ($ids[0] == "") {
     return "<div class='item'><p>沒有</p></div>";
   }

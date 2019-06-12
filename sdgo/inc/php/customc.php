@@ -40,18 +40,23 @@ $result = $pdo->prepare($sql);
 $result->execute();
 if ($result->rowCount() >= 1) {
   $meta_description = "{$machine}: ";
-  while($row = $result->fetch()) {
-    $query_html .= "<a href='search_v2?id={$row["id"]}'><img class='unit' srcc='{$row["id"]}' rank='{$row["rank"]}' tit='".API::call(["type"=>"unit_name","data"=>["id"=>$row["id"]]])."' /></a>";
-    $meta_description .= "";
+  $result = $result->fetchAll();
+  for ($x=0;$x<count($result);$x++) {
+    $row = $result[$x];
+    $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$row["id"]]]);
+    $query_html .= "<a href='search_v2?id={$row["id"]}'><img class='unit' srcc='{$row["id"]}' rank='{$row["rank"]}' tit='{$unit_name}' /></a>";
+    if ($row["rank"] == "SR") {
+      $meta_description .= $unit_name.', ';
+    }
   }
   $query_html .= "
     </td>
   </tr>
 </table>
-</div>
 <script>
 $(\"select[name='machine'] option[value='c']\")[0].selected = 'selected';
 </script>
+</div>
 ";
 } else {
   $query_html = "<br><a href='search_v2?404'>{$err_img}</a>";

@@ -45,7 +45,7 @@ if ($result->rowCount() == 1) {
 <br>
 <table>
   <tr>
-    <td style='font-weight: bold;'>".tos("維基","维基")."</td>
+    <td id='wiki' style='font-weight: bold;'>".tos("維基","维基")."</td>
   </tr>
   <tr>
     <td id='wiki'>
