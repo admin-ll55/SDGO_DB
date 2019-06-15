@@ -26,7 +26,7 @@ function get_news() {
     }
     $html .= "</ul></div>";
   }
-  return $html;
+  return preg_replace("/([0-9]{5})/", "<img class='unit' srcc='$1' tit='' style='width:1em;height:1em;' />", $html);
 }
 ?>
 <table id="news">
