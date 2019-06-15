@@ -2,6 +2,7 @@
 $lm=filemtime(__FILE__);
 $etf = md5_file(__FILE__);
 $eth=(isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):false);
+header('Content-Type: text/javascript');
 header("Last-Modified: ".gmdate("D, d M Y H:i:s", $lm)." GMT");
 header("Etag: {$etf}");
 header('Cache-Control: public');
@@ -10,7 +11,6 @@ if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lm || $eth==$etf) {
   exit();
 }
 require_once "../inc/php/tos.php";
-$is_localhost = preg_match("/^localhost$/", $_SERVER["HTTP_HOST"])||preg_match("/^localhost$/", $_SERVER["SERVER_NAME"])||preg_match("/^(127\.0\.0\.1|::1)$/", $_SERVER["REMOTE_ADDR"])||preg_match("/^(127\.0\.0\.1|::1)$/", $_SERVER["SERVER_ADDR"]);
 if (!$is_localhost&&0) {
 ?>
 var skl = [['003','004','005','006','007','008','009','010','012','013','014','015','016','017','018','019','020','021','022','023','024','025','026','027','028','029','030','031','032','033','034','035','036','037','038','039','040','041','042','043','044','045','046','047','048','049','050','051','052','053','054','055','057','058','059','060','061','062','063','065','066','067','068','069','070','071','072','073','074','075','076','077','078','079','080','081','082','083','084','085','086','087','088','089','090','091','092','093','094','095','096','097','098','099','100','101','102','103','104','105','106','107','108','109','110','111','112','113','114','115','116','117','118','119','120','121','122','123','124','125','126','127','128','129','130','131','132','133','134','135','136','137','138','139','140','141','142','143','144','145','146','147','148','149','150','151','152','153','154','155','156','157','158','159','160','161','162','163','164','165','166','167','168','169','170','171','172','173','174','175','176','177','178','179','180','181','182','183','184','185','186','187','188','189','190','191','192','193','194','195','196','197','198','199','200','201','202','203','204','205','206','207','208','209','210','211','212','213','214','215','216','217','218','219','220','221','230','231','232','233','234','235','236','237','238','239','240','241','242','243','244','245','246','247','248','249','250'],['w7RS','wTG8','wOqs','wLrj','wvaq','0SiV','0pGT','09RU','0FsJ','0CzF','0iM4','0KzD','0EZR','0mi6','0kL9','0ZIx','0Vd1','0lsH','0uRO','0nJK','0QQe','01Ld','08eA','0GdI','0tFP','0Jot','0dSS','0NJf','00yQ','0BLj','0wQg','0res','0swn','0cF0','0yoq','0flF','0WSU','0gYV','0hy4','02WT','04OJ','0HFx','0Im9','0owR','0TT1','0qfK','0bY6','0OSO','0XlD','0j6e','0zmd','0vOH','BpTI','BCkt','BPtP','Biff','BA1S','Bkp8','Bemj','Bn7n','Bm0s','BKkq','BMt0','B1pT','BQhV','B31U','B8cF','BGX4','BYnJ','BtB9','BN7R','BaA1','Bdtx','Bwh6','BB9K','BD1O','BWNt','BrcD','B6nH','Bsje','BcBd','BRAI','BgHA','Bf4P','B538','BbHs','B49f','BIgS','Bojg','B7uQ','BLEn','BHBj','BX40','BONq','BvCV','Bx3T','DCDJ','BzgU','DFER','DSvF','DPb9','DkU1','DVC6','DuKe','DegO','DA4x','DZ8K','DKDH','DmvD','D1UI','DJ8f','DMbd','DlVA','D35t','DGPP','D2MF','DBan','D0Vs','DD5q','Ddbj','DyGV','DcxU','DsP0','D62T','DhZ9','DWqJ','DoPx','DRr4','DLse','DqMD','D4aR','D5I1','D7RK','DTG6','DxII','rSit','DOqH','rZon','DvdA','rpJP','r9Rf','rCz8','riQS','rFsg','rkLQ','rEZj','ruWV','rVds','rmiq','rKzT','rnJ0','rlyF','r1L4','rGw9','rQQU','r8eJ','rreH','rNJx','rJoR','rBOe','rtF1','rswd','rUW6','rwQO','r0yD','rgYt','rcFI','ryTA','r2fP','rh6S','rWSf','rfl8','r4Og','rImQ','rTTs','rOpV','rowj','rHkn','rqf0','rbYq','rXlT','rj6U','sS0J','rzm4','sCkR','rvXF','sp79','skp6','sPt1','sA1K','sE6O','sene','sVXD','sMtI','sKAA','sm0H','s19P','sn7d','sQht','s8c8','s31f','sYng','sGjS','saAs','sD3V','sN7j','swhq','sdNn','srcT','scB4','sB90','s6uF','sgHJ','ssjU','sWNR','sRE9','sf41','sbHH','s49x','s536','sIgK','sojO','sHDe','s7uD','szgf','sLEd','sOUA','svCt','ySv8','sX4I','sx8P','yFEj','y9KS','yarD','yPbQ','yCDg','yUKO']];
@@ -146,7 +146,7 @@ function ch_img(c) {
 <?php
   if ($is_localhost||1) {
 ?>
-  c = "https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo/";
+  c = "<?=($is_localhost?"":"https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo/")?>";
   $("img.unit").each(function(){
     if ($(this).attr("srcc") != undefined)
       $(this).attr("src", c+"img/unit/"+$(this).attr("srcc")+".gif");
@@ -283,7 +283,7 @@ $(document).ready(function(){
   document.addEventListener("keydown", function(e){
     var uid = window.location.href.match(/id=([0-9]{5})(#.*?)?$/);
     var machine = window.location.href.match(/machine=([0-9]{1,2})/);
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 65) {
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 90) {
       window.location.href = (window.location.href.match(/search_v2/)?"admin":"search_v2")+"?id="+uid[1];
       return false;
     }

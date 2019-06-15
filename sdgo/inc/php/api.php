@@ -12,8 +12,18 @@ class API {
     }
   }
   private static function wiki($id) {
+    global $is_localhost;
     $id2 = self::id2($id);
-    return "<a class='button block wiki' href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank'>CFOちらうら</a>
+    return ($is_localhost?"<a class='button block wiki' href='http://localhost/sdgo/resource/cfo/www/ok/{$id}.html' target='_blank'>CFOちらうら</a>
+      <a class='button wiki' href='http://localhost/sdgo/resource/olg/{$id}.html' target='_blank'>
+        <img src='https://s2.ax1x.com/2019/05/22/V9VUoj.png' class='wiki' />
+      </a>
+      <a class='button wiki' href='http://localhost/sdgo/resource/sdp/www/ok/{$id}.html' target='_blank'>
+        <img src='https://s2.ax1x.com/2019/05/22/V9VNwQ.png' class='wiki' />
+      </a>
+      <a class='button wiki' href='http://localhost/sdgo/resource/yukict/www/ok/{$id2}.html' target='_blank'>
+        <img src='https://s2.ax1x.com/2019/05/22/V9VdFs.png' class='wiki' />
+      </a>":"<a class='button block wiki' href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank'>CFOちらうら</a>
       <a class='button wiki' href='https://www.olgame.tw/sds/robot_detail.php?id={$id}' target='_blank'>
         <img src='img/wiki/olg.png' class='wiki' />
       </a>
@@ -22,7 +32,7 @@ class API {
       </a>
       <a class='button wiki' href='https://www.yukict.com/bbs/viewthread.php?tid={$id2}' target='_blank'>
         <img src='img/wiki/yuki.png' class='wiki' />
-      </a>";
+      </a>");
   }
   private static function unit_name($id) {
     global $pdo;
@@ -98,22 +108,21 @@ class API {
     global $pdo;
     $html = "";
     $sql = [
-      "SELECT `tag1` AS tag FROM `unit` WHERE `tag1` = '1' AND `id` = ?;",
-      "SELECT `tag3` AS tag FROM `unit` WHERE `tag3` = '1' AND `id` = ?;",
-      "SELECT `tag4` AS tag FROM `unit` WHERE `tag4` = '1' AND `id` = ?;"
+      "SELECT `id` FROM `unit` WHERE `rlock` > 0 AND `tag3` IS NULL AND `tag4` IS NULL AND `id` = ?;",
+      "SELECT `id` FROM `unit` WHERE `tag3` = '1' AND `id` = ?;",
+      "SELECT `id` FROM `unit` WHERE `tag4` = '1' AND `id` = ?;",
+      "SELECT `id` FROM `unit` WHERE `rlock` < 0 AND `id` = ?;"
     ];
-    $text = [["prop[]=big","tag=tag3","tag=tag4"],["大型", "裝甲解除", "技能激活"],["大型", "装甲解除", "技能激活"],[]];
+    $text = [["tag2","tag3","tag4","no"],["自由","裝甲解除", "技能激活","不能"],["自由","装甲解除","技能激活","不能"]];
     for ($i = 0; $i < count($sql); $i++) {
       $result = $pdo->prepare($sql[$i]);
       $result->execute([$id]);
       if ($result->rowCount() == 1) {
-        while ($row = $result->fetch()) {
-          $html .= "<a href='search_v2?".$text[0][$i]."' class='button'>".tos($text[1][$i], $text[2][$i])."</a>";
-          array_push($text[3], tos($text[1][$i], $text[2][$i]));
-        }
+        $html .= "<a href='search_v2?tag={$text[0][$i]}' class='button'>".tos($text[1][$i], $text[2][$i])."</a>";
+        return ["meta"=>tos($text[1][$i], $text[2][$i]),"html"=>($html?$html:false)];
       }
     }
-    return ["meta"=>implode($text[3], ", "),"html"=>($html?$html:false)];
+    
   }
   private static function skl_sp($id) {
     global $pdo;
@@ -146,9 +155,11 @@ class API {
     $result = $pdo->prepare($sql);
     $result->execute([$id, $no]);
     $cwpn = "";
+    $ctype = "";
     if ($result->rowCount() == 1) {
       while ($row = $result->fetch()) {
         $cwpn = $row["wpn"];
+        $ctype = $row["type"];
         $row["dmg"] .= (($no == 8 || $no == 9) ? "%" : "");
         $html .= "
       <tr>
@@ -196,7 +207,7 @@ class API {
         for ($x = 0; $x < count($ed); $x++) {
           $row["eff"] .= "<a href='search_v2?".($id[$x]!="999"?"eff={$id[$x]}":"prop[]=s2")."' class='button block eff' inc='{$inc[$x]}'>".str_replace(".","<br>",$ed[$x])."</a>";
         }
-        if (in_array("18", $id)||in_array($cwpn, ["6","11","12"])) {
+        if ($ctype=="s"&&(in_array("180", $id)||in_array($cwpn, ["6","11","12","23"]))) {
           $html = str_replace("<cl>", tos("連擊","连击"), $html);
         }
         $html .= $row["eff"];
@@ -209,22 +220,28 @@ class API {
     $html = preg_replace("/(\.[0-9]{2})/", "$1秒", $html);
     return preg_replace("/-1(\.00)?/", "?", $html);
   }
-  private static function ma_ca($id, $r) {
+  private static function attr($id, $r) {
     global $pdo;
     $html = "";
     $ma = "ma";
     $ca = "ca";
+    $big = "big";
+    $tiny = "tiny";
     if ($r == 1) {
       $ma = "r{$ma}";
       $ca = "r{$ca}";
+      $big = "r{$big}";
+      $tiny = "r{$tiny}";
     }
-    $sql = "SELECT `$ma` FROM `unit` WHERE `id` = ? UNION ALL SELECT `$ca` FROM `unit` WHERE `id` = ?;";
+    $sql = "SELECT `{$ma}` FROM `unit` WHERE `id` = ? UNION ALL SELECT `{$ca}` FROM `unit` WHERE `id` = ? UNION ALL SELECT `{$big}` FROM `unit` WHERE `id` = ? UNION ALL SELECT `{$tiny}` FROM `unit` WHERE `id` = ?;";
     $result = $pdo->prepare($sql);
-    $result->execute([$id, $id]);
-    if ($result->rowCount() == 2) {
+    $result->execute([$id, $id, $id, $id]);
+    if ($result->rowCount() == 4) {
       if ($row = $result->fetchAll()) {
-        $html .= ($row[0][0] == "1" ? "<a href='search_v2?prop[]=ma' class='button'>MA</a>" : "")
-                .($row[1][0] == "1" ? "<a href='search_v2?prop[]=ca' class='button'>".tos("格鬥反擊", "格斗反击")."</a>" : "");
+        $html .= ($row[0][0] == "1" ? "<a href='search_v2?prop[]=ma' class='button'>MA</a>" : "").
+                 ($row[1][0] == "1" ? "<a href='search_v2?prop[]=ca' class='button'>".tos("格鬥反擊","格斗反击")."</a>" : "").
+                 ($row[2][0] == "1" ? "<a href='search_v2?prop[]=big' class='button'>大型</a>" : "").
+                 ($row[3][0] == "1" ? "<a href='search_v2?prop[]=tiny' class='button'>小型</a>" : "");
       }
       return $html;
     }
@@ -251,8 +268,8 @@ class API {
         return self::skl_sp($data["id"]);
       case "wpn":
         return self::wpn($data["id"],$data["no"],$data["v2"]);
-      case "ma_ca":
-        return self::ma_ca($data["id"],$data["r"]);
+      case "attr":
+        return self::attr($data["id"],$data["r"]);
     }
   }
 }

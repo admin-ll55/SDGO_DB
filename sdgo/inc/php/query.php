@@ -258,12 +258,20 @@ if (sizeof($_POST["prop"]) > 0) {
     $script .= "$(\"input[name^='prop'][value='nca']\").prop('checked', true);";
   }
   if (in_array("big", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`tag1` = '1')";
+    $sql .= " AND `unit`.`id` IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`big` = '1' OR `w3`.`rbig` = '1')";
     $script .= "$(\"input[name^='prop'][value='big']\").prop('checked', true);";
   }
   if (in_array("nbig", $_POST["prop"])) {
-    $sql .= " AND `unit`.`id` NOT IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`tag1` = '1')";
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w3`.`id` FROM `unit` AS w3 WHERE `w3`.`big` = '1' OR `w3`.`rbig` = '1')";
     $script .= "$(\"input[name^='prop'][value='nbig']\").prop('checked', true);";
+  }
+  if (in_array("tiny", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` IN (SELECT `w0`.`id` FROM `unit` AS w0 WHERE `w0`.`tiny` = '1' OR `w0`.`rtiny` = '1')";
+    $script .= "$(\"input[name^='prop'][value='tiny']\").prop('checked', true);";
+  }
+  if (in_array("ntiny", $_POST["prop"])) {
+    $sql .= " AND `unit`.`id` NOT IN (SELECT `w0`.`id` FROM `unit` AS w0 WHERE `w0`.`tiny` = '1' OR `w0`.`rtiny` = '1')";
+    $script .= "$(\"input[name^='prop'][value='ntiny']\").prop('checked', true);";
   }
   if (in_array("s", $_POST["prop"])) {
     $sql .= " AND `unit`.`id` IN (SELECT `w4`.`id` FROM `unit_weapon` AS w4 WHERE `w4`.`wpn` = '999' GROUP BY `w4`.`id`)";
@@ -365,9 +373,10 @@ for ($x = 0; $x < count($sql_data); $x++) {
 $sql = preg_replace("/\n/", "", $sql);
 $query_html .= "<!--\r{$sql}\r-->";
 $temp = array_fill(0, 6, "");
+$ct = $result->rowCount();
 if ($result->rowCount() >= 1) {
   $result = $result->fetchAll();
-  for ($x=0;$x<count($result);$x++) {
+  for ($x=0;$x<$ct;$x++) {
     $row = $result[$x];
     if ($temp[0] != "") {
       $temp[0] .= ",";
@@ -388,9 +397,9 @@ if ($result->rowCount() >= 1) {
   }
 }
 $query_html .= "
-<div".(count($result)?" id='result'":"").">
+<div".($ct?" id='result'":"").">
   <br>
-  <div id='count'>".tos("結果數量", "结果数量").": ".count($result)."</div>
+  <div id='count'>".tos("結果數量", "结果数量").": {$ct}</div>
   <br>
   <div id='container' style='display: none;'><a href='search_v2?404'>{$err_img}</a></div>";
 $script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";

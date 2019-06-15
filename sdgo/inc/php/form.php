@@ -210,7 +210,7 @@
                   <option localization="" tc="　擴散炮[擴散]" sc="　扩散炮[扩散]" value="35"></option>
                   <option localization="" tc="　飛彈[連射]" sc="　飞弹[连射]" value="36"></option>
                   <option localization="" tc="　羽毛[連射]" sc="　羽毛[连射]" value="37"></option>
-                  <option localization="" tc="　線性步槍" sc="　线性步枪" value="38"></option>
+                  <option localization="" tc="　線性步槍[濺射]" sc="　线性步枪[溅射]" value="38"></option>
                   <option localization="" tc="　加農炮" sc="　加农炮" value="41"></option>
                 
                 <option localization="" tc="光束" sc="光束" value="c" style="font-weight:bold;"></option>
@@ -273,6 +273,15 @@
                 <label>
                   <input name="prop[]" value="nbig" type="checkbox" />
                   <span localization TC="×大型" SC="×大型"></span>
+                </label>
+                <br>
+                <label>
+                  <input name="prop[]" value="tiny" type="checkbox" />
+                  <span localization TC="小型" SC="小型"></span>
+                </label>
+                <label>
+                  <input name="prop[]" value="ntiny" type="checkbox" />
+                  <span localization TC="×小型" SC="×小型"></span>
                 </label>
                 <br>
                 <label>

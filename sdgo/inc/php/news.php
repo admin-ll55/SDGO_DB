@@ -16,9 +16,15 @@ function get_news() {
       $html .= "</ul></div>";
     }
   }
-  if (count($news) > 5) {
-    $news[count($news)-1] = explode("::", $news[count($news)-1]);
-    $html .= "<div class='item'><b>{$news[count($news)-1][0]}</b> <p>{$news[count($news)-1][1]}</p></div>";
+  if (count($news) >= 5) {
+    $new = $news[count($news)-2];
+    $new = explode("::", $new);
+    $new[1] = explode("||", $new[1]);
+    $html .= "<div class='item'><b>{$new[0]}</b> <ul>";
+    for ($y = 0; $y < count($new[1]); $y++) {
+      $html .= "<li>{$new[1][$y]}</li>";
+    }
+    $html .= "</ul></div>";
   }
   return $html;
 }

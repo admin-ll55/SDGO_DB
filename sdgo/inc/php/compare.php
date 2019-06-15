@@ -14,7 +14,7 @@ function id_details($index, $rlock, $tag4) {
   if (!$tags["html"]) $tags["html"] = $b0;
   $skl_sp = API::call(["type"=>"skl_sp","data"=>["id"=>$id]]);
   $wpn = wpn($id, 2);
-  $ma_ca = ma_ca($id);
+  $ma_ca = attr($id);
   if (!$ma_ca[0]) $ma_ca[0] = $b0;
   if (!$ma_ca[1]) $ma_ca[1] = $b0;
   $html = "
@@ -35,7 +35,7 @@ function id_details($index, $rlock, $tag4) {
     unit_info($id)."
     <tr><td>".tos("扭蛋機", "扭蛋机")."</td><td colspan='2'>{$in_cm}</td></tr>
     <tr><td>".tos("設計圖", "设计图")."</td><td colspan='2'>{$blueprint}</td></tr>
-    <tr><td>特性</td><td colspan='2'>{$tags["html"]}</td></tr>
+    <tr><td>".tos("變型","变型")."</td><td colspan='2'>{$tags["html"]}</td></tr>
     <tr>
       <td>技能一</td>
       <td><a href='search_v2?skl={$skl_sp["skl1"]}'><img class='skill' srcc='{$skl_sp["skl1"]}' alt='{$skl_sp["skl1_desc"]}' /></a></td>

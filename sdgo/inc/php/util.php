@@ -91,8 +91,8 @@ function hex($id, $tag4) {
   $hex[1] = str_pad($hex[1], 2, "0", STR_PAD_LEFT);
   return "<input type='text' value='".$hex[0]." ".$hex[1]."' size='4' content='hex' />";
 }
-function ma_ca($id) {
-  return [API::call(["type"=>"ma_ca","data"=>["id"=>$id,"r"=>0]]),API::call(["type"=>"ma_ca","data"=>["id"=>$id,"r"=>1]])];
+function attr($id) {
+  return [API::call(["type"=>"attr","data"=>["id"=>$id,"r"=>0]]),API::call(["type"=>"attr","data"=>["id"=>$id,"r"=>1]])];
 }
 function material() {
   global $pdo, $id;

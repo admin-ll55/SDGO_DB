@@ -2,6 +2,7 @@
 $lm=filemtime(__FILE__);
 $etf = md5_file(__FILE__);
 $eth=(isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):false);
+header('Content-Type: text/css');
 header("Last-Modified: ".gmdate("D, d M Y H:i:s", $lm)." GMT");
 header("Etag: {$etf}");
 header('Cache-Control: public');
@@ -9,11 +10,20 @@ if (@strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE'])==$lm || $eth==$etf) {
   header("HTTP/1.1 304 Not Modified");
   exit();
 }
+require_once "../inc/php/tos.php";
+$host_url = ($is_localhost?"..":"https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo");
 ?>
 /*original*/
 .DDDDFF,
 .DDDDFF > td {
   background-color: #DDDDFF;
+}
+div#result img.unit {
+  min-height: 120px;
+}
+lt {
+  font-size: 0.75em !important;
+  text-decoration: line-through;
 }
 td {
   transition: background-color 1s;
@@ -169,15 +179,15 @@ table#machine tr:not(:first-child) td[rank]::before {
   border-top-left-radius: 3.5px;
 }
 table#machine tr:not(:first-child) td[rank*="A"]::before {
-  content: url(../img/rank/a.png);
+  content: url(<?=$host_url?>/img/rank/a.png);
   position: absolute;
 }
 table#machine tr:not(:first-child) td[rank*="B"]::before {
-  content: url(../img/rank/b.png);
+  content: url(<?=$host_url?>/img/rank/b.png);
   position: absolute;
 }
 table#machine tr:not(:first-child) td[rank*="C"]::before {
-  content: url(../img/rank/c.png);
+  content: url(<?=$host_url?>/img/rank/c.png);
   position: absolute;
 }
 table#machine tr:not(:first-child) td[rank*="R"] {
@@ -448,7 +458,7 @@ form.container {
 div.container {
   vertical-align: top;
   display: inline-block;
-  height: 280px;
+  height: 285px;
 }
 form div table.inner > tbody > tr > td {
   height: calc(100% / 7);
@@ -497,13 +507,13 @@ label,
 input[type="checkbox"],
 form#compare div#dcid,
 svg#close {
-  cursor: url(../img/cursor/harostand.gif), auto;
+  cursor: url(<?=$host_url?>/img/cursor/harostand.gif), auto;
 }
 input[type="text"] {
-  cursor: url(../img/cursor/harotext.gif), auto;
+  cursor: url(<?=$host_url?>/img/cursor/harotext.gif), auto;
 }
 body {
-  cursor: url(../img/cursor/harobusy.gif), auto;
+  cursor: url(<?=$host_url?>/img/cursor/harobusy.gif), auto;
 }
 tr.mobile {
   display: none;
@@ -615,6 +625,7 @@ table#news div.item {
 table#hot div#hot_container {
   min-height: calc(170px * 3 + 2em);
 }
+table#main div,
 table#hot div#hot_container,
 table#news div.item ul {
   white-space: pre-line;
@@ -1149,14 +1160,14 @@ div.f::after {
   overflow: hidden;
 }
 div.s::after {
-  content: url(http://localhost/sdgo/img/weapon/s.png);
+  content: url(<?=$host_url?>/img/weapon/s.png);
 }
 div.m::after {
-  content: url(http://localhost/sdgo/img/weapon/m.png);
+  content: url(<?=$host_url?>/img/weapon/m.png);
 }
 div.l::after {
-  content: url(http://localhost/sdgo/img/weapon/l.png);
+  content: url(<?=$host_url?>/img/weapon/l.png);
 }
 div.f::after {
-  content: url(http://localhost/sdgo/img/weapon/f.png);
+  content: url(<?=$host_url?>/img/weapon/f.png);
 }

@@ -18,6 +18,8 @@ function get_released_units() {
     <td>新果子 🆕</td>
   </tr>
   <tr>
-    <td><?=get_released_units()?></td>
+    <td>
+      <div><?=get_released_units()?></div>
+    </td>
   </tr>
 </table>
