@@ -60,7 +60,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:26
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -102,7 +102,7 @@ CREATE TABLE `weapon` (
 
 LOCK TABLES `weapon` WRITE;
 /*!40000 ALTER TABLE `weapon` DISABLE KEYS */;
-INSERT INTO `weapon` VALUES ('0','0','',''),('1','a','格鬥','格斗'),('11','a','熱能鞭[連擊組合]','热能鞭[连击组合]'),('12','a','箭錨[連擊組合]','火箭锚[连击组合]'),('13','b','飛鏢','飞镖'),('14','b','劍氣','剑气'),('15','a','特效彈藥','特效弹药'),('16','b','拳','拳'),('2','a','斧','斧'),('21','c','光束擴散炮','光束扩散炮'),('22','b','火神炮[連射]','火神炮[连射]'),('23','b','狀態彈','状态弹'),('25','c','浮游炮','浮游炮'),('26','a','浮游劍[連射]','浮游剑[连射]'),('27','c','反射元件','反射元件'),('28','b','浮游導彈[連射]','浮游导弹[连射]'),('3','a','光束軍刀','光束军刀'),('31','c','噴槍','喷枪'),('32','c','光束步槍','光束步枪'),('33','b','機關槍[連射]','机关枪[连射]'),('34','b','火箭炮','火箭炮'),('35','b','擴散炮[擴散]','扩散炮[扩散]'),('36','b','飛彈[連射]','飞弹[连射]'),('37','b','羽毛[連射]','羽毛[连射]'),('38','b','線性步槍','线性步枪'),('39','c','格林機槍','格林机枪'),('4','a','實體刀','实体刀'),('41','b','加農炮','加农炮'),('42','c','超視炮','超视炮'),('43','c','狙擊槍','狙击枪'),('5','b','擊','击'),('6','a','斬','斩'),('999','999','',''),('f','','',''),('l','','',''),('m','','',''),('s','','','');
+INSERT INTO `weapon` VALUES ('0','0','',''),('1','a','格鬥','格斗'),('11','a','熱能鞭[連擊組合]','热能鞭[连击组合]'),('12','a','火箭錨[連擊組合]','火箭锚[连击组合]'),('13','b','飛鏢','飞镖'),('14','b','劍氣','剑气'),('15','a','特效彈藥','特效弹药'),('16','b','拳','拳'),('2','a','斧','斧'),('21','c','光束擴散炮','光束扩散炮'),('22','b','火神炮[連射]','火神炮[连射]'),('23','b','狀態彈','状态弹'),('25','c','浮游炮','浮游炮'),('26','a','浮游劍[連射]','浮游剑[连射]'),('27','c','反射元件','反射元件'),('28','b','浮游導彈[連射]','浮游导弹[连射]'),('3','a','光束軍刀','光束军刀'),('31','c','噴槍','喷枪'),('32','c','光束步槍','光束步枪'),('33','b','機關槍[連射]','机关枪[连射]'),('34','b','火箭炮','火箭炮'),('35','b','擴散炮[擴散]','扩散炮[扩散]'),('36','b','飛彈[連射]','飞弹[连射]'),('37','b','羽毛[連射]','羽毛[连射]'),('38','b','線性步槍[濺射]','线性步枪[溅射]'),('39','c','格林機槍[連射]','格林机枪[连射]'),('4','a','實體刀','实体刀'),('41','b','加農炮','加农炮'),('42','c','超視炮','超视炮'),('43','c','狙擊槍','狙击枪'),('5','b','擊','击'),('6','a','斬','斩'),('999','999','',''),('f','','',''),('l','','',''),('m','','',''),('s','','','');
 /*!40000 ALTER TABLE `weapon` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -115,7 +115,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:26
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -172,7 +172,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -225,7 +225,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -328,7 +328,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -399,7 +399,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -450,7 +450,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -520,7 +520,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:27
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -578,7 +578,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:27
+-- Dump completed on 2019-06-15 17:04:28
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -641,7 +641,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:28
+-- Dump completed on 2019-06-15 17:04:28
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -698,7 +698,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:28
+-- Dump completed on 2019-06-15 17:04:28
 -- MySQL dump 10.13  Distrib 5.7.17, for Win32 (AMD64)
 --
 -- Host: localhost    Database: sdgo
@@ -740,5 +740,5 @@ CREATE TABLE `hot` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-15 15:49:28
+-- Dump completed on 2019-06-15 17:04:28
 INSERT INTO `hot`(`id`) SELECT `id` FROM `unit`;
