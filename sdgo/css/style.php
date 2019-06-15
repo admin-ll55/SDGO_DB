@@ -779,7 +779,7 @@ table#unit_dialog svg#close:hover {
 }
 
 /*mobile*/
-@media only screen and (max-width:1853px) {
+/*@media only screen and (max-width:1853px) {
 div#id.compare.col4 {
   white-space: nowrap;
   max-width: 310px;
@@ -814,6 +814,12 @@ div#id.compare.col4 table#info td:last-child {
   overflow-x: auto;
   text-overflow: clip;
 }
+}*/
+div#compare_wrapper > div {
+  max-width: 90%;
+  margin: 0 auto;
+  white-space: nowrap;
+  overflow: auto;
 }
 @media only screen and (max-width:1100px) {
 table#customc a.button[onclick] {
@@ -999,6 +1005,10 @@ table#armament-sticky {
   top: 0;
   left: 0;
   overflow-y: hidden;
+  pointer-events: none;
+}
+table#armament-sticky tr td:first-child:not([colspan]) {
+  pointer-events: all;
 }
 table#armament-sticky tr td[colspan],
 table#armament-sticky tr td:not(:first-child) {

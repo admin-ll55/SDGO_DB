@@ -88,6 +88,7 @@ if ($result->rowCount() == 1) {
 </table>
 <br>
 <div id='armament'>
+<div id='armament'>
 <table id='armament'>
   <tr style='font-weight: bold;'>
     <td>".tos("武器", "武器")."</td>
@@ -119,7 +120,7 @@ if ($result->rowCount() == 1) {
     <td colspan='3'>".tos("型態特性：", "型态特性：")."{$ma_ca[1]}</td>
   </tr>";
     }
-    $query_html .= "</table></div>";
+    $query_html .= "</table></div></div>";
     $query_html .= material()."</div>";
     array_push($meta, $tags["meta"]);
     $meta_description = "{$meta[0]}, ID: {$meta[1]} , {$meta[2]} RANK, {$meta[3]}, {$meta[4][0]}: {$meta[4][1]}, {$meta[5][0]}: {$meta[5][1]}, {$meta[6][0]}: {$meta[6][1]}, {$meta[7][0]}: {$meta[7][1]}, {$meta[8][0]}: {$meta[8][1]}, {$meta[9][0]}: {$meta[9][1]}, {$meta[10][0]}: {$meta[10][1]}, {$meta[11]}";

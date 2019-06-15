@@ -225,35 +225,26 @@ $(document).ready(function(){
     }
   }
 
-  $("tr#prop label").click(function(){
-    var state = $(this).html().match("×")?false:true;
-    var e = state?$(this).next():$(this).prev();
-    e.children("input").prop('checked', false);
-  });
+  if ($("div#id > div#armament").length > 0) {
+    $("div#id > div#armament").append("<table id='armament-sticky' class='mobile'>"+$("div#armament > div#armament > table#armament")[0].innerHTML+"</table>");
+  }
   ch_l(lang);
   ch_img("");
+  var a = $("body > div#id, div#result, div#machine, div#compare_wrapper, div#blueprint"), b = a.length?a[0].scrollIntoView():null;
+  $("div#loading").remove();
+  
+  /*extended*/
+  add_tit("");
   $("select[name='sort']").change(function(){
     if ($(this).val() == "id") {
       $("select[name='order']").val('ASC');
     }
   });
-  var a = $("body > div#id, div#result, div#machine, div#compare_wrapper, div#blueprint"), b = a.length?a[0].scrollIntoView():null;
-  $("div#loading").remove();
-  
-  /*$("a[href^='search_v2?id=']").click(function(e){
-    e.preventDefault();
-    e.stopPropagation();
-    var id = $(this).find("img").attr("srcc");
-    $.get($(this).attr("href").replace("search_v2","api"), function(r){
-      $("table#unit_dialog tr:nth-child(2) td").html("<div id='ww'>"+r.replace(/<br>/,"")+"</div>");
-      $("table#unit_dialog").attr("uid",id).css({"display":"table"});
-      ch_img("table#unit_dialog ");
-      add_tit("table#unit_dialog ");
-    });
-  });*/
-  
-  /*extended*/
-  add_tit("");
+  $("tr#prop label").click(function(){
+    var state = $(this).html().match("×")?false:true;
+    var e = state?$(this).next():$(this).prev();
+    e.children("input").prop('checked', false);
+  });
   $("div.unit-cell, div.unit-cell img.unit").click(function(){
     $(this).closest("div.unit-cell").toggleClass("DDDDFF");
   });
@@ -319,4 +310,16 @@ $(document).ready(function(){
       return false;
     }
   });
+  
+  /*$("a[href^='search_v2?id=']").click(function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    var id = $(this).find("img").attr("srcc");
+    $.get($(this).attr("href").replace("search_v2","api"), function(r){
+      $("table#unit_dialog tr:nth-child(2) td").html("<div id='ww'>"+r.replace(/<br>/,"")+"</div>");
+      $("table#unit_dialog").attr("uid",id).css({"display":"table"});
+      ch_img("table#unit_dialog ");
+      add_tit("table#unit_dialog ");
+    });
+  });*/
 });

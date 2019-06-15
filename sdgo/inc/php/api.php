@@ -144,7 +144,7 @@ class API {
   private static function wpn($id, $no, $v2) {
     global $pdo;
     $html = "";
-    $sql = "SELECT `type`, `wpn`, `rng`, `dmg`".($v2==1?", `sets`, `cd`":($v2==2?"":""))."
+    $sql = "SELECT `type`, `wpn`, `rng`, `dmg`, `sets`, `cd`
     FROM `unit`, `unit_weapon` 
       LEFT JOIN `unit_weapon_eff` 
         ON `unit_weapon`.`id` = `unit_weapon_eff`.`id`
@@ -163,9 +163,9 @@ class API {
         $row["dmg"] .= (($no == 8 || $no == 9) ? "%" : "");
         $html .= "
       <tr>
-        <td>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"<div class='{$row["type"]}'><a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"</a></div>")."</td>
+        <td>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"<div class='{$row["type"]}'><a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"</a></div>".($v2==2?"<br>[{$row["rng"]}]":""))."</td>
         ".($v2==1?"<td>{$row["rng"]}</td>":($v2==2?"":""))."
-        <td>{$row["dmg"]}</td>
+        <td>{$row["dmg"]}".($v2==2&&$row["wpn"]!="0"&&$row["wpn"]!="999"?"*{$row["sets"]}<br>[<cd>]":"")."</td>
         ".($v2==1?"<td>{$row["sets"]}<cl></td>
         <td><cd></td>":($v2==2?"":""))."
         <td>";
@@ -178,7 +178,7 @@ class API {
         }
       }
     }
-    /*else {
+    else {
       $html .= "
       <tr>
         <td><img srcc='999' class='weapon'></td>
@@ -187,7 +187,7 @@ class API {
         ".($v2==1?"<td></td>
         <td></td>":($v2==2?"":""))."
         <td>";
-    }*/
+    }
     $sql = "SELECT GROUP_CONCAT(`unit_weapon_eff`.`inconsistent` ORDER BY `eff`.`id` ASC SEPARATOR '<br>') AS inc,
     GROUP_CONCAT(`unit_weapon_eff`.`inconsistent` ORDER BY `eff`.`id` ASC SEPARATOR '<br>') AS inc,
     GROUP_CONCAT(`eff`.`id` ORDER BY `eff`.`id` ASC SEPARATOR '<br>') AS id,
@@ -218,6 +218,8 @@ class API {
   ";
     $html = preg_replace("/<cl>/", tos("發","发"), $html);
     $html = preg_replace("/(\.[0-9]{2})/", "$1秒", $html);
+    if ($v2==2) $html = preg_replace("/(\.00|0)秒/", "秒", $html);
+    if ($v2==1) $html = preg_replace("/>([0-9]\.[0-9]{2})/", ">&nbsp;$1", $html);
     return preg_replace("/-1(\.00)?/", "?", $html);
   }
   private static function attr($id, $r) {
