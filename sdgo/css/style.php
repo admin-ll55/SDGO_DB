@@ -629,6 +629,7 @@ table#main div,
 table#hot div#hot_container,
 table#news div.item ul {
   white-space: pre-line;
+  word-break: break-all;
 }
 table#news div.item ul {
   margin: 0 0 0 1em;
@@ -646,6 +647,7 @@ table#customc td {
 }
 table#customc td#ccm {
   white-space: pre-line;
+  word-break: break-all;
 }
 table#customc td div:not(:first-child) {
   margin-top: 5px;
@@ -982,11 +984,25 @@ div#id.compare div#spempty {
 div > div#id.compare:not(:first-child) {
   margin-left: 10px;
 }
+div#id > div#armament {
+  overflow-x: hidden;
+}
 div#armament {
   overflow-x: auto;
   overflow-y: hidden;
   width: 765px;
   margin: 0 auto;
+  position: relative;
+}
+table#armament-sticky {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-y: hidden;
+}
+table#armament-sticky tr td[colspan],
+table#armament-sticky tr td:not(:first-child) {
+  opacity: 0;
 }
 table#info svg {
   width: 65px;
