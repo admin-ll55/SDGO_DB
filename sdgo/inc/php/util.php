@@ -54,7 +54,8 @@ function unit_info($id) {
     $sp = [tos("必殺", "必杀"),$sp1,$sp2];
     $tot = [tos("六圍總和", "六围总和"),$row["atk"]+$row["def"]+$row["spd"]+$sp1+$row["agi"]+$hp,$row["ratk"]+$row["rdef"]+$row["rspd"]+$sp2+$row["ragi"]+$hp];
     $loc = [tos("鎖敵距離", "锁敌距离"),$row["lock"],$row["rlock"]];
-    array_push($meta, $unit_name, $id, $row["rank"], ($row["pos"]=="r"?"近":($row["pos"]=="s"?"中":tos("遠","远"))).tos("距離","距离"), [tos("血量", "血量"),$row["hp"]], $atk, $def, $spd, $ctl, $tot, $loc);
+    $pos = ["r"=>"近","s"=>"中","p"=>tos("遠","远")];
+    array_push($meta, $unit_name, $id, $row["rank"], $pos[$row["pos"]].tos("距離","距离"), [tos("血量", "血量"),$row["hp"]], $atk, $def, $agi, $spd, $tot, $loc);
     return "
   <tr>
     <td colspan='3'><a href='search_v2?id={$id}'><img srcc='{$id}' class='unit' tit='{$unit_name}' alt='{$unit_name}' /></a></td>
@@ -62,7 +63,7 @@ function unit_info($id) {
   <tr>
     <td>ID: <input type='text' content='id' value='{$id}' size='4' /></td>
     <td><a href='search_v2?rank={$row["rank"]}' class='button'>{$row["rank"]}</a></td>
-    <td><a href='search_v2?pos={$row["pos"]}' class='button h28px'><img srcc='{$row["pos"]}' class='pos'></a></td>
+    <td><a href='search_v2?pos={$row["pos"]}' class='button'>{$pos[$row["pos"]]}<!--img srcc='{$row["pos"]}' class='pos'--></a></td>
   </tr>
   <tr>
     <td>".tos("血量", "血量")."</td>
@@ -84,10 +85,10 @@ function wpn($id, $v2) {
   }
   return $r;
 }
-function hex($id, $tag4) {
+function hex($id, $tag) {
   $hex = strtoupper(dechex(intval($id)));
   $hex = [$hex[2].$hex[3], $hex[0].$hex[1]];
-  $hex[0] = str_pad(strtoupper(dechex(hexdec($hex[0])+($tag4==""?0:1))), 2, "0", STR_PAD_LEFT);
+  $hex[0] = str_pad(strtoupper(dechex(hexdec($hex[0])+($tag=="4"?1:0))), 2, "0", STR_PAD_LEFT);
   $hex[1] = str_pad($hex[1], 2, "0", STR_PAD_LEFT);
   return "<input type='text' value='".$hex[0]." ".$hex[1]."' size='4' content='hex' />";
 }
@@ -142,7 +143,7 @@ function material() {
     }
     $html .= "</tr>";
   }
-  $html .= "</table>";*/
+  $html .= "</table>";
   if ($column!=3) {
     $temp = $column;
     $column = $row;
@@ -151,7 +152,9 @@ function material() {
   if ($column>3) {
     $column = 3;
     $row = ceil(sizeof($parents)/3);
-  }
+  }*/
+  $column = (sizeof($parents)<=3?sizeof($parents):3);
+  $row = ceil(sizeof($parents)/$column);
   $index = 0;
   $html .= "<br><table id='material'><tr style='font-weight: bold;'><td colspan='5'>材料</td></tr>";
   for ($i = 0; $i < $row; $i++) {

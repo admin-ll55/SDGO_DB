@@ -1,7 +1,7 @@
 <?php
 function get_news() {
   $html = "";
-  $news = explode(";", minify(_require("inc/home/rss.php")));
+  $news = explode(";", minify(_require("rss.php")));
   if ($news[0] == "") {
     return "<div class='item'><p>沒有</p></div>";
   }

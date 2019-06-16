@@ -158,10 +158,10 @@
             <td class="width-99">
               <select name="tag">
                 <option value=""></option>
-                <option value="tag2" localization TC="自由" SC="自由"></option>
-                <option value="tag3" localization TC="裝甲解除" SC="装甲解除"></option>
-                <option value="tag4" localization TC="技能激活" SC="技能激活"></option>
-                <option value="no" localization TC="不能" SC="不能"></option>
+                <option value="2" localization TC="自由" SC="自由"></option>
+                <option value="3" localization TC="裝甲解除" SC="装甲解除"></option>
+                <option value="4" localization TC="技能激活" SC="技能激活"></option>
+                <option value="0" localization TC="不能" SC="不能"></option>
               </select>
             <!--/td>
             <td class="width-1"-->

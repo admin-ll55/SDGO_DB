@@ -241,6 +241,7 @@ a.button {
   transition: background-color 1s, color 1s, border 1s;
   text-decoration: none;
   color: black;
+  font-weight: normal;
 }
 a.button {
   display: inline-flex;
@@ -822,6 +823,8 @@ div#compare_wrapper > div {
   overflow: auto;
 }
 @media only screen and (max-width:1100px) {
+form#settings > div {
+  border-width: 4px !important;}
 table#customc a.button[onclick] {
   margin-left: 15px;
   padding: 0 15px;
@@ -867,6 +870,7 @@ form#compare div#add,
 form#compare div#go {
   min-height: 70px;
   line-height: 70px;
+  border-width: 4px;
 }
 table#unit_dialog {
   top: 0;
@@ -1143,17 +1147,17 @@ img.origin {
   width: auto;
   height: 200px;
 }
-div.s::after,
-div.m::after,
-div.l::after,
-div.f::after {
+div.s > a:nth-child(2),
+div.m > a:nth-child(2),
+div.l > a:nth-child(2),
+div.f > a:nth-child(2) {
   transform-origin: bottom right;
   transform: scale(2);
 }
-div#id.compare div.s::after,
-div#id.compare div.m::after,
-div#id.compare div.l::after,
-div#id.compare div.f::after {
+div#id.compare div.s > a:nth-child(2),
+div#id.compare div.m > a:nth-child(2),
+div#id.compare div.l > a:nth-child(2),
+div#id.compare div.f > a:nth-child(2) {
   transform: scale(1);
 }
 div#home > table {
@@ -1175,25 +1179,30 @@ div.f {
   position: relative;
   display: inline-block;
 }
-div.s::after,
-div.m::after,
-div.l::after,
-div.f::after {
+div.s > a:nth-child(2),
+div.m > a:nth-child(2),
+div.l > a:nth-child(2),
+div.f > a:nth-child(2) {
   position: absolute;
   right: 0;
   bottom: 0;
   border-bottom-right-radius: 3.5px;
   overflow: hidden;
 }
-div.s::after {
+img.weapon.type {
+  height: unset !important;
+  width: unset !important;
+  border-radius: 0;
+}
+/*div.s > a:nth-child(2) {
   content: url(<?=$host_url?>/img/weapon/s.png);
 }
-div.m::after {
+div.m > a:nth-child(2) {
   content: url(<?=$host_url?>/img/weapon/m.png);
 }
-div.l::after {
+div.l > a:nth-child(2) {
   content: url(<?=$host_url?>/img/weapon/l.png);
 }
-div.f::after {
+div.f > a:nth-child(2) {
   content: url(<?=$host_url?>/img/weapon/f.png);
-}
+}*/

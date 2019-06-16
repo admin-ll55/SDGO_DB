@@ -211,9 +211,10 @@ var lang = "<?=$_COOKIE["l"]?>".toLowerCase();
 $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
-    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>' class='button h28px'><img srcc='<6>' class='pos'></a><a href='search_v2?rank=<5>' class='button'><5></a></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
+    var pos = {r:"近",s:"中",p:"<?=tos("遠","远")?>"};
+    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>' class='button'><6><!--img srcc='<6>' class='pos'--></a><a href='search_v2?rank=<5>' class='button'><5></a></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
     for (var i = 0; i < r[0].length; i++) {
-      temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,r[6][i]);
+      temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,pos[r[6][i]]);
     }
     if (r[0].length) {
       $("div#container").html("");
@@ -225,12 +226,14 @@ $(document).ready(function(){
     }
   }
 
-  if ($("div#id > div#armament").length > 0) {
+  if ($("div#id > div#armament").length > 0 && !window.location.href.match(/admin/)) {
     $("div#id > div#armament").append("<table id='armament-sticky' class='mobile'>"+$("div#armament > div#armament > table#armament")[0].innerHTML+"</table>");
   }
   ch_l(lang);
   ch_img("");
-  var a = $("body > div#id, div#result, div#machine, div#compare_wrapper, div#blueprint"), b = a.length?a[0].scrollIntoView():null;
+  var a = $("body > div#id, div#result, div#machine, div#compare_wrapper, div#blueprint");
+  $($("input[content='id']")[0]).focus().blur();
+  if (a.length) a[0].scrollIntoView();
   $("div#loading").remove();
   
   /*extended*/

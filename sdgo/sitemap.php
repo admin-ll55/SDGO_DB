@@ -11,7 +11,7 @@ $s = ["select id from unit;",
       "select skl from skill where skl in ('012','013','014','231');",
       "select wpn from weapon where wpn not in ('0','999','s','m','l','f');",
       "select wpn from weapon where wpn in ('s','m','l','f');",
-      "select distinct cat from weapon where cat in ('a','b','c','d');",
+      "select distinct cat from weapon where cat in ('a','b','c');",
       "select id from eff where id not in ('999');",
       "select origin from origin;",
       "select id from blueprint;",
@@ -25,136 +25,136 @@ for ($i=0;$i<count($p);$i++) {
 }
 echo $x."
   <url>
-    <loc>{$n}/search_v2?machine=c</loc>
+    <loc>{$n}{$u}?machine=c</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=S%</loc>
+    <loc>{$n}{$u}?rank=S%</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=SS</loc>
+    <loc>{$n}{$u}?rank=SS</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=SR</loc>
+    <loc>{$n}{$u}?rank=SR</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=S</loc>
+    <loc>{$n}{$u}?rank=S</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=A%</loc>
+    <loc>{$n}{$u}?rank=A%</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=AS</loc>
+    <loc>{$n}{$u}?rank=AS</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=AR</loc>
+    <loc>{$n}{$u}?rank=AR</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=A</loc>
+    <loc>{$n}{$u}?rank=A</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=B%</loc>
+    <loc>{$n}{$u}?rank=B%</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=BS</loc>
+    <loc>{$n}{$u}?rank=BS</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=BR</loc>
+    <loc>{$n}{$u}?rank=BR</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=B</loc>
+    <loc>{$n}{$u}?rank=B</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=BU</loc>
+    <loc>{$n}{$u}?rank=BU</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=C%</loc>
+    <loc>{$n}{$u}?rank=C%</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=CS</loc>
+    <loc>{$n}{$u}?rank=CS</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=CR</loc>
+    <loc>{$n}{$u}?rank=CR</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=C</loc>
+    <loc>{$n}{$u}?rank=C</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=CU</loc>
+    <loc>{$n}{$u}?rank=CU</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=SABC</loc>
+    <loc>{$n}{$u}?rank=SABC</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=_S</loc>
+    <loc>{$n}{$u}?rank=_S</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=_R</loc>
+    <loc>{$n}{$u}?rank=_R</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?rank=_U</loc>
+    <loc>{$n}{$u}?rank=_U</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?pos=r</loc>
+    <loc>{$n}{$u}?pos=r</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?pos=s</loc>
+    <loc>{$n}{$u}?pos=s</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?pos=p</loc>
+    <loc>{$n}{$u}?pos=p</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=ma</loc>
+    <loc>{$n}{$u}?prop[]=ma</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=nma</loc>
+    <loc>{$n}{$u}?prop[]=nma</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=ca</loc>
+    <loc>{$n}{$u}?prop[]=ca</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=nca</loc>
+    <loc>{$n}{$u}?prop[]=nca</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=big</loc>
+    <loc>{$n}{$u}?prop[]=big</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=nbig</loc>
+    <loc>{$n}{$u}?prop[]=nbig</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=s</loc>
+    <loc>{$n}{$u}?prop[]=s</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=ns</loc>
+    <loc>{$n}{$u}?prop[]=ns</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=s2</loc>
+    <loc>{$n}{$u}?prop[]=s2</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=ns2</loc>
+    <loc>{$n}{$u}?prop[]=ns2</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=bp</loc>
+    <loc>{$n}{$u}?prop[]=bp</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=nbp</loc>
+    <loc>{$n}{$u}?prop[]=nbp</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=cm</loc>
+    <loc>{$n}{$u}?prop[]=cm</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?prop=ncm</loc>
+    <loc>{$n}{$u}?prop[]=ncm</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?tag=tag2</loc>
+    <loc>{$n}{$u}?tag=2</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?tag=tag3</loc>
+    <loc>{$n}{$u}?tag=3</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?tag=tag4</loc>
+    <loc>{$n}{$u}?tag=4</loc>
   </url>
   <url>
-    <loc>{$n}/search_v2?tag=no</loc>
+    <loc>{$n}{$u}?tag=0</loc>
   </url>
 </urlset>";
 ?>

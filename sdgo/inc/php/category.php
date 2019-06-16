@@ -16,7 +16,7 @@ switch($k) {
     array_push($sql_data, $_GET["sp"]);
     break;
   case "wpn":
-    preg_match("/([0-9]{2}|[a-g])/", $_GET["wpn"], $m);
+    preg_match("/([0-9]{2}|[a-csmlf])/", $_GET["wpn"], $m);
     $_GET["wpn"] = $m[0];
     $sql = "SELECT '武器' AS col1, '{$_GET["wpn"]}' AS col2, `name_{$_COOKIE["l"]}` AS col3, '' AS col4 FROM `weapon` WHERE `wpn` = ? OR `cat` = ?;";
     array_push($sql_data, $_GET["wpn"], $_GET["wpn"]);
@@ -86,7 +86,7 @@ switch($k) {
         $text = "CU";
         break;
       case "SABC":
-        $text = "全白";
+        $text = "全NORMAL";
         break;
       case "_S":
         $text = "全SECRET";
@@ -110,15 +110,76 @@ switch($k) {
       $sql = "SELECT '".tos("距離","距离")."' AS col1, '{$_GET["pos"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
     break;
   case "tag":
-    if($_GET["tag"]=="tag2"){$text=tos("自由","自由");}
-    else if($_GET["tag"]=="tag3"){$text=tos("裝甲解除","装甲解除");}
-    else if($_GET["tag"]=="tag4"){$text=tos("技能激活","技能激活");}
-    else if($_GET["tag"]=="no"){$text=tos("不能","不能");}
+    if($_GET["tag"]=="2"){$text=tos("自由","自由");}
+    else if($_GET["tag"]=="3"){$text=tos("裝甲解除","装甲解除");}
+    else if($_GET["tag"]=="4"){$text=tos("技能激活","技能激活");}
+    else if($_GET["tag"]=="0"){$text=tos("不能","不能");}
     else {$_GET["tag"]==";";}
     if ($_GET["tag"] != ";")
       $sql = "SELECT '".tos("變型","变型")."' AS col1, '{$_GET["tag"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
     break;
   case "prop":
+    $text = "";
+    switch ($_GET["prop"]) {
+      case "ma":
+        $text = tos("MA", "MA");
+        break;
+      case "nma":
+        $text = tos("×MA", "×MA");
+        break;
+      case "ca":
+        $text = tos("格鬥反擊", "格斗反击");
+        break;
+      case "nca":
+        $text = tos("×格鬥反擊", "×格斗反击");
+        break;
+      case "big":
+        $text = tos("大型", "大型");
+        break;
+      case "nbig":
+        $text = tos("×大型", "×大型");
+        break;
+      case "tiny":
+        $text = tos("小型", "小型");
+        break;
+      case "ntiny":
+        $text = tos("×小型", "×小型");
+        break;
+      case "s":
+        $text = tos("盾牌", "盾牌");
+        break;
+      case "ns":
+        $text = tos("×盾牌", "×盾牌");
+        break;
+      case "s2":
+        $text = tos("光束盾", "光束盾");
+        break;
+      case "ns2":
+        $text = tos("×光束盾", "×光束盾");
+        break;
+      case "bp":
+        $text = tos("設計圖", "设计图");
+        break;
+      case "nbp":
+        $text = tos("×設計圖", "×设计图");
+        break;
+      case "cm":
+        $text = tos("扭蛋", "扭蛋");
+        break;
+      case "ncm":
+        $text = tos("×扭蛋", "×扭蛋");
+        break;
+      default:
+        $_GET["prop"] = ";";
+        break;
+    }
+    if ($_GET["prop"] != ";") {
+      $_POST["prop"] = [$_GET["prop"]];
+      $sql = "SELECT '特殊' AS col1, '{$_GET["prop"]}' AS col2, '{$text}' AS col3, '' AS col4 FROM `eff` LIMIT 1;";
+    }
+    else {
+      $_POST["prop"] = [false];
+    }
     break;
 }
 $result = $pdo->prepare($sql);

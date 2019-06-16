@@ -1,17 +1,19 @@
 <?php
 $meta = [];
-function id_details($index, $rlock, $tag4) {
+function id_details($index, $tag) {
   global $id, $count;
   $none = ["<tr><td><img class='weapon' srcc='","' /></td><td></td><td></td></tr>"];
   $b0 = "<a class='button h28px b0'>-</a>";
+  $b0_cm = "<a class='button' href='search_v2?prop[]=ncm'>×</a>";
+  $b0_bp = "<a class='button' href='search_v2?prop[]=nbp'>×</a>";
+  $bpsvg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='currentColor' d='M568 368c-19.1 0-36.3 7.6-49.2 19.7L440.6 343c4.5-12.2 7.4-25.2 7.4-39 0-61.9-50.1-112-112-112-8.4 0-16.6 1.1-24.4 2.9l-32.2-69c15-13.2 24.6-32.3 24.6-53.8 0-39.8-32.2-72-72-72s-72 32.2-72 72 32.2 72 72 72c.9 0 1.8-.2 2.7-.3l33.5 71.7C241.5 235.9 224 267.8 224 304c0 61.9 50.1 112 112 112 30.7 0 58.6-12.4 78.8-32.5l82.2 47c-.4 3.1-1 6.3-1 9.5 0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72zM232 96c-13.2 0-24-10.8-24-24s10.8-24 24-24 24 10.8 24 24-10.8 24-24 24zm104 272c-35.3 0-64-28.7-64-64s28.7-64 64-64 64 28.7 64 64-28.7 64-64 64zm232 96c-13.2 0-24-10.8-24-24s10.8-24 24-24 24 10.8 24 24-10.8 24-24 24zm-54.4-261.2l-19.2-25.6-48 36 19.2 25.6 48-36zM576 192c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zM152 320h48v-32h-48v32zm-88-80c-35.3 0-64 28.7-64 64s28.7 64 64 64 64-28.7 64-64-28.7-64-64-64z' class=''></path></svg>";
   $wiki = API::call(["type"=>"wiki","data"=>["id"=>$id]]);
   $unit_name = API::call(["type"=>"unit_name","data"=>["id"=>$id]]);
   $origin = API::call(["type"=>"origin","data"=>["id"=>$id]]);
   $in_cm = API::call(["type"=>"in_cm","data"=>["id"=>$id]]);
-  if (!$in_cm) $in_cm = $b0;
-  $blueprint = (API::call(["type"=>"blueprint","data"=>["id"=>$id]])?"<a href = 'search_v2?blueprint={$id}' class='button bp'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'><path fill='currentColor' d='M568 368c-19.1 0-36.3 7.6-49.2 19.7L440.6 343c4.5-12.2 7.4-25.2 7.4-39 0-61.9-50.1-112-112-112-8.4 0-16.6 1.1-24.4 2.9l-32.2-69c15-13.2 24.6-32.3 24.6-53.8 0-39.8-32.2-72-72-72s-72 32.2-72 72 32.2 72 72 72c.9 0 1.8-.2 2.7-.3l33.5 71.7C241.5 235.9 224 267.8 224 304c0 61.9 50.1 112 112 112 30.7 0 58.6-12.4 78.8-32.5l82.2 47c-.4 3.1-1 6.3-1 9.5 0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72zM232 96c-13.2 0-24-10.8-24-24s10.8-24 24-24 24 10.8 24 24-10.8 24-24 24zm104 272c-35.3 0-64-28.7-64-64s28.7-64 64-64 64 28.7 64 64-28.7 64-64 64zm232 96c-13.2 0-24-10.8-24-24s10.8-24 24-24 24 10.8 24 24-10.8 24-24 24zm-54.4-261.2l-19.2-25.6-48 36 19.2 25.6 48-36zM576 192c35.3 0 64-28.7 64-64s-28.7-64-64-64-64 28.7-64 64 28.7 64 64 64zM152 320h48v-32h-48v32zm-88-80c-35.3 0-64 28.7-64 64s28.7 64 64 64 64-28.7 64-64-28.7-64-64-64z' class=''></path></svg></a>":$b0);
+  if (!$in_cm) $in_cm = $b0_cm;
+  $blueprint = (API::call(["type"=>"blueprint","data"=>["id"=>$id]])?"<a href = 'search_v2?blueprint={$id}' class='button bp'>{$bpsvg}</a>":$b0_bp);
   $tags = API::call(["type"=>"tags","data"=>["id"=>$id,"meta"=>$meta]]);
-  if (!$tags["html"]) $tags["html"] = $b0;
   $skl_sp = API::call(["type"=>"skl_sp","data"=>["id"=>$id]]);
   $wpn = wpn($id, 2);
   $ma_ca = attr($id);
@@ -78,13 +80,13 @@ function id_details($index, $rlock, $tag4) {
       <td colspan='3'></td>
     </tr>
     <tr>".
-    ($rlock>0?$wpn[3]:"{$none[0]}0{$none[1]}").
-    ($rlock>0?$wpn[4]:"{$none[0]}0{$none[1]}").
-    ($rlock>0?$wpn[5]:"{$none[0]}0{$none[1]}").
-    ($rlock>0?$wpn[9]:"{$none[0]}999{$none[1]}")."
+    ($tag!="0"?$wpn[3]:"{$none[0]}0{$none[1]}").
+    ($tag!="0"?$wpn[4]:"{$none[0]}0{$none[1]}").
+    ($tag!="0"?$wpn[5]:"{$none[0]}0{$none[1]}").
+    ($tag!="0"?$wpn[9]:"{$none[0]}999{$none[1]}")."
     </tr>
     <tr>
-      <td colspan='3'>".tos("型態代碼：", "型态代码：").($rlock>0?hex($id, $tag4):"<input type='text' disabled='' size='4' />")."</td>
+      <td colspan='3'>".tos("型態代碼：", "型态代码：").($tag!="0"?hex($id, $tag):"<input type='text' disabled='' size='4' />")."</td>
     </tr>
     </tr>
       <td colspan='3'>".tos("型態特性：", "型态特性：")."{$ma_ca[1]}</td>
@@ -98,7 +100,7 @@ try {
   $count = count($ids);
   $query_html = "<div id='compare_wrapper'><div><br>";
   for ($x = 0; $x < $count; $x++) {
-    $sql = "SELECT `id`, `rlock`, `tag4` FROM `unit` WHERE `id` = ?;";
+    $sql = "SELECT `id`, `tag` FROM `unit` WHERE `id` = ?;";
     $result = $pdo->prepare($sql);
     if (!preg_match("/[0-9]{5}/", $ids[$x])) {
       throw new Exception("");
@@ -107,7 +109,7 @@ try {
     if ($result->rowCount() == 1) {
       while ($row = $result->fetch()) {
         $id = $row["id"];
-        $query_html .= id_details($ids[$x], $row["rlock"], $row["tag4"]);
+        $query_html .= id_details($ids[$x], $row["tag"]);
       }
     }
     else {

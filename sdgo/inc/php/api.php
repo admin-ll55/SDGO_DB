@@ -107,19 +107,14 @@ class API {
   private static function tags($id) {
     global $pdo;
     $html = "";
-    $sql = [
-      "SELECT `id` FROM `unit` WHERE `rlock` > 0 AND `tag3` IS NULL AND `tag4` IS NULL AND `id` = ?;",
-      "SELECT `id` FROM `unit` WHERE `tag3` = '1' AND `id` = ?;",
-      "SELECT `id` FROM `unit` WHERE `tag4` = '1' AND `id` = ?;",
-      "SELECT `id` FROM `unit` WHERE `rlock` < 0 AND `id` = ?;"
-    ];
-    $text = [["tag2","tag3","tag4","no"],["自由","裝甲解除", "技能激活","不能"],["自由","装甲解除","技能激活","不能"]];
-    for ($i = 0; $i < count($sql); $i++) {
-      $result = $pdo->prepare($sql[$i]);
-      $result->execute([$id]);
-      if ($result->rowCount() == 1) {
-        $html .= "<a href='search_v2?tag={$text[0][$i]}' class='button'>".tos($text[1][$i], $text[2][$i])."</a>";
-        return ["meta"=>tos($text[1][$i], $text[2][$i]),"html"=>($html?$html:false)];
+    $text = [["不能","","自由","裝甲解除", "技能激活"],["不能","","自由","装甲解除","技能激活"]];
+    $result = $pdo->prepare("SELECT `tag` FROM `unit` WHERE `id` = ?;");
+    $result->execute([$id]);
+    if ($result->rowCount() == 1) {
+      while ($row = $result->fetch()) {
+        $tag = intval($row["tag"]);
+        $html .= "<a href='search_v2?tag={$tag}' class='button'>".tos($text[0][$tag], $text[1][$tag])."</a>";
+        return ["meta"=>tos($text[0][$tag], $text[1][$tag]),"html"=>($html?$html:false)];
       }
     }
     
@@ -160,18 +155,18 @@ class API {
       while ($row = $result->fetch()) {
         $cwpn = $row["wpn"];
         $ctype = $row["type"];
-        $row["dmg"] .= (($no == 8 || $no == 9) ? "%" : "");
+        $row["dmg"] = (($no == 8 || $no == 9) ? ($v2==2?"{$row["rng"]}[":"")."{$row["dmg"]}%".($v2==2?"]":"") : $row["dmg"]);
         $html .= "
       <tr>
-        <td>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"<div class='{$row["type"]}'><a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]=="0"||$row["wpn"]=="999"?"":"</a></div>".($v2==2?"<br>[{$row["rng"]}]":""))."</td>
+        <td>".($row["wpn"]=="0"||$row["wpn"]=="999"?($row["wpn"]=="999"?"<a href='search_v2?prop[]=s'>":""):"<div class='{$row["type"]}'><a href='search_v2?wpn={$row["wpn"]}'>")."<img srcc='{$row["wpn"]}' class='weapon'>".($row["wpn"]=="0"||$row["wpn"]=="999"?($row["wpn"]=="999"?"<a href='search_v2?prop[]=s'>":""):"</a><a href='search_v2?wpn={$row["type"]}'><img class='weapon type' srcc='{$row["type"]}' /></a></div>".($v2==2?"<br>[{$row["rng"]}]":""))."</td>
         ".($v2==1?"<td>{$row["rng"]}</td>":($v2==2?"":""))."
-        <td>{$row["dmg"]}".($v2==2&&$row["wpn"]!="0"&&$row["wpn"]!="999"?"*{$row["sets"]}<br>[<cd>]":"")."</td>
+        <td>{$row["dmg"]}".($v2==2&&$row["wpn"]!="0"&&$row["wpn"]!="999"?"×{$row["sets"]}<cl><br>[<cd>]":"")."</td>
         ".($v2==1?"<td>{$row["sets"]}<cl></td>
         <td><cd></td>":($v2==2?"":""))."
         <td>";
         $html = str_replace("<cd>", ($row["type"]=="s"&&$row["cd"]<0?($row["cd"]*-1).tos("段格鬥", "段格斗"):$row["cd"]), $html);
         if ($row["type"]=="s"&&$row["cd"]<0) {
-          $html = str_replace("<cl>", "下倒地", $html);
+          $html = str_replace("<cl>", ($v2==2?"下":"下倒地"), $html);
         }
         if ($row["wpn"]=="0"||$row["wpn"]=="999") {
           $html = str_replace("<cl>", "", $html);
@@ -181,7 +176,7 @@ class API {
     else {
       $html .= "
       <tr>
-        <td><img srcc='999' class='weapon'></td>
+        <td><a href='search_v2?prop[]=ns'><img srcc='999' class='weapon'></a></td>
         ".($v2==1?"<td>-</td>":($v2==2?"":""))."
         <td>-</td>
         ".($v2==1?"<td></td>
@@ -208,7 +203,7 @@ class API {
           $row["eff"] .= "<a href='search_v2?".($id[$x]!="999"?"eff={$id[$x]}":"prop[]=s2")."' class='button block eff' inc='{$inc[$x]}'>".str_replace(".","<br>",$ed[$x])."</a>";
         }
         if ($ctype=="s"&&(in_array("180", $id)||in_array($cwpn, ["6","11","12","23"]))) {
-          $html = str_replace("<cl>", tos("連擊","连击"), $html);
+          $html = str_replace("<cl>", ($v2==2?tos("擊","击"):tos("連擊","连击")), $html);
         }
         $html .= $row["eff"];
       }
@@ -218,8 +213,8 @@ class API {
   ";
     $html = preg_replace("/<cl>/", tos("發","发"), $html);
     $html = preg_replace("/(\.[0-9]{2})/", "$1秒", $html);
-    if ($v2==2) $html = preg_replace("/(\.00|0)秒/", "秒", $html);
-    if ($v2==1) $html = preg_replace("/>([0-9]\.[0-9]{2})/", ">&nbsp;$1", $html);
+    if ($v2==2) $html = preg_replace("/\[([0-9]\.[0-9]{2})/", "[<span style='opacity:0;'>0</span>$1", $html);
+    if ($v2==1) $html = preg_replace("/>([0-9]\.[0-9]{2})/", "><span style='opacity:0;'>0</span>$1", $html);
     return preg_replace("/-1(\.00)?/", "?", $html);
   }
   private static function attr($id, $r) {

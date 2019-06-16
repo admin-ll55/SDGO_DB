@@ -185,7 +185,7 @@ if ($_POST["pos"] != ""){
   $script .= "$(\"select[name='pos'] option[value='".htmlspecialchars($_POST["pos"],ENT_QUOTES)."']\").attr('selected',true);";
 }
 //tag
-if ($_POST["tag"] == "tag2"){
+if ($_POST["tag"] == "2"){
   $not = "";
   if ($s = not("tag")) {
     $script .= $s;
@@ -194,13 +194,11 @@ if ($_POST["tag"] == "tag2"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`tag3` is null
-    AND `unit_tag`.`tag4` is null
-    AND `unit_tag`.`rlock` > 0
+  WHERE `unit_tag`.`tag` = '2'
   ))";
-  $script .= "$(\"select[name='tag'] option[value='tag2']\").attr('selected',true);";
+  $script .= "$(\"select[name='tag'] option[value='2']\").attr('selected',true);";
 }
-if ($_POST["tag"] == "tag3"){
+if ($_POST["tag"] == "3"){
   $not = "";
   if ($s = not("tag")) {
     $script .= $s;
@@ -209,11 +207,11 @@ if ($_POST["tag"] == "tag3"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`tag3` = '1'
+  WHERE `unit_tag`.`tag` = '3'
   ))";
-  $script .= "$(\"select[name='tag'] option[value='tag3']\").attr('selected',true);";
+  $script .= "$(\"select[name='tag'] option[value='3']\").attr('selected',true);";
 }
-if ($_POST["tag"] == "tag4"){
+if ($_POST["tag"] == "4"){
   $not = "";
   if ($s = not("tag")) {
     $script .= $s;
@@ -222,11 +220,11 @@ if ($_POST["tag"] == "tag4"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`tag4` = '1'
+  WHERE `unit_tag`.`tag` = '4'
   ))";
-  $script .= "$(\"select[name='tag'] option[value='tag4']\").attr('selected',true);";
+  $script .= "$(\"select[name='tag'] option[value='4']\").attr('selected',true);";
 }
-if ($_POST["tag"] == "no"){
+if ($_POST["tag"] == "0"){
   $not = "";
   if ($s = not("tag")) {
     $script .= $s;
@@ -235,12 +233,15 @@ if ($_POST["tag"] == "no"){
   $sql .= " AND (`unit`.`id` {$not} IN (
   SELECT `unit_tag`.`id`
   FROM `unit` AS unit_tag
-  WHERE `unit_tag`.`rlock` < 0
+  WHERE `unit_tag`.`tag` = '0'
   ))";
-  $script .= "$(\"select[name='tag'] option[value='no']\").attr('selected',true);";
+  $script .= "$(\"select[name='tag'] option[value='0']\").attr('selected',true);";
 }
 //prop
 if (sizeof($_POST["prop"]) > 0) {
+  if ($_POST["prop"][0]===false) {
+    $sql .= " AND 0";
+  }
   if (in_array("ma", $_POST["prop"])) {
     $sql .= " AND `unit`.`id` IN (SELECT `w1`.`id` FROM `unit` AS w1 WHERE `w1`.`ma` = '1' OR `w1`.`rma` = '1')";
     $script .= "$(\"input[name^='prop'][value='ma']\").prop('checked', true);";

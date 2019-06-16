@@ -5,13 +5,29 @@ $key = ["skl","sp","wpn","eff","origin","rank","pos","tag","prop"];
 foreach ([5] as $i) {
   if (array_key_exists($key[$i], $_GET)) {
     $_GET[$key[$i]] = strtoupper($_GET[$key[$i]]);
+  }
+  if (array_key_exists($key[$i], $_POST)) {
     $_POST[$key[$i]] = strtoupper($_POST[$key[$i]]);
   }
 }
-foreach ([2,6] as $i) {
+foreach ([2,6,8] as $i) {
   if (array_key_exists($key[$i], $_GET)) {
-    $_GET[$key[$i]] = strtolower($_GET[$key[$i]]);
-    $_POST[$key[$i]] = strtolower($_POST[$key[$i]]);
+    if ($i==8) {
+      $_GET[$key[$i]] = strtolower($_GET[$key[$i]][0]);
+    }
+    else {
+      $_GET[$key[$i]] = strtolower($_GET[$key[$i]]);
+    }
+  }
+  if (array_key_exists($key[$i], $_POST)) {
+    if ($i==8) {
+      for ($x = 0; $x < count($_GET[$key[$i]]); $x++) {
+        $_GET[$key[$i]][$x] = strtolower($_GET[$key[$i]][$x]);
+      }
+    }
+    else {
+      $_POST[$key[$i]] = strtolower($_POST[$key[$i]]);
+    }
   }
 }
 if (array_keys($_GET)[0] == "404") {

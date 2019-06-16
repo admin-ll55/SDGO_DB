@@ -1,4 +1,5 @@
 <?php
+$is_localhost = false;
 require_once "inc/php/util.php";
 require_once "inc/php/cookie.php";
 require_once "inc/php/db.php";
