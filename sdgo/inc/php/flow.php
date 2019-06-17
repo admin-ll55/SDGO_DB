@@ -74,5 +74,6 @@ else if (in_array(array_keys($_GET)[0], $key)) {
 }
 else {
   $is_home = true;
+  $query_html = _require("inc/php/home.php");
 }
 ?>

@@ -234,11 +234,11 @@ class API {
     $result = $pdo->prepare($sql);
     $result->execute([$id, $id, $id, $id]);
     if ($result->rowCount() == 4) {
-      if ($row = $result->fetchAll()) {
-        $html .= ($row[0][0] == "1" ? "<a href='search_v2?prop[]=ma' class='button'>MA</a>" : "").
-                 ($row[1][0] == "1" ? "<a href='search_v2?prop[]=ca' class='button'>".tos("格鬥反擊","格斗反击")."</a>" : "").
-                 ($row[2][0] == "1" ? "<a href='search_v2?prop[]=big' class='button'>大型</a>" : "").
-                 ($row[3][0] == "1" ? "<a href='search_v2?prop[]=tiny' class='button'>小型</a>" : "");
+      if ($result = $result->fetchAll()) {
+        $html .= ($result[0][0] == "1" ? "<a href='search_v2?prop[]=ma' class='button'>MA</a>" : "").
+                 ($result[1][0] == "1" ? "<a href='search_v2?prop[]=ca' class='button'>".tos("格鬥反擊","格斗反击")."</a>" : "").
+                 ($result[2][0] == "1" ? "<a href='search_v2?prop[]=big' class='button'>大型</a>" : "").
+                 ($result[3][0] == "1" ? "<a href='search_v2?prop[]=tiny' class='button'>小型</a>" : "");
       }
       return $html;
     }

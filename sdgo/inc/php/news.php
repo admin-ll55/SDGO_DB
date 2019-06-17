@@ -1,23 +1,23 @@
 <?php
 function get_news() {
   $html = "";
-  $news = explode(";", minify(_require("rss.php")));
+  $news = minify(_require("rss.php"));
+  $news = explode(";", $news);
   if ($news[0] == "") {
-    return "<div class='item'><p>沒有</p></div>";
+    return "<div class='item'><b>沒有</b></div>";
   }
-  for ($x = 0; $x < 5; $x++) {
-    if ($news[$x] != "") {
-      $news[$x] = explode("::", $news[$x]);
-      $news[$x][1] = explode("||", $news[$x][1]);
-      $html .= "<div class='item'><b>{$news[$x][0]}</b> <ul>";
-      for ($y = 0; $y < count($news[$x][1]); $y++) {
-        $html .= "<li>{$news[$x][1][$y]}</li>";
-      }
-      $html .= "</ul></div>";
+  $new = $news[count($news)-2];
+  $news = array_slice($news, 0, 5);
+  for ($x = 0; $x < count($news); $x++) {
+    $news[$x] = explode("::", $news[$x]);
+    $news[$x][1] = explode("||", $news[$x][1]);
+    $html .= "<div class='item'><b>{$news[$x][0]}</b> <ul>";
+    for ($y = 0; $y < count($news[$x][1]); $y++) {
+      $html .= "<li>{$news[$x][1][$y]}</li>";
     }
+    $html .= "</ul></div>";
   }
   if (count($news) >= 5) {
-    $new = $news[count($news)-2];
     $new = explode("::", $new);
     $new[1] = explode("||", $new[1]);
     $html .= "<div class='item'><b>{$new[0]}</b> <ul>";

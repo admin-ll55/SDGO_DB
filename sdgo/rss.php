@@ -7,6 +7,11 @@ $backup_site_url = "https://github.com/admin-ll55/SDGO_DB/wiki/Backup-Sites-%7C-
 $source_url = "https://github.com/admin-ll55/SDGO_DB";
 ?>
 
+2019/06/17
+::
+<?=tos("更新首頁、設計圖頁面效能(仍有待提升)","更新首页、设计图页面效能(仍有待提升)")?>
+
+;
 2019/06/16
 ::
 <?=tos("移動版網頁：新增武器表格首列置頂功能","移动版网页：新增武器表格首列置顶功能")?>
@@ -26,7 +31,7 @@ $source_url = "https://github.com/admin-ll55/SDGO_DB";
 
 「<img class="pos" srcc="r" />、<img class="pos" srcc="s" />、<img class="pos" srcc="p" />」
 ||
-<?=tos("修正meta標籤、分類、扭蛋機頁面", "修正meta标签，分类，扭蛋机页面")?>
+<?=tos("修正meta標籤、分類、扭蛋機頁面", "修正meta标签、分类、扭蛋机页面")?>
 
 ;
 2019/06/15

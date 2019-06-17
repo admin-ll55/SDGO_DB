@@ -19,6 +19,7 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
 <body localization='<?=$_COOKIE["l"]?>'>
   <?php require_once 'inc/php/helper.php';?>
   <?=minify(_require('inc/php/nav.php'))?>
+  <div id="loading"><br><?=tos("加載中…<br><br>請耐心等候", "加载中…<br><br>请耐心等候")?><br></div>
   <?php require_once 'inc/php/result.php';?>
   <?php require_once 'inc/php/footer.php';?>
   <br>

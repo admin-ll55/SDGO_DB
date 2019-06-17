@@ -1,12 +1,16 @@
 <?php
-  $c = explode(";", minify(_require("inc/home/recommendation.txt")));
+  global $pdo;
+  $c = minify(_require("inc/home/recommendation.txt"));
+  $c = explode(";", preg_replace("/#.*?;/", "", $c));
   $i = 0;
   $x = 0;
-  while ($x < 3) {
-    if (!preg_match("/^#/", $c[$i])) {
-      $c[$x++] = ($c[$i]?"<a href='search_v2?id={$c[$i]}'><img class='unit' srcc='{$c[$i]}' tit='".API::call(["type"=>"unit_name","data"=>["id"=>$c[$i]]])."' /></a>":"");
+  $c = array_slice($c, 0, 3);
+  $result = $pdo->prepare("SELECT `unit_name_{$_COOKIE["l"]}` AS idu FROM `id_ex` WHERE `id1` IN (".implode(",", $c).") ORDER BY FIELD(`id1`,".implode(",", $c).");");
+  $result->execute();
+  if ($result = $result->fetchAll()) {
+    for ($x=0;$x<count($result);$x++) {
+      $c[$x] = "<a href='search_v2?id={$c[$x]}'><img class='unit' srcc='{$c[$x]}' tit='{$result[$x]["idu"]}' /></a>";
     }
-    $i++;
   }
 ?>
 <table id="daily">

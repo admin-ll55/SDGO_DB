@@ -1,14 +1,16 @@
 <?php
 function get_released_units() {
+  global $pdo;
   $ids = explode(";", minify(_require("inc/home/released.txt")));
   if ($ids[0] == "") {
     return "<div class='item'><p>沒有</p></div>";
   }
-  for ($x = 0; $x < count($ids); $x++) {
-    if ($ids[$x] != "") {
-      $id = $ids[$x];
+  $result = $pdo->prepare("SELECT `id1`, `unit_name_{$_COOKIE["l"]}` AS idu FROM `id_ex` WHERE `id1` IN (".implode(",", $ids).") ORDER BY `id1` ASC;");
+  $result->execute();
+  if ($result = $result->fetchAll()) {
+    for ($x = 0; $x < count($result); $x++) {
 ?>
-<a href='search_v2?id=<?=$id?>'><img class='unit' srcc='<?=$id?>' tit='<?=API::call(["type"=>"unit_name","data"=>["id"=>$id]])?>' /></a><?php
+<a href='search_v2?id=<?=$result[$x]["id1"]?>'><img class='unit' srcc='<?=$result[$x]["id1"]?>' tit='<?=$result[$x]["idu"]?>' /></a><?php
     }
   }
 }

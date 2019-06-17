@@ -212,9 +212,9 @@ $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
     var pos = {r:"近",s:"中",p:"<?=tos("遠","远")?>"};
-    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>' class='button'><6><!--img srcc='<6>' class='pos'--></a><a href='search_v2?rank=<5>' class='button'><5></a></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
+    var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' tit='<7>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>' class='button'><6><!--img srcc='<6>' class='pos'--></a><a href='search_v2?rank=<5>' class='button'><5></a></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
     for (var i = 0; i < r[0].length; i++) {
-      temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,pos[r[6][i]]);
+      temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,pos[r[6][i]]).replace(/<7>/g,r[7][i]);
     }
     if (r[0].length) {
       $("div#container").html("");
@@ -255,13 +255,13 @@ $(document).ready(function(){
     ($(this).children("input")[0].checked?$(this).addClass("checked"):$(this).removeClass("checked"));
     setTimeout(function(){$("div#tooltip").fadeOut();},1000);
   });
-  if ($("div#result").length == 0) {
+  //if ($("div#result").length == 0) {
     $("img.unit").mousemove(function(e){
       $("div#tooltip").text($(this).attr("tit")).css({"top":e.pageY+30+"px", "left":(e.pageX<=$("div#tooltip").outerWidth()/2?0:(window.innerWidth-e.pageX<=$("div#tooltip").outerWidth()/2?window.innerWidth-$("div#tooltip").outerWidth():e.pageX-$("div#tooltip").outerWidth()/2))+"px"}).show();
     }).mouseout(function(){
       $("div#tooltip").hide().css({"left":"0"});
     });
-  }
+  //}
   $("input[type='text']").mouseenter(function(){
     if ($(this).attr("content")) {
       $(this).select();

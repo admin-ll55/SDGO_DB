@@ -32,7 +32,7 @@ if ($result->rowCount() == 1) {
       $in_cm = $b0_cm;
     }
     $blueprint = (API::call(["type"=>"blueprint","data"=>["id"=>$id]])?"<a href='search_v2?blueprint={$id}' class='button bp'>{$bpsvg}</a>":$b0_bp);
-    if ($blueprint != $b0) {
+    if ($blueprint != $b0_bp) {
       $query_html .= str_replace("<svg", "<svg onclick=\"window.location.href='search_v2?blueprint={$id}';\"  srcc='blueprint.png'", $bpsvg);
     }
     $tags = API::call(["type"=>"tags","data"=>["id"=>$id]]);
@@ -123,7 +123,7 @@ if ($result->rowCount() == 1) {
     }
     $query_html .= "</table></div></div>";
     $query_html .= material()."</div>";
-    array_push($meta, [tos("變型","变型"), $tags["meta"]]);
+    array_push($meta, [tos("變型","变型"), $tags["meta"]]);//bp in-cm
     $meta_description = "{$meta[0]}, ID: {$meta[1]} , {$meta[2]} RANK, {$meta[3]}, {$meta[4][0]}: {$meta[4][1]}";
     foreach ([5,6,7,8,9,10] as $x) {
       $meta_description .= ", {$meta[$x][0]}: {$meta[$x][1]}";

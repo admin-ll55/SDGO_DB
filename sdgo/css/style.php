@@ -56,8 +56,10 @@ body[localization="TC"] * {
   font-family: "NSimSun";
 }
 body {
-  min-height: 1333px;
-  height: 1333px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 1273px;
+  padding-bottom: 4em;
 }
 body * {
   font-size: 20px;
@@ -206,14 +208,27 @@ div#tooltip {
 }
 
 /*general*/
-body {
-  margin: 0 auto;
-  text-align: center;
-}
 div#wrapper, div#footer, div#machine {
   margin: 0 auto;
   text-align: center;
   width: 1080px;
+}
+div#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+div#footer * {
+  font-size: 0.9em;
+}
+div#footer p {
+  text-align: left;
+  max-width: 854px;
+  margin: 1em auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  overflow: auto;
 }
 div#compare_wrapper {
   margin: 0 auto;
@@ -515,6 +530,7 @@ input[type="text"] {
 }
 body {
   cursor: url(<?=$host_url?>/img/cursor/harobusy.gif), auto;
+  position: relative;
 }
 tr.mobile {
   display: none;
@@ -823,6 +839,9 @@ div#compare_wrapper > div {
   overflow: auto;
 }
 @media only screen and (max-width:1100px) {
+div#footer * {
+  font-size: 0.5em;
+}
 form#settings > div {
   border-width: 4px !important;}
 table#customc a.button[onclick] {
@@ -958,7 +977,6 @@ table#materials.mobile td {
 body {
   width: 1080px;
   min-height: 4940px;
-  height: 4940px;
 }
 nav > button > table {
   margin: 0 20px;

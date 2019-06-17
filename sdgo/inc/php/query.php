@@ -1,6 +1,6 @@
 <?php
 $title = tos("搜尋結果", "搜寻结果")." - ";
-$sql = "SELECT `id`,`skl1`,`skl2`,`sp1`,`sp2`,`rank`,`pos`
+$sql = "SELECT `id`,`skl1`,`skl2`,`sp1`,`sp2`,`rank`,`pos`,(SELECT `unit_name_{$_COOKIE["l"]}` FROM `id_ex` WHERE `id` = `id1`) AS idu
 FROM `unit`
 WHERE 1=1";
 $script = "var label_not = [];";
@@ -387,6 +387,7 @@ if ($result->rowCount() >= 1) {
       $temp[4] .= ",";
       $temp[5] .= ",";
       $temp[6] .= ",";
+      $temp[7] .= ",";
     }
     $temp[0] .= "'{$row["id"]}'";
     $temp[1] .= "'{$row["skl1"]}'";
@@ -395,6 +396,7 @@ if ($result->rowCount() >= 1) {
     $temp[4] .= "'{$row["sp2"]}'";
     $temp[5] .= "'{$row["rank"]}'";
     $temp[6] .= "'{$row["pos"]}'";
+    $temp[7] .= "'{$row["idu"]}'";
   }
 }
 $query_html .= "
@@ -403,6 +405,6 @@ $query_html .= "
   <div id='count'>".tos("結果數量", "结果数量").": {$ct}</div>
   <br>
   <div id='container' style='display: none;'><a href='search_v2?404'>{$err_img}</a></div>";
-$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."]];";
+$script .= "var r = [[".$temp[0]."],[".$temp[1]."],[".$temp[2]."],[".$temp[3]."],[".$temp[4]."],[".$temp[5]."],[".$temp[6]."],[".$temp[7]."]];";
 $query_html .= "<script>".$script."</script></div>";
 ?>
