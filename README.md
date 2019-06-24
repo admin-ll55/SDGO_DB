@@ -1,7 +1,7 @@
 # SDGO_DB | SD高達 資料庫 | SD敢达 资料库
 
 # Live Preview | 新版預覽 | 新版预览
-- https://sdgo.herokuapp.com/
+- http://cfo.rf.gd/search_v2
 
 # Backup Sites | 後備網址 | 后备网址
 * http://cfo.rf.gd ![](https://img.shields.io/website/http/cfo.rf.gd.svg?down_color=red&down_message=down&up_color=green&up_message=up&label=)
