@@ -6,6 +6,7 @@ require_once "inc/php/db.php";
 $meta_description = tos("希望你得到想要的機體！","希望你得到想要的机体！");
 require_once "inc/php/flow.php";
 $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
+$viewed = false;
 ?>
 <html>
 <head>
@@ -26,3 +27,9 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
    <script src="js/script" type="text/javascript"></script>
 <!--</body>--></body>
 </html>
+<?php
+if (!$viewed) {
+  $result = $pdo2->prepare("UPDATE `hot` SET `ct` = `ct` + 1 WHERE `id` = ?;");
+  $result->execute([$viewed]);
+}
+?>
