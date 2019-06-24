@@ -7,6 +7,15 @@ $backup_site_url = "https://github.com/admin-ll55/SDGO_DB/wiki/Backup-Sites-%7C-
 $source_url = "https://github.com/admin-ll55/SDGO_DB";
 ?>
 
+2019/06/24
+::
+<?=tos("改用000wh、更新電郵、主要網域","改用000wh、更新电邮、主要网域")?>
+
+||
+<?=tos("有關詳情請看關於本站","有关详情请看关於本站")?>
+
+;
+
 2019/06/17
 ::
 <?=tos("更新首頁、設計圖頁面效能(仍有待提升)","更新首页、设计图页面效能(仍有待提升)")?>
