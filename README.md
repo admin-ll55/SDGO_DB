@@ -4,7 +4,9 @@
 - https://sdgo.herokuapp.com/
 
 # Backup Sites | 後備網址 | 后备网址
-- https://github.com/admin-ll55/SDGO_DB/wiki/Backup-Sites-%7C-%E5%BE%8C%E5%82%99%E7%B6%B2%E5%9D%80-%7C-%E5%90%8E%E5%A4%87%E7%BD%91%E5%9D%80
+* http://cfo.rf.gd ![](https://img.shields.io/website/http/cfo.rf.gd.svg?down_color=red&down_message=down&up_color=green&up_message=up&label=)
+* https://sdgo.herokuapp.com ![](https://img.shields.io/website/https/sdgo.herokuapp.com.svg?down_color=red&down_message=down&up_color=green&up_message=up&label=)
+* https://sdgo2018.000webhostapp.com ![](https://img.shields.io/website/https/sdgo2018.000webhostapp.com.svg?down_color=red&down_message=down&up_color=green&up_message=up&label=)
 
 # Usage | 用法 | 用法
 - https://github.com/admin-ll55/SDGO_DB/wiki/Usage-%7C-%E7%94%A8%E6%B3%95-%7C-%E7%94%A8%E6%B3%95
