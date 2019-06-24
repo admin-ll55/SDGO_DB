@@ -207,7 +207,7 @@ function add_tit(c) {
     $("div#tooltip").hide().css({"left":"0"});
   });
 }
-var lang = "<?=$_COOKIE["l"]?>".toLowerCase();
+var lang = $("body").attr("localization").toLowerCase();
 $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
