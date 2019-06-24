@@ -136,9 +136,7 @@ if ($result->rowCount() == 1) {
     }
     $meta_description .= ", {$meta[11][0]}: {$meta[11][1]}";
   }
-  $result = $pdo2->prepare("UPDATE `hot` SET `ct` = `ct` + 1 WHERE `id` = ?;");
-  $result->execute([$_GET["id"]]);
-  $result->fetchAll();
+  $viewed = $id;
 } else {
   $title = tos("小護士","小护士")." - ";
   $query_html = "<div><br><a href='search_v2?404'>{$err_img}</a></div>";
