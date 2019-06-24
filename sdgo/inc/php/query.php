@@ -396,7 +396,7 @@ if ($result->rowCount() >= 1) {
     $temp[4] .= "'{$row["sp2"]}'";
     $temp[5] .= "'{$row["rank"]}'";
     $temp[6] .= "'{$row["pos"]}'";
-    $temp[7] .= "'".preg_replace("/(\\\\|')/", "\\\\$1", $row["idu"])."'";
+    $temp[7] .= "'".htmlspecialchars($row["idu"], ENT_QUOTES)."'";
   }
 }
 $query_html .= "

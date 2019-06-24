@@ -103,7 +103,7 @@ function acid(e,cid) {
     if (ucid.length == 4)
       e.hide();
     setcookie("ucid", JSON.stringify(ucid), false);
-    nuid = $("<div ucid='"+cid+"' onclick='dcid($(this));'><img class='unit' srcc='"+cid+"' tit='<?=tos("刪除","删除")?>' /><div id='dcid'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-times-circle fa-w-16 fa-9x'><path fill='currentColor' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z' class=''></path></svg></div></div>");
+    nuid = $("<div ucid='"+cid+"' onclick='dcid($(this));'><img class='unit' srcc='"+cid+"' tit='"+(_COOKIE=="TC"?"刪除":"删除")+"' /><div id='dcid'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' class='svg-inline--fa fa-times-circle fa-w-16 fa-9x'><path fill='currentColor' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z' class=''></path></svg></div></div>");
     nuid.mousemove(function(e){
       $("div#tooltip").text($(this).children("img").attr("tit")).css({"top":e.pageY+30+"px", "left":(e.pageX<=$("div#tooltip").outerWidth()/2?0:(window.innerWidth-e.pageX<=$("div#tooltip").outerWidth()/2?window.innerWidth-$("div#tooltip").outerWidth():e.pageX-$("div#tooltip").outerWidth()/2))+"px"}).show();
     }).mouseout(function(){
@@ -135,8 +135,8 @@ function dcid(e) {
       $("div#go").hide();
     setcookie("ucid", JSON.stringify(ucid), false);
     $("div#tooltip").hide().css({"left":"0"});
-    e.remove();
   }
+  e.remove();
 }
 function toggle_expand(e) {
   e.closest("table").find("tr:nth-child(2)").toggleClass("expand_compliance");
@@ -207,11 +207,12 @@ function add_tit(c) {
     $("div#tooltip").hide().css({"left":"0"});
   });
 }
-var lang = $("body").attr("localization").toLowerCase();
+var _COOKIE = $("body").attr("localization");
+var lang = _COOKIE.toLowerCase();
 $(document).ready(function(){
   if (typeof r != "undefined") {
     var temp = "";
-    var pos = {r:"近",s:"中",p:"<?=tos("遠","远")?>"};
+    var pos = {r:"近",s:"中",p:(_COOKIE=="TC"?"遠":"远")};
     var template = "<div class='unit-cell'><div id='unit'><a href='search_v2?id=<0>'><img class='unit' srcc='<0>' tit='<7>' /></a></div><div id='detail' class='mobile hide'><a href='search_v2?pos=<6>' class='button'><6><!--img srcc='<6>' class='pos'--></a><a href='search_v2?rank=<5>' class='button'><5></a></div><div id='skl1' class='mobile hide'><a href='search_v2?skl=<1>'><img class='skill' srcc='<1>' /></a></div><div id='skl2' class='mobile hide'><a href='search_v2?skl=<2>'><img class='skill' srcc='<2>' /></a></div><div id='sp1' class='mobile hide'><a href='search_v2?sp=<3>'><img class='sp' srcc='<3>' /></a></div><div id='sp2' class='mobile hide'><a href='search_v2?sp=<4>'><img class='sp' srcc='<4>' /></a></div></div>";
     for (var i = 0; i < r[0].length; i++) {
       temp += template.replace(/<0>/g,r[0][i]).replace(/<1>/g,r[1][i]).replace(/<2>/g,r[2][i]).replace(/<3>/g,r[3][i]).replace(/<4>/g,r[4][i]).replace(/<5>/g,r[5][i]).replace(/<6>/g,pos[r[6][i]]).replace(/<7>/g,r[7][i]);
