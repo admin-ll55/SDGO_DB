@@ -24,5 +24,5 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
   <?php require_once 'inc/php/footer.php';?>
   <br>
    <script src="js/script" type="text/javascript"></script>
-</body>
+<!--</body>--></body>
 </html>

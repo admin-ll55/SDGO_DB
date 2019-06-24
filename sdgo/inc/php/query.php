@@ -18,7 +18,7 @@ if ($_POST["name"] != "") {
     OR `unit_name_SC` LIKE ?
   )";
   array_push($sql_data, "%{$_POST["name"]}%", "%{$_POST["name"]}%");
-  $script .= "$(\"input[name='name']\").val('".htmlspecialchars($_POST["name"],ENT_QUOTES)."');";
+  $script .= "$(\"input[name='name']\").val($('<div/>').html('".htmlspecialchars($_POST["name"],ENT_QUOTES)."').text());";
 }
 //skill
 if ($_POST["skl"] != "") {

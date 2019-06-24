@@ -93,11 +93,13 @@ $source_url = "https://github.com/admin-ll55/SDGO_DB";
 <?=tos("關於本站","关於本站")?>
 
 ::
+<?=tos("未來一個月只在周末更新，進度會很慢","未来一个月只在周末更新，进度会很慢")?>
+||
 <?=tos("網頁及數據更新進度","网页及数据更新进度")?>：40%
 ||
 <?=tos("過去公告","过去公告")?>：<a class='button' href='rss' target='blank'><?=tos("點擊查看","点击查看")?></a>
 ||
 <?=tos("網頁源碼","网页源码")?>：<a class='button' href='<?=$source_url?>' target='blank'><?=tos("點擊查看","点击查看")?></a>
 ||
-<?=tos("聯絡電郵","联络电邮")?>：<input type='text' content='dmca' value='contact@sdgo2018.rf.gd' size='21' />
+<?=tos("聯絡電郵","联络电邮")?>：<input type='text' content='dmca' value='ct-sdgo@mail.ru' size='14' />
 ;
