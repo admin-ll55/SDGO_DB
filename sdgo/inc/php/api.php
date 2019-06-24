@@ -25,13 +25,13 @@ class API {
         <img src='https://s2.ax1x.com/2019/05/22/V9VdFs.png' class='wiki' />
       </a>":"<a class='button block wiki' href='http://cfo.tiraura.jp/unit_detail.php?id={$id}' target='_blank'>CFOちらうら</a>
       <a class='button wiki' href='https://www.olgame.tw/sds/robot_detail.php?id={$id}' target='_blank'>
-        <img src='img/wiki/olg.png' class='wiki' />
+        <img src='https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo/img/wiki/olg.png' class='wiki' />
       </a>
       <a class='button wiki' href='https://sdplayer.club/detail.html?id={$id}' target='_blank'>
-        <img src='img/wiki/sdp.png' class='wiki' />
+        <img src='https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo/img/wiki/sdp.png' class='wiki' />
       </a>
       <a class='button wiki' href='https://www.yukict.com/bbs/viewthread.php?tid={$id2}' target='_blank'>
-        <img src='img/wiki/yuki.png' class='wiki' />
+        <img src='https://raw.githubusercontent.com/admin-ll55/SDGO_DB/master/sdgo/img/wiki/yuki.png' class='wiki' />
       </a>");
   }
   private static function unit_name($id) {
