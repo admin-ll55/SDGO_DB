@@ -99,7 +99,7 @@ $source_url = "https://github.com/admin-ll55/SDGO_DB";
 ||
 <?=tos("過去公告","过去公告")?>：<a class='button' href='rss' target='blank'><?=tos("點擊查看","点击查看")?></a>
 ||
-<?=tos("網頁源碼","网页源码")?>：<a class='button' href='<?=$source_url?>' target='blank'><?=tos("點擊查看","点击查看")?></a>
+<?=tos("備用網頁、源碼","备用网页、源码")?>：<a class='button' href='<?=$source_url?>' target='blank'><?=tos("點擊查看","点击查看")?></a>
 ||
 <?=tos("聯絡電郵","联络电邮")?>：<input type='text' content='dmca' value='ct-sdgo@mail.ru' size='14' />
 ;
