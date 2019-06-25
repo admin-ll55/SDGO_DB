@@ -28,7 +28,7 @@ $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
 <!--</body>--></body>
 </html>
 <?php
-if (!$viewed) {
+if ($viewed != false) {
   $result = $pdo2->prepare("UPDATE `hot` SET `ct` = `ct` + 1 WHERE `id` = ?;");
   $result->execute([$viewed]);
 }
