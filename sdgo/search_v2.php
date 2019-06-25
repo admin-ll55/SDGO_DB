@@ -1,12 +1,12 @@
 <?php
 $is_localhost = false;
+$viewed = false;
 require_once "inc/php/util.php";
 require_once "inc/php/cookie.php";
 require_once "inc/php/db.php";
 $meta_description = tos("希望你得到想要的機體！","希望你得到想要的机体！");
 require_once "inc/php/flow.php";
 $title = $title.tos("SD高達 資料庫", "SD敢达 资料库");
-$viewed = false;
 ?>
 <html>
 <head>
