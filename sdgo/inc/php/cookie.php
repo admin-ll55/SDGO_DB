@@ -14,8 +14,13 @@ if (array_key_exists("ucid", $_COOKIE)) {
   setcookie("ucid", $_COOKIE["ucid"]);
 }
 if (!isset($_COOKIE["l"]) || !preg_match("/(TC|SC)/", $_COOKIE["l"])) {
-  _setcookie("l", "SC");
-  header("Refresh:0");
-  exit();
+  if ($_GET["l"] == "") {
+    _setcookie("l", "SC");
+    header("Refresh:0");
+    exit();
+  } else {
+    _setcookie("l", $_GET["l"]);
+    $_COOKIE["l"] = $_GET["l"];
+  }
 }
 ?>
