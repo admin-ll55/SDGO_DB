@@ -1,3 +1,7 @@
+<FilesMatch "(?:admin|bat|py|sql|resource)$">
+Order allow,deny
+Deny from all
+</FilesMatch>
 Options -Indexes
 <IfModule mod_expires.c>
 ExpiresActive On
@@ -5,7 +9,10 @@ ExpiresByType image/ico "access plus 1 year"
 </IfModule>
 ErrorDocument 404 /sdgo/search_v2?404
 RewriteEngine on
-RewriteBase /sdgo/
+RewriteCond %{REQUEST_URI} ^.*\/sdgo\/.*$
+RewriteRule . - [E=REWRITEBASE:/sdgo/]
+RewriteCond %{REQUEST_URI} !^.*\/sdgo\/.*$
+RewriteRule . - [E=REWRITEBASE:/]
 RewriteCond %{THE_REQUEST} ^[A-Z]+\s.+\.php.*
 RewriteRule ^(.*)\.php$ $1 [L,R=301]
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -15,3 +22,5 @@ RewriteRule ^sitemap\.xml$ sitemap.php
 RewriteRule api search_v2
 DirectoryIndex search_v2.php
 Header add Access-Control-Allow-Origin "*"
+Header add Access-Control-Allow-Methods "*"
+Header add Access-Control-Allow-Headers "*"
